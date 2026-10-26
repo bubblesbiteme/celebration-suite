@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Celebration Suite">
+  <rect width="128" height="128" rx="30" fill="#37243F"/>
+  <circle cx="64" cy="64" r="39" fill="none" stroke="#D9BE8C" stroke-width="8"/>
+  <path d="M82 44c-7-8-15-12-25-12-17 0-30 14-30 32s13 32 30 32c11 0 20-5 26-13" fill="none" stroke="#A9B89A" stroke-width="9" stroke-linecap="round"/>
+  <path d="M47 54h34M47 68h24M47 82h34" stroke="#FAF7F2" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="92" cy="54" r="4.5" fill="#D9BE8C"/>
+  <circle cx="80" cy="68" r="4.5" fill="#D9BE8C"/>
+  <circle cx="92" cy="82" r="4.5" fill="#D9BE8C"/>
+</svg>

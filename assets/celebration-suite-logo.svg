@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" role="img" aria-labelledby="title desc">
+  <title id="title">Celebration Suite</title>
+  <desc id="desc">Celebration Suite event planning platform logo</desc>
+  <rect width="640" height="160" rx="30" fill="#FAF7F2"/>
+  <g transform="translate(24 24)">
+    <rect width="112" height="112" rx="28" fill="#37243F"/>
+    <circle cx="56" cy="56" r="34" fill="none" stroke="#D9BE8C" stroke-width="8"/>
+    <path d="M72 38c-6-7-13-10-22-10-15 0-27 12-27 28s12 28 27 28c9 0 17-4 23-11" fill="none" stroke="#A9B89A" stroke-width="9" stroke-linecap="round"/>
+    <path d="M41 48h30M41 62h22M41 76h30" stroke="#FAF7F2" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="83" cy="48" r="4.5" fill="#D9BE8C"/>
+    <circle cx="71" cy="62" r="4.5" fill="#D9BE8C"/>
+    <circle cx="83" cy="76" r="4.5" fill="#D9BE8C"/>
+  </g>
+  <g fill="#37243F">
+    <text x="158" y="72" font-family="Inter, Arial, sans-serif" font-size="46" font-weight="800" letter-spacing="1">Celebration Suite</text>
+    <text x="160" y="108" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600" letter-spacing="3">EVENT PLANNING PLATFORM</text>
+  </g>
+</svg>

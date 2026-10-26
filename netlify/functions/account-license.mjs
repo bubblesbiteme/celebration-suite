@@ -1,0 +1,2 @@
+import {json,supabase} from './_shared.mjs';import {tenantContext} from './_tenant.mjs';
+export default async request=>{try{const ctx=await tenantContext(request);const history=await supabase(`licenses?tenant_id=eq.${encodeURIComponent(ctx.tenant.id)}&select=*&order=created_at.desc&limit=20`);return json({tenant:{id:ctx.tenant.id,business_name:ctx.tenant.business_name,status:ctx.tenant.status},license:ctx.license,license_active:ctx.active,history});}catch(e){return json({error:e.message},e.status||500)}};

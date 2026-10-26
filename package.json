@@ -1,0 +1,12 @@
+{
+  "name": "celebration-suite",
+  "version": "0.5.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  },
+  "scripts": {
+    "preflight": "node scripts/preflight.mjs"
+  }
+}
