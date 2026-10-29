@@ -11,10 +11,10 @@ export default async request=>{try{const ctx=await tenantContext(request);requir
  const d=await request.json();
  if(request.method==='POST'&&action==='invite'){
   const email=clean(d.email,180).toLowerCase(),full_name=clean(d.full_name,160),role=roles.has(d.role)?d.role:'staff';if(!email)throw new Error('Email is required.');
-  const existing=await supabase(`tenant_users?email=eq.${encodeURIComponent(email)}&select=id&limit=1`);if(existing?.length)throw new Error('That email already has an account.');
+  const existing=await supabase(`tenant_users?email=ilike.${encodeURIComponent(email)}&select=id&limit=1`);if(existing?.length)throw new Error('That email already has an account.');
   const rows=await supabase('tenant_staff_invites',{method:'POST',body:{tenant_id:ctx.tenant.id,email,full_name:full_name||null,role,permissions:d.permissions||{},expires_at:new Date(Date.now()+7*86400000).toISOString()}});const inv=rows?.[0];
   const invite_url=`${origin(request)}/staff-invite.html?token=${encodeURIComponent(inv.invite_token)}`;
-  let email_sent=false;try{await sendTenantEmail(ctx.tenant,{to:email,subject:`You're invited to ${ctx.tenant.business_name}`,body:`${full_name||'Hello'},\n\nYou've been invited to join ${ctx.tenant.business_name} as ${role}. Create your password here:\n${invite_url}\n\nThis invitation expires in 7 days.`});email_sent=true}catch{}
+  let email_sent=false;try{await sendTenantEmail(ctx.tenant,{to:email,subject:`You're invited to ${ctx.tenant.business_name}`,body:`${full_name||'Hello'},\n\nYou've been invited to join ${ctx.tenant.business_name} as ${role}. Accept your invitation and choose email/password or Google sign-in here:\n${invite_url}\n\nThis invitation expires in 7 days.`});email_sent=true}catch{}
   return json({ok:true,invite:inv,invite_url,email_sent});
  }
  if(request.method==='POST'&&action==='assign'){

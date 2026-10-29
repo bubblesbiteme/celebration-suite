@@ -1,39 +1,31 @@
-# Celebration Suite — Product Spec
+# Celebration Suite Product Specification
 
-## License products
+## Plans
 
-### Single Event
-- Maximum 1 event.
-- Event date is required when activating the license.
-- License expiration = event date + 90 days.
-- Event data remains stored after expiration; editing is blocked until renewed.
+### Single Event — $99 one-time
+- One licensed event.
+- Access through 90 days after the event date.
+- Historical events may remain when a later Single Event entitlement is purchased.
 
-### Annual Unlimited
+### Planner Unlimited Monthly — $59/month
 - Unlimited events.
-- License expiration = activation date + 1 year.
-- Data remains stored after expiration; editing is blocked until renewed.
+- Recurring month-to-month Stripe subscription.
+- Payment failures enter an internal recovery state; unpaid accounts are eventually suspended while data remains retained.
+- The internal recovery timing is operational policy and is intentionally not shown in customer-facing product copy.
 
-## White-label controls
-Each tenant controls:
-- Business name
-- Logo URL
-- Primary, secondary, and accent colors
-- Email sender name
-- Reply-to email
-- Tenant-owned email provider credentials
+### Planner Unlimited Annual — $499/year
+- Unlimited events for 12 months.
+- Early renewal preserves remaining paid time.
 
-## Email providers
-The first build supports:
-- Resend API key owned by the tenant
-- Standard SMTP credentials owned by the tenant
-
-Credentials are encrypted at rest with `INTEGRATION_ENCRYPTION_KEY`.
-
-## Marketplace fulfillment
-Marketplace orders can be fulfilled with one-time license codes generated in `/platform-admin.html`.
+## Authentication
+- Platform owners/admins: email/password or approved Google account.
+- Planner tenant owners/admins/planners/staff: email/password or Google using an existing approved account email.
+- Staff invitation acceptance: email/password or the invited Google account.
+- Clients: email/password or the Google account matching the event invitation email.
+- Google identity is verified server-side and never authorizes a role merely because a Google account exists.
 
 ## Tenant isolation
 All planner data is keyed by `tenant_id` and all planner API requests derive tenant scope from the signed HttpOnly session cookie. The browser never supplies an authoritative tenant ID.
 
-## Expiration behavior
-Expired accounts are retained but blocked from planning mutations. This avoids destructive deletion and makes renewal possible.
+## Access suspension
+Inactive or unpaid accounts retain stored data but lose active planning access. Client portals use a neutral unavailable message rather than disclosing the planner's billing status.

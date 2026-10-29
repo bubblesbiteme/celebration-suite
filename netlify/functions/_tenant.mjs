@@ -6,11 +6,13 @@ export async function tenantContext(request){
  const users=await supabase(`tenant_users?id=eq.${encodeURIComponent(session.user_id)}&tenant_id=eq.${encodeURIComponent(session.tenant_id)}&select=*&limit=1`),user=users?.[0];
  if(!user||user.status!=='active')throw Object.assign(new Error('Account access is disabled.'),{status:401});
  const tenants=await supabase(`tenants?id=eq.${encodeURIComponent(session.tenant_id)}&select=*&limit=1`);const tenant=tenants?.[0];if(!tenant)throw Object.assign(new Error('Account not found.'),{status:401});
- const licenses=await supabase(`licenses?tenant_id=eq.${encodeURIComponent(tenant.id)}&status=in.(active,grace)&select=*&order=created_at.desc&limit=1`);const license=licenses?.[0]||null;
- const now=Date.now(),expires=license?.expires_at?Date.parse(license.expires_at):0;const active=Boolean(license&&['active','grace'].includes(license.status)&&(!expires||expires>now));
- return{session:{...session,role:user.role},user,tenant,license,active}
+ const licenses=await supabase(`licenses?tenant_id=eq.${encodeURIComponent(tenant.id)}&status=in.(active,past_due,grace)&select=*&order=created_at.desc&limit=1`);const license=licenses?.[0]||null;
+ const now=Date.now(),expires=license?.expires_at?Date.parse(license.expires_at):0,graceEnd=license?.grace_until?Date.parse(license.grace_until):0;
+ const licenseUsable=Boolean(license&&((['active','grace'].includes(license.status)&&(!expires||expires>now))||(license.status==='past_due'&&graceEnd>now)));
+ const tenantUsable=!['billing_suspended','suspended','closed'].includes(tenant.status);
+ return{session:{...session,role:user.role},user,tenant,license,active:licenseUsable&&tenantUsable}
 }
-export function requireActive(ctx){if(!ctx.active)throw Object.assign(new Error('License expired or inactive.'),{status:402})}
+export function requireActive(ctx){if(!ctx.active)throw Object.assign(new Error('Subscription or license inactive. Update billing to restore access.'),{status:402})}
 export function eventLimit(ctx){return ctx.license?.plan_type==='single_event'?1:null}
 export function hasPermission(ctx,permission){if(['owner','admin'].includes(ctx.user?.role))return true;const custom=ctx.user?.permissions||{};if(custom[permission]===true)return true;if(custom[permission]===false)return false;return (roleDefaults[ctx.user?.role]||[]).includes(permission)}
 export function requirePermission(ctx,permission){if(!hasPermission(ctx,permission))throw Object.assign(new Error('You do not have permission to perform this action.'),{status:403})}

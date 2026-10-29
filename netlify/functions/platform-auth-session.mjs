@@ -1,0 +1,2 @@
+import {json,supabase} from './_shared.mjs';import {readPlatformSession} from './_session.mjs';
+export default async request=>{try{const s=readPlatformSession(request);if(!s)return json({authenticated:false},401);const a=(await supabase(`platform_admins?id=eq.${encodeURIComponent(s.admin_id)}&status=eq.active&select=id,email,full_name,role&limit=1`))?.[0];if(!a)return json({authenticated:false},401);return json({authenticated:true,admin:a})}catch(e){return json({error:e.message},500)}};

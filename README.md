@@ -1,46 +1,26 @@
-# Celebration Suite — v0.5
+# Celebration Suite v0.6
 
-Standalone multi-tenant white-label event planning platform. This codebase is separate from any existing planner website or production portal.
+Standalone multi-tenant white-label event planning platform operated by Sage & Celebration LLC. The deployment remains separate from the Sage & Celebration planning portal even though it uses `planner.sageandcelebration.com`.
 
-## License products
-- **Single Event** — one licensed event, active through 90 days after its event date.
-- **Annual Unlimited** — unlimited events for 12 months, with renewals preserving remaining paid time.
+## Commercial plans
+- **Single Event — $99**: one licensed event through 90 days after the event date.
+- **Planner Unlimited Monthly — $59/month**: unlimited events with recurring monthly billing.
+- **Planner Unlimited Annual — $499/year**: unlimited events for 12 months, with early renewals preserving remaining paid time.
 
-## Product modules through v0.5
-- White-label business branding
-- Tenant-owned email and Stripe integrations
-- Marketplace activation codes and direct online checkout
-- Seller order/entitlement console
-- Guided onboarding and self-service billing
-- Legal acceptance records and customer export
-- Lead CRM and lead-to-event conversion
-- Proposals, contracts and electronic acceptance/signature
-- Invoices and payment tracking
-- Vendor CRM
-- Inventory reservations and date conflicts
-- Guests, RSVP, registration/ticketing and check-in
-- Appointments and approvals
-- Floor plans
-- Event Day command center
-- Team accounts, assignments, permissions and labor tracking
-- Automation Center and post-event closeout
+## Sign-in
+- Platform admin: email/password or Google.
+- Planner owners/admins/planners/staff: email/password or Google.
+- Invited staff: password or invited Google account.
+- Clients: password or invited Google account.
 
-See `docs/DEPLOYMENT.md`, `docs/PRODUCT-SPEC.md`, `docs/SELLER-GUIDE.md`, and the version notes in `docs/`.
+Google sign-in uses verified server-side OAuth identity and only matches approved/invited email addresses.
 
+## Database
+Run migrations 0001 through 0006 in order. If 0001–0005 are already installed, run only:
 
-## Celebration Suite launch identity
+`supabase/migrations/0006_MONTHLY_BILLING_AND_UNIFIED_AUTH.sql`
 
-- Product: **Celebration Suite**
-- URL: **https://planner.sageandcelebration.com**
-- Support: **support@sageandcelebration.com**
-- Seller/operator: **Sage & Celebration LLC**
-- Tagline: **Your branded event planning system — for one event or your entire planning business.**
+See `docs/DEPLOYMENT.md` and `docs/V0.6-MONTHLY-BILLING-UNIFIED-AUTH.md`.
 
-Default product palette:
-- Deep Aubergine `#37243F`
-- Warm Ivory `#FAF7F2`
-- Soft Sage `#A9B89A`
-- Champagne `#D9BE8C`
-- Charcoal `#222222`
-
-The product deployment must remain separate from the Sage & Celebration planning portal even though it uses the `planner.sageandcelebration.com` subdomain.
+## v0.6.1 reliability baseline
+Celebration Suite now includes local-first + secure autosave, 45-second live refresh standards for Client Portal/Event Day, dirty-edit refresh protection, and case-insensitive identity hardening. See `docs/RELIABILITY-HOTFIX-REFERENCE.md` and run migration `0007_RELIABILITY_DRAFTS_AND_SYNC.sql` before deploying v0.6.1.
