@@ -42,3 +42,7 @@ Annual Unlimited now uses true recurring yearly Stripe subscription checkout. Mo
 
 ## v0.10 Client Workflow & Event Operations
 Adds reusable questionnaires, richer client portal workflows, event inventory packing/check-out/return operations, printable Final Event Book, support issue tracking, expanded backup export coverage, and vendor-linked documents. Run migration `0011_CLIENT_WORKFLOW_EVENT_OPERATIONS.sql` after 0010.
+
+
+## v0.12.0
+See `docs/V0.12-PLATFORM-CONTROL-INTELLIGENCE.md`.

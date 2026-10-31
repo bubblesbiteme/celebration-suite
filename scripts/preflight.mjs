@@ -161,4 +161,24 @@ check('dashboard links purchasing',read('app.html').includes('/purchasing.html')
 check('dashboard links reconciliation',read('app.html').includes('/reconciliation.html'));
 check('referrals links partner access',read('referrals.html').includes('/partner-access.html'));
 
+
+// v0.12 platform control + intelligence
+for(const f of ['supabase/migrations/0013_PLATFORM_CONTROL_INTELLIGENCE.sql','audit.html','notifications.html','integration-center.html','netlify/functions/audit.mjs','netlify/functions/notifications.mjs','netlify/functions/integration-center.mjs','netlify/functions/external-api.mjs','netlify/functions/_webhooks.mjs','docs/V0.12-PLATFORM-CONTROL-INTELLIGENCE.md'])check(`v0.12 exists ${f}`,exists(f));
+const m13=read('supabase/migrations/0013_PLATFORM_CONTROL_INTELLIGENCE.sql');
+for(const t of ['tenant_audit_log','tenant_notifications','tenant_api_keys','tenant_webhooks','tenant_webhook_deliveries'])check(`v0.12 table ${t}`,m13.includes(t));
+check('API keys stored hashed',read('netlify/functions/integration-center.mjs').includes("createHash('sha256')")&&read('netlify/functions/integration-center.mjs').includes('key_hash'));
+check('external API supports event reads',read('netlify/functions/external-api.mjs').includes("resource==='events'"));
+check('external API supports lead intake',read('netlify/functions/external-api.mjs').includes("request.method==='POST'&&resource==='leads'"));
+check('webhooks are HMAC signed',read('netlify/functions/_webhooks.mjs').includes("createHmac('sha256'")&&read('netlify/functions/_webhooks.mjs').includes('x-celebration-signature'));
+check('webhook deliveries logged',read('netlify/functions/_webhooks.mjs').includes('tenant_webhook_deliveries'));
+check('client activity creates audit history',read('netlify/functions/client-portal.mjs').includes('tenant_audit_log'));
+check('client activity creates planner notification',read('netlify/functions/client-portal.mjs').includes('tenant_notifications'));
+check('client activity emits webhook',read('netlify/functions/client-portal.mjs').includes("emitWebhook(event.tenant_id,'client.activity'"));
+check('owner BI includes event profitability',read('netlify/functions/analytics.mjs').includes('event_profitability')&&read('analytics.html').includes('Event Profitability'));
+check('owner BI includes inventory utilization',read('netlify/functions/analytics.mjs').includes('inventory_utilization')&&read('analytics.html').includes('Inventory Utilization'));
+check('new platform control data included in export',read('netlify/functions/account-export.mjs').includes('tenant_audit_log')&&read('netlify/functions/account-export.mjs').includes('tenant_webhook_deliveries'));
+check('dashboard links notification center',read('app.html').includes('/notifications.html'));
+check('dashboard links integration center',read('app.html').includes('/integration-center.html'));
+check('event workspace links activity history',read('event.html').includes('/audit.html?event_id='));
+
 console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);
