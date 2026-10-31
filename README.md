@@ -80,3 +80,14 @@ A product-wide usability and visual redesign. Adds persistent planner navigation
 ## v0.20.0 — Original Product Parity Bridge
 
 This release uses the uploaded Sage & Celebration Phase 12 build as the source-of-truth reference and ports dense planner/admin behavior into the multi-tenant Celebration Suite product. It adds staff scheduling with labor-cost sync, inventory reservation calendar and operational movement history, questionnaire analysis → planning checklist creation, multi-layout floor-plan parity, contract/decor-budget accounting, three Event Book packet modes, safe restore/recovery tooling, signed QuickBooks inbound change review, support follow-up notifications, and original-route compatibility aliases. Run `supabase/migrations/0019_ORIGINAL_PRODUCT_PARITY_BRIDGE.sql` after migration 0018. See `docs/V0.20-ORIGINAL-PRODUCT-PARITY-BRIDGE.md`.
+
+
+## v0.21.0 — Deep Operations & Workspace Parity
+- Vendor Operations center with arrival/load-in instructions, assigned areas, check-in/out and emergency contacts.
+- Vendor compliance view based on dated vendor documents.
+- Event Day integrates vendor arrivals and emergency contacts.
+- Final Event Book adds BEO / Function Sheet packet.
+- Event Workspace timeline adds list/calendar modes and ICS export.
+- Installable PWA shell with service worker and offline fallback.
+- Backup/export includes vendor operations and emergency contacts.
+- Run migration `0020_DEEP_OPERATIONS_WORKSPACE_PARITY.sql`.

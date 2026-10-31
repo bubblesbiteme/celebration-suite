@@ -86,3 +86,9 @@ window.WLP={$, $$, api, esc, fmtDate};
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',inject);else inject();
 })();
+
+
+// v0.21 installable/offline shell
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
+let csInstallPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();csInstallPrompt=e;document.documentElement.dataset.installable='1';});
+window.CSInstallApp=async()=>{if(!csInstallPrompt)return false;csInstallPrompt.prompt();await csInstallPrompt.userChoice;csInstallPrompt=null;document.documentElement.dataset.installable='0';return true};

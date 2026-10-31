@@ -305,4 +305,17 @@ check('original event workspace route is compatible',read('event-workspace.html'
 check('original financial admin route is compatible',read('financials-admin.html').includes('financials.html'));
 check('export includes parity operational tables',read('netlify/functions/account-export.mjs').includes('tenant_inventory_movements')&&read('netlify/functions/account-export.mjs').includes('tenant_staff_availability')&&read('netlify/functions/account-export.mjs').includes('tenant_event_expenses'));
 
+
+// v0.21 deep operations + workspace parity
+for(const f of ['supabase/migrations/0020_DEEP_OPERATIONS_WORKSPACE_PARITY.sql','vendor-operations.html','netlify/functions/vendor-operations.mjs','manifest.webmanifest','sw.js','offline.html','docs/V0.21-DEEP-OPERATIONS-WORKSPACE-PARITY.md'])check(`v0.21 exists ${f}`,exists(f));
+const m20=read('supabase/migrations/0020_DEEP_OPERATIONS_WORKSPACE_PARITY.sql');
+check('vendor operations schema exists',m20.includes('tenant_vendor_operations')&&m20.includes('scheduled_arrival')&&m20.includes('checked_in_at'));
+check('event emergency contacts schema exists',m20.includes('tenant_event_emergency_contacts'));
+check('vendor operations supports checkin and checkout',read('netlify/functions/vendor-operations.mjs').includes("d.action==='checkin'")&&read('netlify/functions/vendor-operations.mjs').includes("d.action==='checkout'"));
+check('event day consumes vendor operations',read('netlify/functions/event-day.mjs').includes('tenant_vendor_operations')&&read('event-day.html').includes('Vendor Arrivals'));
+check('event book has BEO packet',read('event-book.html').includes('BEO / Function Sheet')&&read('event-book.html').includes('Food / Beverage Notes'));
+check('workspace timeline has calendar mode',read('event.html').includes("timelineView==='calendar'")&&read('event.html').includes('downloadEventIcs'));
+check('PWA shell exists',read('assets/app.js').includes("serviceWorker.register('/sw.js')")&&read('manifest.webmanifest').includes('standalone'));
+check('export includes vendor operations',read('netlify/functions/account-export.mjs').includes('tenant_vendor_operations')&&read('netlify/functions/account-export.mjs').includes('tenant_event_emergency_contacts'));
+
 console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);
