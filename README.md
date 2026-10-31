@@ -1,3 +1,7 @@
+## v0.27.0 — Direct-Fork Business Modules
+
+Financials, Vendors, and Communications now use the original Sage interfaces with tenant-safe compatibility APIs.
+
 ## v0.24.5 Event Workspace Recovery
 
 See `docs/V0.24.5-EVENT-WORKSPACE-RECOVERY.md`.

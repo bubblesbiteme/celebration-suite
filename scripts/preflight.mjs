@@ -238,7 +238,7 @@ check('vendor quote selection books vendor and commits budget',read('netlify/fun
 check('client portal receives vendor options',read('netlify/functions/client-portal.mjs').includes('tenant_vendor_quotes')&&read('portal.html').includes("['vendors','Vendor Options']"));
 check('Resend inbound webhook validates signature',read('netlify/functions/resend-inbound-webhook.mjs').includes('new Webhook(secret).verify'));
 check('Telnyx inbound webhook verifies signature',read('netlify/functions/telnyx-inbound-sms.mjs').includes('crypto.verify'));
-check('communications supports unmatched resolution',read('communications.html').includes('Resolve Match')&&read('netlify/functions/communications.mjs').includes("request.method==='PATCH'"));
+check('communications supports unmatched resolution',read('communications.html').includes('Resolve match')&&read('netlify/functions/communications-admin.mjs').includes("match_inbound"));
 check('communications contextual reply routing exists',read('netlify/functions/communications.mjs').includes('booking-${d.event_id}@${inboundDomain}'));
 check('CRM tracks lead temperature and lost reason',read('crm.html').includes('Temperature')&&read('crm.html').includes('Lost reason'));
 for(const r of ['agreement_signed','invoice_due','questionnaire_followup','overdue_task','vendor_document_due'])check(`v0.15 automation ${r}`,read('netlify/functions/_automation-engine.mjs').includes(`rule.rule_type==='${r}'`));
@@ -296,7 +296,7 @@ check('inventory reservation calendar exists',read('inventory-reservation-calend
 check('questionnaire analysis creates planning checklist',read('netlify/functions/questionnaire-tools.mjs').includes('create-plan')&&read('questionnaires.html').includes('Create Plan'));
 check('floor plans support multiple layout operations',read('netlify/functions/floorplans.mjs').includes("action==='duplicate'")&&read('floorplan.html').includes('+ New layout')&&read('floorplan.html').includes('Rename')&&read('floorplan.html').includes('Delete'));
 check('client can update shared floorplan objects',read('netlify/functions/client-portal.mjs').includes("d.action==='floorplan-object-update'")&&read('portal.html').includes('Save layout changes'));
-check('event finances separate service fee and decor allowance',read('financials.html').includes('Service Fee')&&read('financials.html').includes('Decor Allowance')&&read('netlify/functions/financials.mjs').includes('estimated_service_profit'));
+check('event finances separate service fee and decor allowance',read('financials.html').includes('Service / labor fee')&&read('financials.html').includes('Decor')&&read('netlify/functions/financial-admin.mjs').includes('client_decor_budget'));
 check('event book has three packet modes',read('event-book.html').includes('Staff Production Book')&&read('event-book.html').includes('Vendor Packet')&&read('event-book.html').includes('Client Final Details'));
 check('safe restore includes dry run and confirmation phrase',read('netlify/functions/account-restore.mjs').includes('RESTORE CELEBRATION DATA')&&read('backup.html').includes('Dry-run'));
 check('QuickBooks webhook is signed and review first',read('netlify/functions/quickbooks-webhook.mjs').includes('QUICKBOOKS_WEBHOOK_VERIFIER_TOKEN')&&read('netlify/functions/quickbooks-changes.mjs').includes("status:'reviewed'"));
@@ -304,7 +304,7 @@ check('QuickBooks customer apply uses full_name',read('netlify/functions/quickbo
 check('support UI can update status and resolution',read('support.html').includes('Save update')&&read('support.html').includes('Waiting on user'));
 check('support backend sends followup notifications',read('netlify/functions/support.mjs').includes('SUPPORT_NOTIFICATION_EMAIL')&&read('netlify/functions/support.mjs').includes('resolved'));
 check('original event workspace route is direct SaaS fork',read('event-workspace.html').includes('/.netlify/functions/event-workspace')&&read('netlify/functions/event-workspace.mjs').includes('tenantContext(request)'));
-check('original financial admin route is compatible',read('financials-admin.html').includes('financials.html'));
+check('original financial admin route is compatible',read('financials-admin.html').includes('/.netlify/functions/financial-admin')&&read('netlify/functions/financial-admin.mjs').includes('tenantContext(request)'));
 check('export includes parity operational tables',read('netlify/functions/account-export.mjs').includes('tenant_inventory_movements')&&read('netlify/functions/account-export.mjs').includes('tenant_staff_availability')&&read('netlify/functions/account-export.mjs').includes('tenant_event_expenses'));
 
 
