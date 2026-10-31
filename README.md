@@ -109,3 +109,15 @@ This release uses the uploaded Sage & Celebration Phase 12 build as the source-o
 
 ## v0.22.2
 Floor Plan catalog rendering hotfix: 134 built-in objects are pre-rendered and visible before any API call.
+
+## v0.22.3 — Floor Plan Interaction + Modern UX Hotfix
+
+- Fixed object dragging on the floor-plan canvas by preserving pointer capture during movement instead of re-rendering the object mid-drag.
+- Added drag-from-library to canvas placement for built-in catalog objects and Master Inventory objects.
+- Click-to-place remains available as a fallback.
+- Rebuilt the floor-plan search field with a properly aligned SVG search icon and clear button.
+- Modernized event/layout/starter selectors and floor-plan toolbar styling.
+- Removed duplicated quick-item strip from Full Tools; it appears only in simplified mode.
+- Reworked Easy Mode into a real Simplify / Full Tools state with visible UI changes.
+- Simplified mode hides advanced versioning, measurements, specialty categories, and room settings while showing a four-step guide and common items.
+- Full Tools exposes the complete professional catalog and advanced controls.
