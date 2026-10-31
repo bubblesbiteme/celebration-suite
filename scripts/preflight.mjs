@@ -248,7 +248,7 @@ for(const f of ['docs/V0.16-CHILD-SIMPLE-UX-FLOORPLAN.md'])check(`v0.16 exists $
 check('dashboard has task-first easy actions',read('app.html').includes('What are you working on today?')&&read('app.html').includes('Make a floor plan'));
 check('floor plan is primary dashboard shortcut',read('app.html').includes('🪑 Floor Plan Maker'));
 check('event workspace promotes floor plan',read('event.html').includes('id="floorQuick"')&&read('event.html').includes('/floorplan.html?event_id='));
-check('floor plan has child-simple start controls',read('floorplan.html').includes('Start here')&&read('floorplan.html').includes('Round Table')&&read('floorplan.html').includes('Upload Venue Plan'));
+check('floor plan has child-simple start controls',read('floorplan.html').includes('Guest table')&&read('floorplan.html').includes('Banquet table')&&read('floorplan.html').includes('Venue plan'));
 check('global easy mode launcher exists',read('assets/app.js').includes('What do you want to do?')&&read('assets/app.js').includes('cs-easy-mode'));
 check('easy mode defaults on',read('assets/app.js').includes("saved!=='off'"));
 
@@ -318,4 +318,11 @@ check('workspace timeline has calendar mode',read('event.html').includes("timeli
 check('PWA shell exists',read('assets/app.js').includes("serviceWorker.register('/sw.js')")&&read('manifest.webmanifest').includes('standalone'));
 check('export includes vendor operations',read('netlify/functions/account-export.mjs').includes('tenant_vendor_operations')&&read('netlify/functions/account-export.mjs').includes('tenant_event_emergency_contacts'));
 
-console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);
+const fp22=read('floorplan.html');
+check('v0.22 floorplan removes duplicate start-here sections',(fp22.match(/Start here/g)||[]).length<=1);
+check('v0.22 floorplan has pro catalog',fp22.includes('Decor & Floral')&&fp22.includes('Outdoor & Specialty')&&fp22.includes('Guest Experience'));
+check('v0.22 floorplan has starter layouts',fp22.includes('Wedding reception')&&fp22.includes('Gala / fundraiser')&&fp22.includes('applyStarter'));
+check('v0.22 floorplan has favorites recent and inventory',fp22.includes('Favorites')&&fp22.includes('Recently used')&&fp22.includes('Master Inventory'));
+check('v0.22 floorplan has snap grid controls',fp22.includes('snapToggle')&&fp22.includes('gridToggle'));
+console.log(`\n${pass} checks passed, ${fail} failed`);
+if(fail)process.exit(1);

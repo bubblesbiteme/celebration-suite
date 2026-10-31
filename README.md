@@ -1,3 +1,7 @@
+## v0.22.0 — Floor Plan Pro Library & UX
+
+Professional floor-plan overhaul with a 100+ object event library, starter layouts, favorites/recent items, integrated master inventory, snap/grid controls, exact dimensions, seating, assignments, notes, rotation/layers and simplified non-repetitive onboarding.
+
 ## v0.7 OAuth redirect hotfix
 Google OAuth is now pinned to the incoming Celebration Suite host for start/callback routing, preventing cross-site redirects to the Sage root site.
 
