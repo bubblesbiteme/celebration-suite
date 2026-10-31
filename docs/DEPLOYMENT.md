@@ -90,3 +90,16 @@ If migrations 0001-0006 are already installed, run only:
 Then deploy the complete package. Do not deploy only `portal.html` or `event.html`; the client draft endpoint in `netlify/functions/client-draft.mjs` is required.
 
 After deployment, hard-refresh any previously open Celebration Suite tabs. Validate the 45-second Client Portal/Event Day refresh and the 2.5-second autosave behavior described in `docs/RELIABILITY-HOTFIX-REFERENCE.md`.
+
+
+## v0.7 launch-readiness migration
+If migrations 0001-0007 are already installed, run only:
+
+`supabase/migrations/0008_LAUNCH_EMAIL_PASSWORD_RESETS.sql`
+
+Add platform transactional email variables:
+- `RESEND_API_KEY`
+- `PLATFORM_FROM_EMAIL=support@sageandcelebration.com`
+- `PLATFORM_FROM_NAME=Celebration Suite`
+
+After deployment, sign in as Platform Admin and open `/launch-health.html`. All checks should be READY before public sales. Password-reset links expire after 24 hours.

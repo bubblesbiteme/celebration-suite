@@ -1,0 +1,2 @@
+import {json} from './_shared.mjs';import {tenantContext} from './_tenant.mjs';
+export default async request=>{try{await tenantContext(request);const key=!!process.env.STRIPE_SECRET_KEY;const plans={single_event:!!process.env.STRIPE_PRICE_SINGLE_EVENT,monthly_unlimited:!!process.env.STRIPE_PRICE_MONTHLY,annual_unlimited:!!process.env.STRIPE_PRICE_ANNUAL};return json({configured:key&&Object.values(plans).every(Boolean),stripe_key_configured:key,plans});}catch(e){return json({error:e.message},e.status||401)}};

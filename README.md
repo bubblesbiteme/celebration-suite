@@ -1,3 +1,6 @@
+## v0.7 OAuth redirect hotfix
+Google OAuth is now pinned to the incoming Celebration Suite host for start/callback routing, preventing cross-site redirects to the Sage root site.
+
 # Celebration Suite v0.6
 
 Standalone multi-tenant white-label event planning platform operated by Sage & Celebration LLC. The deployment remains separate from the Sage & Celebration planning portal even though it uses `planner.sageandcelebration.com`.
@@ -24,3 +27,11 @@ See `docs/DEPLOYMENT.md` and `docs/V0.6-MONTHLY-BILLING-UNIFIED-AUTH.md`.
 
 ## v0.6.1 reliability baseline
 Celebration Suite now includes local-first + secure autosave, 45-second live refresh standards for Client Portal/Event Day, dirty-edit refresh protection, and case-insensitive identity hardening. See `docs/RELIABILITY-HOTFIX-REFERENCE.md` and run migration `0007_RELIABILITY_DRAFTS_AND_SYNC.sql` before deploying v0.6.1.
+
+
+## v0.7 Launch readiness
+- Elegant Celebration Suite logo system applied to shared platform branding.
+- Stripe checkout readiness diagnostics.
+- Resend-powered platform transactional email.
+- 24-hour password reset for planner/team, platform admin and client accounts.
+- Platform Launch Health dashboard.

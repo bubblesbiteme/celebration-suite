@@ -109,4 +109,37 @@ check('platform password login case insensitive',read('netlify/functions/platfor
 check('Google tenant identity lookup case insensitive',read('netlify/functions/_oauth.mjs').includes('tenant_users?email=ilike.'));
 check('reliability doc records 45 second and 2.5 second standards',read('docs/RELIABILITY-HOTFIX-REFERENCE.md').includes('45 seconds')&&read('docs/RELIABILITY-HOTFIX-REFERENCE.md').includes('2.5 seconds'));
 
+
+// v0.6.2 OAuth redirect host hardening
+for(const f of ['docs/V0.6.2-OAUTH-REDIRECT-HOTFIX.md'])check(`v0.6.2 exists ${f}`,exists(f));
+const oauth62=read('netlify/functions/_oauth.mjs'), callback62=read('netlify/functions/google-auth-callback.mjs');
+check('Google OAuth uses incoming request origin',oauth62.includes('oauthOrigin=request=>new URL(request.url).origin'));
+check('Google OAuth no longer imports shared SITE_URL origin',!oauth62.includes("origin,supabase")&&!oauth62.includes('${origin(request)}'));
+check('Google callback post-login redirect uses incoming request origin',callback62.includes('const o=new URL(request.url).origin'));
+check('OAuth hotfix preserves host-only sessions',!read('netlify/functions/_session.mjs').includes('Domain='));
+
+
+// v0.7 launch readiness, branding and password reset
+for(const f of ['supabase/migrations/0008_LAUNCH_EMAIL_PASSWORD_RESETS.sql','forgot-password.html','reset-password.html','launch-health.html','netlify/functions/_platform_mailer.mjs','netlify/functions/password-reset-request.mjs','netlify/functions/password-reset-complete.mjs','netlify/functions/checkout-readiness.mjs','netlify/functions/launch-health.mjs','docs/V0.7-LAUNCH-READINESS.md'])check(`v0.7 exists ${f}`,exists(f));
+const m8=read('supabase/migrations/0008_LAUNCH_EMAIL_PASSWORD_RESETS.sql');
+check('password reset token table exists',m8.includes('public.password_reset_tokens'));
+check('password reset token RLS enabled',m8.includes('enable row level security'));
+check('password reset links expire in 24 hours',read('netlify/functions/password-reset-request.mjs').includes('24*60*60*1000'));
+check('password reset token stored hashed',read('netlify/functions/password-reset-request.mjs').includes("createHash('sha256')")&&read('netlify/functions/password-reset-request.mjs').includes('token_hash'));
+check('password reset is one-time',read('netlify/functions/password-reset-complete.mjs').includes('used_at=is.null')&&read('netlify/functions/password-reset-complete.mjs').includes('used_at:new Date().toISOString()'));
+check('reset supports tenant platform client',read('netlify/functions/password-reset-request.mjs').includes("'tenant','platform','client'"));
+check('planner login links password reset',read('login.html').includes('/forgot-password.html?type=tenant'));
+check('platform login links password reset',read('platform-login.html').includes('/forgot-password.html?type=platform'));
+check('client login links password reset',read('client-login.html').includes('/forgot-password.html?type=client'));
+check('platform transactional email env documented',read('.env.example').includes('RESEND_API_KEY')&&read('.env.example').includes('PLATFORM_FROM_EMAIL'));
+check('registration sends welcome email best effort',read('netlify/functions/auth-register.mjs').includes('Welcome to Celebration Suite')&&read('netlify/functions/auth-register.mjs').includes('.catch(()=>{})'));
+check('checkout readiness endpoint exists',read('netlify/functions/checkout-readiness.mjs').includes('STRIPE_PRICE_SINGLE_EVENT')&&read('netlify/functions/checkout-readiness.mjs').includes('STRIPE_PRICE_MONTHLY')&&read('netlify/functions/checkout-readiness.mjs').includes('STRIPE_PRICE_ANNUAL'));
+check('checkout error names missing config',read('netlify/functions/checkout-create.mjs').includes('Online checkout setup is incomplete'));
+check('activation page checks checkout readiness',read('activate.html').includes('checkout-readiness')&&read('activate.html').includes('Secure online checkout is ready.'));
+check('launch health is platform-session protected',read('netlify/functions/launch-health.mjs').includes('readPlatformSession'));
+check('launch health does not return secret values',!read('netlify/functions/launch-health.mjs').includes('process.env[k]||')&&!read('launch-health.html').includes('STRIPE_SECRET_KEY='));
+check('platform admin links launch health',read('platform-admin.html').includes('/launch-health.html'));
+check('new elegant logo mark contains sparkle and botanical accent',read('assets/celebration-suite-mark.svg').includes('#D9BE8C')&&read('assets/celebration-suite-mark.svg').includes('#A9B89A'));
+check('full logo includes Sage and Celebration endorsement',read('assets/celebration-suite-logo.svg').includes('BY SAGE &amp; CELEBRATION'));
+
 console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);
