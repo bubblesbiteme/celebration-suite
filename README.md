@@ -1,3 +1,13 @@
+
+## v0.22.1 — Floor Plan Library Rendering Hotfix
+
+- The built-in professional floor-plan catalog now renders immediately, before event/API data finishes loading.
+- Restores 134 built-in event objects across tables, seating, ceremony, decor/floral, production, food & beverage, guest experience, logistics, custom, and outdoor/specialty categories.
+- The All view is grouped by category so the full catalog is visibly thorough instead of presented as one undifferentiated block.
+- Favorites and Recent local-storage data are now parsed safely; corrupt browser storage can no longer blank the catalog.
+- Master Inventory loads independently after event data and can no longer suppress the built-in library when inventory is empty.
+- If event data fails temporarily, the built-in library remains browsable and the page shows a recoverable notice instead of an empty catalog.
+
 ## v0.22.0 — Floor Plan Pro Library & UX
 
 Professional floor-plan overhaul with a 100+ object event library, starter layouts, favorites/recent items, integrated master inventory, snap/grid controls, exact dimensions, seating, assignments, notes, rotation/layers and simplified non-repetitive onboarding.

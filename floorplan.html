@@ -79,8 +79,9 @@ main{max-width:1580px;margin:0 auto;padding:22px 24px 100px}
 const requestedEvent=new URLSearchParams(location.search).get('event_id');
 let tenant,events=[],plans=[],inventory=[],versionRows=[],guests=[],vendors=[],plan=null,objects=[],selected=null,drag=null,zoom=1,measurements=[],activeCategory='All';
 const $=id=>document.getElementById(id);
-const favorites=new Set(JSON.parse(localStorage.getItem('cs_floor_favorites')||'[]'));
-let recent=JSON.parse(localStorage.getItem('cs_floor_recent')||'[]');
+function safeStoredArray(key){try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
+const favorites=new Set(safeStoredArray('cs_floor_favorites'));
+let recent=safeStoredArray('cs_floor_recent');
 const catalog=[
 ['round10','Round table + 10 chairs','Tables & Seating','round',60,60,5,5,10,'◯'],['round8','Round table + 8 chairs','Tables & Seating','round',58,58,5,5,8,'◯'],['round6','Round table + 6 chairs','Tables & Seating','round',54,54,4.5,4.5,6,'◯'],['round4','Round table + 4 chairs','Tables & Seating','round',48,48,4,4,4,'◯'],['rect10','Rectangle + 10 chairs','Tables & Seating','rect',96,42,8,3.5,10,'▭'],['rect8','Rectangle + 8 chairs','Tables & Seating','rect',84,38,7,3.2,8,'▭'],['rect6','Rectangle + 6 chairs','Tables & Seating','rect',72,34,6,2.8,6,'▭'],['rect4','Rectangle + 4 chairs','Tables & Seating','rect',60,32,5,2.6,4,'▭'],['farm8','Farm table + 8 chairs','Tables & Seating','long',96,40,8,3.3,8,'▰'],['kings12','Kings table + 12 chairs','Tables & Seating','long',144,48,12,4,12,'▰'],['head10','Head table + 10 chairs','Tables & Seating','long',120,40,10,3.3,10,'▰'],['picnic8','Picnic table + 8 seats','Tables & Seating','long',84,42,7,3.5,8,'▰'],['table','Table — no chairs','Tables & Seating','rect',72,30,6,2.5,0,'▭'],['longtable','Long table — no chairs','Tables & Seating','long',96,30,8,2.5,0,'▰'],['halfround','Half-round table','Tables & Seating','rect',60,36,5,3,0,'◒'],['serpentine','Serpentine table','Tables & Seating','long',90,36,7.5,3,0,'〰'],['cocktail','Cocktail / highboy','Tables & Seating','small',30,30,2.5,2.5,4,'◉'],['chair','Single chair','Tables & Seating','small',20,20,1.7,1.7,1,'♟'],['chairpair','Pair of chairs','Tables & Seating','small',40,20,3.4,1.7,2,'♟'],['chairrow','Chair row — 6','Tables & Seating','chairrow',120,22,10,1.8,6,'▥'],['chairrow8','Chair row — 8','Tables & Seating','chairrow',160,22,13.3,1.8,8,'▥'],['bench4','Bench — 4 seats','Tables & Seating','long',72,22,6,1.8,4,'▬'],['sofa3','Lounge sofa — 3 seats','Tables & Seating','long',72,34,6,2.8,3,'▰'],['loungechair','Lounge chair','Tables & Seating','small',34,34,2.8,2.8,1,'▣'],
 ['sweetheart','Sweetheart table','Ceremony & Wedding','rect',72,30,6,2.5,2,'♡'],['arch','Classic ceremony arch','Ceremony & Wedding','arch',60,24,5,2,0,'⌒'],['roundarch','Circular arch','Ceremony & Wedding','round',72,24,6,2,0,'◯'],['squarearch','Square arch','Ceremony & Wedding','arch',72,24,6,2,0,'⌑'],['trianglearch','Triangle arch','Ceremony & Wedding','arch',72,24,6,2,0,'△'],['chuppah','Chuppah / canopy','Ceremony & Wedding','arch',96,72,8,6,0,'⌂'],['altar','Altar / ceremony table','Ceremony & Wedding','rect',72,30,6,2.5,0,'▭'],['aisle','Ceremony aisle','Ceremony & Wedding','aisle',180,60,15,5,0,'↕'],['aislerunner','Aisle runner','Ceremony & Wedding','aisle',180,36,15,3,0,'▥'],['podium','Podium / lectern','Ceremony & Wedding','small',30,24,2.5,2,0,'▯'],['unity','Unity ceremony table','Ceremony & Wedding','small',36,28,3,2.3,0,'♡'],['ceremonysign','Ceremony welcome sign','Ceremony & Wedding','small',36,24,3,2,0,'▧'],
@@ -103,29 +104,36 @@ function renderTabs(){ $('categoryTabs').innerHTML=categories.map(c=>`<button cl
 function itemCard(x){const[key,name,cat,kind,w,h,wft,hft,seats,icon]=x;return `<div class="object-card" role="button" tabindex="0" onclick="quickAdd('${key}')" onkeydown="if(event.key==='Enter'||event.key===' ')quickAdd('${key}')"><button class="fav-btn ${favorites.has(key)?'on':''}" title="Favorite" onclick="toggleFav(event,'${key}')">★</button><div class="obj-icon">${icon}</div><strong>${WLP.esc(name)}</strong><small>${seats?seats+' seats · ':''}${wft}×${hft} ft</small></div>`}
 function inventoryCard(x){const img=x.image_url?`<img src="${WLP.esc(x.image_url)}" alt="">`:`<div class="obj-icon">▣</div>`;return `<div class="object-card inventory-card" role="button" tabindex="0" onclick="addInventory('${x.id}')" onkeydown="if(event.key==='Enter'||event.key===' ')addInventory('${x.id}')">${img}<span><strong>${WLP.esc(x.name)}</strong><small>${WLP.esc(x.category||'Inventory')} · qty ${Number(x.quantity||0)}</small></span></div>`}
 function renderPalette(){
- const q=$('paletteSearch').value.trim().toLowerCase();
- const favOnly=$('favoritesOnly').checked,invOnly=$('inventoryOnly').checked;
+ const q=($('paletteSearch')?.value||'').trim().toLowerCase();
+ const favOnly=!!$('favoritesOnly')?.checked,invOnly=!!$('inventoryOnly')?.checked;
  let html='';
+ const matches=x=>(!q||(x[1]+' '+x[2]).toLowerCase().includes(q));
  if(!invOnly&&activeCategory!=='Master Inventory'){
    let rows=catalog.filter(x=>{
      if(favOnly&&!favorites.has(x[0]))return false;
      if(activeCategory==='Favorites'&&!favorites.has(x[0]))return false;
      if(activeCategory==='Recent'&&!recent.includes(x[0]))return false;
      if(!['All','Favorites','Recent'].includes(activeCategory)&&x[2]!==activeCategory)return false;
-     return !q||(x[1]+' '+x[2]).toLowerCase().includes(q);
+     return matches(x);
    });
    if(activeCategory==='Recent')rows.sort((a,b)=>recent.indexOf(a[0])-recent.indexOf(b[0]));
-   if(rows.length)html+=`<div class="library-section"><h3><span>${activeCategory==='All'?'Event object library':activeCategory}</span><span>${rows.length}</span></h3><div class="object-grid">${rows.map(itemCard).join('')}</div></div>`;
-   if(activeCategory==='All'&&!q&&!favOnly){
-     const rec=catalog.filter(x=>recent.includes(x[0])).sort((a,b)=>recent.indexOf(a[0])-recent.indexOf(b[0])).slice(0,6);
-     if(rec.length)html=`<div class="library-section"><h3><span>Recently used</span><span>${rec.length}</span></h3><div class="object-grid">${rec.map(itemCard).join('')}</div></div>`+html;
+   if(activeCategory==='All'){
+     const grouped=[...new Set(rows.map(x=>x[2]))];
+     if(!q&&!favOnly){
+       const rec=catalog.filter(x=>recent.includes(x[0])).sort((a,b)=>recent.indexOf(a[0])-recent.indexOf(b[0])).slice(0,6);
+       if(rec.length)html+=`<div class="library-section"><h3><span>Recently used</span><span>${rec.length}</span></h3><div class="object-grid">${rec.map(itemCard).join('')}</div></div>`;
+     }
+     html+=grouped.map(cat=>{const group=rows.filter(x=>x[2]===cat);return `<div class="library-section"><h3><span>${WLP.esc(cat)}</span><span>${group.length}</span></h3><div class="object-grid">${group.map(itemCard).join('')}</div></div>`}).join('');
+   }else if(rows.length){
+     html+=`<div class="library-section"><h3><span>${WLP.esc(activeCategory)}</span><span>${rows.length}</span></h3><div class="object-grid">${rows.map(itemCard).join('')}</div></div>`;
    }
  }
  if(activeCategory==='Master Inventory'||activeCategory==='All'||invOnly){
-   const inv=inventory.filter(x=>!q||(x.name+' '+(x.category||'')+' '+(x.storage_location||'')).toLowerCase().includes(q)).slice(0,500);
+   const inv=(inventory||[]).filter(x=>!q||((x.name||'')+' '+(x.category||'')+' '+(x.storage_location||'')).toLowerCase().includes(q)).slice(0,500);
    if(inv.length)html+=`<div class="library-section"><h3><span>Master Inventory</span><span>${inv.length}</span></h3><div class="object-grid">${inv.map(inventoryCard).join('')}</div></div>`;
+   else if(activeCategory==='Master Inventory'||invOnly)html+=`<div class="no-results"><strong>No Master Inventory items yet.</strong><br><small>Your built-in professional catalog is still available under All or the category tabs.</small></div>`;
  }
- $('palette').innerHTML=html||'<div class="no-results">No matching floor-plan items. Try a different search or category.</div>';
+ $('palette').innerHTML=html||'<div class="no-results"><strong>No matching floor-plan items.</strong><br><small>Clear the search or choose All to see the full professional catalog.</small></div>';
 }
 function smartPosition(w,h){const n=objects.length,col=n%5,row=Math.floor(n/5)%5;return{x:40+col*95,y:40+row*80}}
 
@@ -168,7 +176,8 @@ function renderVersions(){$('versions').innerHTML=versionRows.length?versionRows
 $('planFilter').onchange=()=>{plan=plans.find(x=>x.id===$('planFilter').value)||null;loadPlan()};$('eventFilter').onchange=()=>refresh(true);$('paletteSearch').oninput=renderPalette;$('favoritesOnly').onchange=renderPalette;$('inventoryOnly').onchange=renderPalette;$('bgOpacity').oninput=render;$('bgUrl').onchange=render;$('gridToggle').onchange=render;
 $('bgFile').onchange=async()=>{const f=$('bgFile').files[0];if(!f)return;const r=await fetch('/.netlify/functions/inspiration-upload?event_id='+encodeURIComponent($('eventFilter').value)+'&name='+encodeURIComponent(f.name),{method:'POST',headers:{'content-type':f.type},body:f});const j=await r.json();if(!r.ok)return alert(j.error||'Upload failed');$('bgUrl').value=j.file_url||'';render()};
 window.addEventListener('keydown',e=>{if(!selected||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;const o=objects.find(x=>x.id===selected);if(!o)return;const step=e.shiftKey?10:1;if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();removeSelected();return}if(e.key==='ArrowLeft'){o.x=Math.max(0,o.x-step)}else if(e.key==='ArrowRight'){o.x+=step}else if(e.key==='ArrowUp'){o.y=Math.max(0,o.y-step)}else if(e.key==='ArrowDown'){o.y+=step}else return;e.preventDefault();render()});
-async function load(){const b=await WLP.api('bootstrap');tenant=b.tenant;brand();events=(await WLP.api('events')).events||[];$('eventFilter').innerHTML='<option value="">Choose event</option>'+events.map(e=>`<option value="${e.id}">${WLP.esc(e.title)}</option>`).join('');if(requestedEvent&&events.some(e=>e.id===requestedEvent))$('eventFilter').value=requestedEvent;else if(events[0])$('eventFilter').value=events[0].id;await refresh(true)}load().catch(()=>location='/login.html');
+renderTabs();renderPalette();
+async function load(){try{const b=await WLP.api('bootstrap');tenant=b.tenant;brand();events=(await WLP.api('events')).events||[];$('eventFilter').innerHTML='<option value="">Choose event</option>'+events.map(e=>`<option value="${e.id}">${WLP.esc(e.title)}</option>`).join('');if(requestedEvent&&events.some(e=>e.id===requestedEvent))$('eventFilter').value=requestedEvent;else if(events[0])$('eventFilter').value=events[0].id;if($('eventFilter').value)await refresh(true);else{renderTabs();renderPalette()}}catch(err){console.error('Floor plan data load failed',err);renderTabs();renderPalette();const msg=document.createElement('div');msg.className='notice';msg.style.margin='0 0 12px';msg.innerHTML='<strong>The floor-plan library is ready.</strong><br><small>Event data could not be loaded yet. Refresh or return to the dashboard, but you can still browse the professional catalog.</small>';document.querySelector('.fp-workspace')?.before(msg)}}load();
 </script>
 </body>
 </html>
