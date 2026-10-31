@@ -76,3 +76,7 @@ Adds persistent inventory QR labels, native-camera inventory lookup, bulk CSV in
 ## v0.19.0 — Full UI/UX Overhaul
 
 A product-wide usability and visual redesign. Adds persistent planner navigation, task-first Start Here panels, compact responsive working widths, improved cards/forms/tables/empty states, and page-specific guidance for Inventory, Event Inventory, Financials, Guests, Floor Plan, and Design Studio. No database migration is required. See `docs/V0.19-FULL-UI-UX-OVERHAUL.md`.
+
+## v0.20.0 — Original Product Parity Bridge
+
+This release uses the uploaded Sage & Celebration Phase 12 build as the source-of-truth reference and ports dense planner/admin behavior into the multi-tenant Celebration Suite product. It adds staff scheduling with labor-cost sync, inventory reservation calendar and operational movement history, questionnaire analysis → planning checklist creation, multi-layout floor-plan parity, contract/decor-budget accounting, three Event Book packet modes, safe restore/recovery tooling, signed QuickBooks inbound change review, support follow-up notifications, and original-route compatibility aliases. Run `supabase/migrations/0019_ORIGINAL_PRODUCT_PARITY_BRIDGE.sql` after migration 0018. See `docs/V0.20-ORIGINAL-PRODUCT-PARITY-BRIDGE.md`.

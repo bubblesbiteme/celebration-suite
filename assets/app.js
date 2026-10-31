@@ -48,10 +48,12 @@ window.WLP={$, $$, api, esc, fmtDate};
     ['💬','Messages','Email and text conversations','/communications.html'],
     ['💵','Money','Invoices, payments and event costs','/financials.html'],
     ['📦','Inventory','Find and reserve your items','/inventory.html'],
+    ['🗓','Inventory Calendar','See where items are reserved by event date','/inventory-reservation-calendar.html'],
     ['📷','Scan inventory QR','Open an item by scanning its label','/inventory-scan.html'],
     ['⬆️','Bulk inventory upload','Import a CSV and match item photos','/inventory.html#bulk'],
     ['✅','Questionnaires','Ask clients what you need','/questionnaires.html'],
     ['🤝','Vendors','Contacts, quotes and bookings','/vendors.html'],
+    ['👥','Staff Scheduling','Assign shifts, availability and labor cost','/staff-operations.html'],
     ['🗓️','Appointments','Client meetings and scheduling','/appointments.html'],
     ['📄','Documents','Contracts and shared files','/documents.html'],
     ['⚙️','Settings','Branding, integrations and account','/settings.html']
@@ -64,7 +66,10 @@ window.WLP={$, $$, api, esc, fmtDate};
     '/registration.html':['Tickets & Registration','Turn sales on, add ticket types, then share one public link. Every attendee gets a QR ticket.'],
     '/guest-checkin.html':['QR Check-In','Start the camera and scan either RSVP guest QR codes or ticket QR codes.'],
     '/financials.html':['Money','Create invoices, record payments and keep event costs together.'],
-    '/communications.html':['Messages','Email or text clients here. Replies can come back into the same conversation center.']
+    '/communications.html':['Messages','Email or text clients here. Replies can come back into the same conversation center.'],
+    '/staff-operations.html':['Staff Scheduling','Assign people to events, set call times, catch conflicts and keep labor costs synced.'],
+    '/inventory-reservation-calendar.html':['Inventory Calendar','See every reservation by event date before you promise an item twice.'],
+    '/questionnaires.html':['Questionnaires','Collect answers, analyze what is missing, and turn responses into planning tasks.']
   };
   function openDrawer(){const d=document.getElementById('easyDrawer');if(d)d.hidden=false}
   function closeDrawer(){const d=document.getElementById('easyDrawer');if(d)d.hidden=true}

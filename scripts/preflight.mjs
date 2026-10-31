@@ -281,4 +281,28 @@ check('design reservation stores source design ids',read('netlify/functions/insp
 check('event inventory separates manual and approved design',read('event-inventory.html').includes('Approved Design')&&read('event-inventory.html').includes('manual_quantity'));
 check('account export includes inventory media and import batches',read('netlify/functions/account-export.mjs').includes('tenant_inventory_images')&&read('netlify/functions/account-export.mjs').includes('tenant_inventory_import_batches'));
 
+
+
+// v0.20 original-product parity bridge
+for(const f of ['supabase/migrations/0019_ORIGINAL_PRODUCT_PARITY_BRIDGE.sql','staff-operations.html','inventory-reservation-calendar.html','netlify/functions/staff-operations.mjs','netlify/functions/inventory-operations.mjs','netlify/functions/questionnaire-tools.mjs','netlify/functions/quickbooks-webhook.mjs','netlify/functions/quickbooks-changes.mjs','netlify/functions/account-restore.mjs','docs/V0.20-ORIGINAL-PRODUCT-PARITY-BRIDGE.md'])check(`v0.20 exists ${f}`,exists(f));
+const m19=read('supabase/migrations/0019_ORIGINAL_PRODUCT_PARITY_BRIDGE.sql');
+for(const c of ['service_fee','client_decor_budget','tenant_staff_availability','tenant_event_expenses','tenant_inventory_movements','tenant_quickbooks_changes','tenant_restore_runs','shared_editable'])check(`v0.20 capability ${c}`,m19.includes(c));
+check('staff operations synchronizes labor expenses',read('netlify/functions/staff-operations.mjs').includes('tenant_event_expenses')&&read('netlify/functions/staff-operations.mjs').includes('planned_hours'));
+check('staff operations checks conflicts',read('netlify/functions/staff-operations.mjs').includes('conflict')&&read('staff-operations.html').includes('override'));
+check('inventory operations preserve movement history',read('netlify/functions/inventory-operations.mjs').includes('tenant_inventory_movements')&&read('event-inventory.html').includes('Return'));
+check('inventory reservation calendar exists',read('inventory-reservation-calendar.html').includes('Reservation Calendar'));
+check('questionnaire analysis creates planning checklist',read('netlify/functions/questionnaire-tools.mjs').includes('create-plan')&&read('questionnaires.html').includes('Create Plan'));
+check('floor plans support multiple layout operations',read('netlify/functions/floorplans.mjs').includes("action==='duplicate'")&&read('floorplan.html').includes('Duplicate')&&read('floorplan.html').includes('Client can edit'));
+check('client can update shared floorplan objects',read('netlify/functions/client-portal.mjs').includes("d.action==='floorplan-object-update'")&&read('portal.html').includes('Save layout changes'));
+check('event finances separate service fee and decor allowance',read('financials.html').includes('Service Fee')&&read('financials.html').includes('Decor Allowance')&&read('netlify/functions/financials.mjs').includes('estimated_service_profit'));
+check('event book has three packet modes',read('event-book.html').includes('Staff Production Book')&&read('event-book.html').includes('Vendor Packet')&&read('event-book.html').includes('Client Final Details'));
+check('safe restore includes dry run and confirmation phrase',read('netlify/functions/account-restore.mjs').includes('RESTORE CELEBRATION DATA')&&read('backup.html').includes('Dry-run'));
+check('QuickBooks webhook is signed and review first',read('netlify/functions/quickbooks-webhook.mjs').includes('QUICKBOOKS_WEBHOOK_VERIFIER_TOKEN')&&read('netlify/functions/quickbooks-changes.mjs').includes("status:'reviewed'"));
+check('QuickBooks customer apply uses full_name',read('netlify/functions/quickbooks-changes.mjs').includes('full_name:snap.DisplayName'));
+check('support UI can update status and resolution',read('support.html').includes('Save update')&&read('support.html').includes('Waiting on user'));
+check('support backend sends followup notifications',read('netlify/functions/support.mjs').includes('SUPPORT_NOTIFICATION_EMAIL')&&read('netlify/functions/support.mjs').includes('resolved'));
+check('original event workspace route is compatible',read('event-workspace.html').includes('event.html'));
+check('original financial admin route is compatible',read('financials-admin.html').includes('financials.html'));
+check('export includes parity operational tables',read('netlify/functions/account-export.mjs').includes('tenant_inventory_movements')&&read('netlify/functions/account-export.mjs').includes('tenant_staff_availability')&&read('netlify/functions/account-export.mjs').includes('tenant_event_expenses'));
+
 console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);
