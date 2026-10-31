@@ -1,10 +1,11 @@
 {
   "name": "celebration-suite",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "private": true,
   "type": "module",
   "dependencies": {
-    "nodemailer": "^6.9.16"
+    "nodemailer": "^6.9.16",
+    "svix": "^1.40.0"
   },
   "scripts": {
     "preflight": "node scripts/preflight.mjs"

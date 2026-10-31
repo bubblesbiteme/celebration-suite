@@ -11,6 +11,32 @@ export async function runTenantAutomations(tenant,rules){const owner=await owner
    const days=Math.max(1,Number(cfg.days)||3),cutoff=new Date(Date.now()-days*86400000).toISOString();const leads=await supabase(`tenant_leads?tenant_id=eq.${encodeURIComponent(tenant.id)}&stage=in.(new_inquiry,contacted,consultation,proposal_sent,negotiating)&updated_at=lt.${encodeURIComponent(cutoff)}&select=*&limit=200`);
    for(const lead of leads||[]){const key=`stale-lead:${lead.id}:${todayKey}`;await send(tenant,rule,owner,`Follow up: ${lead.full_name}`,`${lead.full_name} has been inactive in your lead pipeline for at least ${days} day${days===1?'':'s'}.\n\nStage: ${lead.stage}\nEvent: ${lead.event_type||'Not specified'}\nNext follow-up: ${lead.next_follow_up||'Not scheduled'}`, 'lead',lead.id,key);actions++}
   }
+  if(rule.rule_type==='agreement_signed'){
+   const contracts=await supabase(`tenant_contracts?tenant_id=eq.${encodeURIComponent(tenant.id)}&status=eq.signed&signed_at=not.is.null&select=*&limit=200`);for(const c of contracts||[]){const key=`agreement-signed:${c.id}`;await send(tenant,rule,owner,`Agreement signed: ${c.title}`,`${c.client_name||'A client'} signed ${c.title}.
+
+Open the event workspace to begin kickoff tasks.`, 'contract',c.id,key);actions++}
+  }
+  if(rule.rule_type==='invoice_due'){
+   const days=Math.max(0,Number(cfg.days_before)||7),future=new Date(Date.now()+days*86400000).toISOString().slice(0,10);const invoices=await supabase(`tenant_invoices?tenant_id=eq.${encodeURIComponent(tenant.id)}&status=in.(sent,partial)&due_date=gte.${todayKey}&due_date=lte.${future}&select=*&limit=300`);for(const inv of invoices||[]){const key=`invoice-due:${inv.id}:${inv.due_date}`;await send(tenant,rule,inv.client_email,`Upcoming payment due: ${inv.invoice_number}`,`Hello ${inv.client_name||'there'},
+
+Invoice ${inv.invoice_number} for ${money(inv.amount)} is due ${inv.due_date}.
+
+Thank you,
+${tenant.business_name}`,'invoice',inv.id,key);actions++}
+  }
+  if(rule.rule_type==='questionnaire_followup'){
+   const days=Math.max(1,Number(cfg.days)||3),cut=new Date(Date.now()-days*86400000).toISOString();const qs=await supabase(`tenant_questionnaires?tenant_id=eq.${encodeURIComponent(tenant.id)}&status=in.(sent,in_progress)&sent_at=lt.${encodeURIComponent(cut)}&select=*&limit=300`);for(const q of qs||[]){const ev=(await supabase(`tenant_events?id=eq.${encodeURIComponent(q.event_id)}&tenant_id=eq.${encodeURIComponent(tenant.id)}&select=client_name,client_email,title&limit=1`))?.[0];const key=`questionnaire-followup:${q.id}:${todayKey}`;await send(tenant,rule,ev?.client_email,`Questionnaire reminder: ${q.title}`,`Hello ${ev?.client_name||'there'},
+
+Your ${q.title} questionnaire for ${ev?.title||'your event'} is still awaiting completion. Please open your client portal when you have a moment.`, 'questionnaire',q.id,key);actions++}
+  }
+  if(rule.rule_type==='overdue_task'){
+   const events=await supabase(`tenant_events?tenant_id=eq.${encodeURIComponent(tenant.id)}&status=eq.active&select=*&limit=500`);for(const ev of events||[]){for(const task of ev.workspace_data?.checklist||[]){if(task.done||task.status==='done'||!task.due_date||task.due_date>=todayKey)continue;const key=`overdue-task:${ev.id}:${task.id||task.title}:${todayKey}`;await send(tenant,rule,owner,`Overdue task: ${task.title||'Event task'}`,`${ev.title}
+
+${task.title||'Event task'} was due ${task.due_date}.`, 'event',ev.id,key);actions++}}
+  }
+  if(rule.rule_type==='vendor_document_due'){
+   const days=Math.max(1,Number(cfg.days_before)||30),future=new Date(Date.now()+days*86400000).toISOString().slice(0,10);const docs=await supabase(`tenant_documents?tenant_id=eq.${encodeURIComponent(tenant.id)}&vendor_id=not.is.null&expiration_date=gte.${todayKey}&expiration_date=lte.${future}&status=neq.archived&select=*&limit=300`);for(const doc of docs||[]){const key=`vendor-doc:${doc.id}:${doc.expiration_date}`;await send(tenant,rule,owner,`Vendor document expiring: ${doc.title}`,`${doc.title} expires ${doc.expiration_date}. Review the Vendor/Document Vault before the event.`, 'document',doc.id,key);actions++}
+  }
   if(rule.rule_type==='overdue_invoice'){
    const invoices=await supabase(`tenant_invoices?tenant_id=eq.${encodeURIComponent(tenant.id)}&status=in.(sent,partial,overdue)&due_date=lt.${todayKey}&select=*&limit=300`);
    for(const inv of invoices||[]){const key=`invoice-reminder:${inv.id}:${todayKey}`;await send(tenant,rule,inv.client_email,`Payment reminder: ${inv.invoice_number}`,`Hello ${inv.client_name||'there'},\n\nThis is a reminder that invoice ${inv.invoice_number} for ${money(inv.amount)} was due ${inv.due_date}. Please contact ${tenant.business_name} if you have questions or have already arranged payment.\n\nThank you,\n${tenant.business_name}`,'invoice',inv.id,key);actions++}

@@ -223,4 +223,24 @@ check('client portal includes guests and floorplan',read('portal.html').includes
 check('client portal backend returns guests and floorplans',read('netlify/functions/client-portal.mjs').includes('guests,floorplans'));
 check('account export includes floor plan versions and closeouts',read('netlify/functions/account-export.mjs').includes('tenant_floorplan_versions')&&read('netlify/functions/account-export.mjs').includes('tenant_event_closeouts'));
 
+
+
+// v0.15 deep client journey + communications
+for(const f of ['supabase/migrations/0016_DEEP_CLIENT_JOURNEY_COMMUNICATIONS.sql','scheduling.html','vendor-quotes.html','netlify/functions/scheduling.mjs','netlify/functions/vendor-quotes.mjs','netlify/functions/resend-inbound-webhook.mjs','netlify/functions/telnyx-inbound-sms.mjs','netlify/functions/_communication-match.mjs','docs/V0.15-DEEP-CLIENT-JOURNEY-COMMUNICATIONS.md'])check(`v0.15 exists ${f}`,exists(f));
+const m16=read('supabase/migrations/0016_DEEP_CLIENT_JOURNEY_COMMUNICATIONS.sql');
+for(const t of ['tenant_appointment_types','tenant_scheduling_availability','tenant_scheduling_blocks','tenant_vendor_quotes'])check(`v0.15 table ${t}`,m16.includes(t));
+for(const c of ['consultation_at','lost_reason','temperature','provider_event_id','match_status'])check(`v0.15 field ${c}`,m16.includes(c));
+check('client portal supports appointment booking',read('netlify/functions/client-portal.mjs').includes("d.action==='appointment-book'")&&read('portal.html').includes("['appointments','Appointments']"));
+check('client appointment cancellation has 24 hour rule',read('netlify/functions/client-portal.mjs').includes('24*3600000'));
+check('scheduling supports weekly availability and blackout periods',read('scheduling.html').includes('Weekly Availability')&&read('scheduling.html').includes('Blackout Periods'));
+check('vendor quotes compute full costs',read('netlify/functions/vendor-quotes.mjs').includes("'tax_amount'")&&read('netlify/functions/vendor-quotes.mjs').includes("'delivery_fee'"));
+check('vendor quote selection books vendor and commits budget',read('netlify/functions/vendor-quotes.mjs').includes("status:'booked'")&&read('netlify/functions/vendor-quotes.mjs').includes('source_quote_id'));
+check('client portal receives vendor options',read('netlify/functions/client-portal.mjs').includes('tenant_vendor_quotes')&&read('portal.html').includes("['vendors','Vendor Options']"));
+check('Resend inbound webhook validates signature',read('netlify/functions/resend-inbound-webhook.mjs').includes('new Webhook(secret).verify'));
+check('Telnyx inbound webhook verifies signature',read('netlify/functions/telnyx-inbound-sms.mjs').includes('crypto.verify'));
+check('communications supports unmatched resolution',read('communications.html').includes('Resolve Match')&&read('netlify/functions/communications.mjs').includes("request.method==='PATCH'"));
+check('communications contextual reply routing exists',read('netlify/functions/communications.mjs').includes('booking-${d.event_id}@${inboundDomain}'));
+check('CRM tracks lead temperature and lost reason',read('crm.html').includes('Temperature')&&read('crm.html').includes('Lost reason'));
+for(const r of ['agreement_signed','invoice_due','questionnaire_followup','overdue_task','vendor_document_due'])check(`v0.15 automation ${r}`,read('netlify/functions/_automation-engine.mjs').includes(`rule.rule_type==='${r}'`));
+check('new scheduling and quote data included in export',read('netlify/functions/account-export.mjs').includes('tenant_appointment_types')&&read('netlify/functions/account-export.mjs').includes('tenant_vendor_quotes'));
 console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);

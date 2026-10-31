@@ -48,5 +48,15 @@ Adds reusable questionnaires, richer client portal workflows, event inventory pa
 See `docs/V0.12-PLATFORM-CONTROL-INTELLIGENCE.md`.
 
 
-## v0.14.0 Deep Workspace & Design Studio
+## v0.15.0 Deep Workspace & Design Studio
 The parity strategy now ports deep workflows from the original Sage & Celebration portal. This release rebuilds the Inspiration Board as a shared planner/client Design Studio, deepens the Event Workspace, adds per-event client permissions, inventory-linked design reservation reconciliation, image uploads, and design content in the Final Event Book. Run migration `0014_DEEP_WORKSPACE_DESIGN_STUDIO.sql`. See `docs/V0.13-DEEP-WORKSPACE-DESIGN-STUDIO.md`.
+
+
+## v0.15 highlights
+- Client-bookable appointment types, weekly availability, buffers and blackout periods.
+- Client portal appointment booking/cancellation with conflict protection.
+- Vendor quote comparison with full fee math, recommendation, client visibility and Select & Book budget commitment.
+- Unified inbound/outbound communications with Resend inbound email and Telnyx inbound SMS webhook receivers, matching and manual resolution.
+- Deeper lead CRM: temperature, tags, consultations, lost reasons and overdue follow-up visibility.
+- Expanded milestone automations for agreements, invoice due dates, questionnaires, overdue tasks and vendor-document expiration.
+- Migration: `0016_DEEP_CLIENT_JOURNEY_COMMUNICATIONS.sql`.
