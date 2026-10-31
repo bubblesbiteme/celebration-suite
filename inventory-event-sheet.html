@@ -1,1 +1,1 @@
-<!doctype html><meta charset="utf-8"><script>location.replace("/event-inventory.html"+(location.search||""))</script>
+<!doctype html><meta charset="utf-8"><title>Celebration Suite</title><script>const p=new URLSearchParams(location.search);const e=p.get("event_id")||p.get("booking_id")||p.get("id");if(e)p.set("event_id",e);p.delete("booking_id");p.delete("id");location.replace("/event-inventory.html"+(p.toString()?"?"+p.toString():""));</script><noscript><a href="/event-inventory.html">Continue</a></noscript>

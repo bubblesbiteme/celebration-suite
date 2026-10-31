@@ -27,7 +27,7 @@ const timeFn=read('netlify/functions/time-entries.mjs');check('time tracking per
 const autoFn=read('netlify/functions/automations.mjs'),engine=read('netlify/functions/_automation-engine.mjs'),runner=read('netlify/functions/automation-run.mjs');check('automation management restricted',autoFn.includes("requirePermission(ctx,'manage_automations')"));for(const r of ['stale_lead','overdue_invoice','event_countdown','client_task_reminder','post_event_closeout'])check(`automation rule ${r}`,engine.includes(`rule.rule_type==='${r}'`));check('automation dedupe key storage',engine.includes('tenant_automation_runs'));check('automation uses tenant email',engine.includes('sendTenantEmail'));check('automation runner scheduled hourly',runner.includes("schedule:'0 * * * *'"));check('post event closes event',engine.includes("status:'completed'"));check('closeout can reopen event',read('netlify/functions/closeouts.mjs').includes("status==='reopened'?'active':'completed'"));
 const eventsV4=read('netlify/functions/events.mjs'),bootV4=read('netlify/functions/bootstrap.mjs');check('event API filters assigned events',eventsV4.includes('assignedEventIds(ctx)'));check('event API asserts assigned event access',eventsV4.includes('assertEventAccess(ctx,id)'));check('dashboard bootstrap filters assigned events',bootV4.includes('assignedEventIds(ctx)'));check('bootstrap returns current user role',bootV4.includes('permissions:ctx.user.permissions'));
 for(const [f,pn] of [['guests.mjs','manage_guests'],['approvals.mjs','manage_approvals'],['registrations.mjs','manage_guests'],['floorplans.mjs','manage_floorplans'],['event-day.mjs','event_day']]){const x=read('netlify/functions/'+f);check(`${f} permission enforced`,x.includes(`requirePermission(ctx,'${pn}')`));check(`${f} assignment enforced`,x.includes('assertEventAccess(ctx,'));}
-check('dashboard links team',read('app.html').includes('/team.html'));check('event workspace links labor',read('event.html').includes('/time-tracking.html?event_id='));check('settings links automations',read('settings.html').includes('/automations.html'));check('event workspace links closeout',read('event.html').includes('event-closeout.html'));check('event workspace links labor',read('event.html').includes('/time-tracking.html?event_id='));check('event checklist stores parseable due date',read('event.html').includes('String(due).match(/\\d{4}-\\d{2}-\\d{2}/)')&&read('event.html').includes('due=m[0]')); 
+check('dashboard links team',read('app.html').includes('/team.html'));check('event workspace includes team/labor operations',read('event.html').includes("['team','Team']")&&read('event.html').includes('eventStaff'));check('settings links automations',read('settings.html').includes('/automations.html'));check('event workspace links closeout',read('event.html').includes('event-closeout.html'));check('event workspace includes team/labor operations',read('event.html').includes("['team','Team']")&&read('event.html').includes('eventStaff'));check('event checklist stores due date through unified workspace',read('event.html').includes('name=\"due_date\"')&&read('netlify/functions/event-workspace.mjs').includes('due_date:d.due_date||null')); 
 
 
 const v5pages=['pricing.html','onboarding.html','billing.html','demo.html','terms.html','privacy.html','eula.html'];
@@ -96,11 +96,11 @@ check('client message local autosave on input',portalV61.includes('storeLocalDra
 check('client message secure cloud autosave after 2.5 seconds',portalV61.includes('setTimeout(run,2500)')&&portalV61.includes("client-draft?token="));
 check('client draft newer local or cloud recovery',portalV61.includes('localTime>=remoteTime'));
 check('client draft clears after successful send',portalV61.includes("method:'DELETE'"));
-check('event workspace local backup exists',eventV61.includes("localStorage.setItem(localDraftKey"));
-check('event workspace autosaves after 2.5 seconds',eventV61.includes('setTimeout(()=>save({quiet:true}),2500)'));
-check('event workspace warns on dirty unload',eventV61.includes("beforeunload"));
-check('event workspace saves on page hide',eventV61.includes("visibilityState==='hidden'&&dirty"));
-check('event workspace explicit save status exists',eventV61.includes('Saved securely')&&eventV61.includes('cloud save failed'));
+check('event workspace recovery cache exists',eventV61.includes('sessionStorage.setItem(EVENT_CACHE_KEY')&&eventV61.includes('restoreEventCache()'));
+check('event workspace saves mutations immediately through unified API',read('netlify/functions/event-workspace.mjs').includes("action==='task-create'")&&read('netlify/functions/event-workspace.mjs').includes("action==='timeline-create'")&&read('netlify/functions/event-workspace.mjs').includes("action==='design-layout-save'"));
+check('event workspace restores cached state before refresh',eventV61.includes('restoreEventCache()')&&eventV61.includes('Refreshing…'));
+check('event workspace persists workspace mutations server side',read('netlify/functions/event-workspace.mjs').includes('saveWorkspace(ctx,eventId,w)'));
+check('event workspace exposes visible save/error feedback',eventV61.includes('toast(')&&eventV61.includes('Could not load workspace.'));
 check('event day refreshes every 45 seconds',eventDayV61.includes('},45000)'));
 check('event day foreground reconnect refresh exists',eventDayV61.includes("window.addEventListener('focus'")&&eventDayV61.includes("window.addEventListener('online'"));
 check('planner password login case insensitive',read('netlify/functions/auth-login.mjs').includes('email=ilike.'));
@@ -157,7 +157,7 @@ check('event day shows live labor',read('event-day.html').includes('Team on the 
 check('QuickBooks helper exported for reconciliation',read('netlify/functions/quickbooks.mjs').includes('export async function getQuickBooksSummary'));
 check('reconciliation compares local and QuickBooks',read('netlify/functions/reconciliation.mjs').includes('invoice_delta')&&read('netlify/functions/reconciliation.mjs').includes('balance_delta'));
 check('new operations included in account export',read('netlify/functions/account-export.mjs').includes('tenant_purchasing_gaps')&&read('netlify/functions/account-export.mjs').includes('tenant_event_incidents'));
-check('purchasing remains available from event workspace',read('event.html').includes('purchasing.html'));
+check('purchasing remains available from event workspace',read('event.html').includes('Rent / buy needed')&&read('netlify/functions/event-workspace.mjs').includes("action==='inventory-gap-save'"));
 check('reconciliation remains available from accounting',read('accounting.html').includes('/reconciliation.html'));
 check('referrals links partner access',read('referrals.html').includes('/partner-access.html'));
 
@@ -179,7 +179,7 @@ check('owner BI includes inventory utilization',read('netlify/functions/analytic
 check('new platform control data included in export',read('netlify/functions/account-export.mjs').includes('tenant_audit_log')&&read('netlify/functions/account-export.mjs').includes('tenant_webhook_deliveries'));
 check('notification center page remains available',fs.existsSync(path.join(root,'notifications.html')));
 check('integration center page remains available',fs.existsSync(path.join(root,'integration-center.html')));
-check('event workspace links activity history',read('event.html').includes('/audit.html?event_id='));
+check('event workspace includes activity history',read('event.html').includes("['activity','Activity']")&&read('event.html').includes('Recent activity'));
 
 
 // v0.13 deep workspace + design studio
@@ -196,7 +196,7 @@ check('approved designs reconcile inventory',read('netlify/functions/inspiration
 check('manual and design reservation quantities split',m14.includes('manual_quantity')&&m14.includes('design_quantity'));
 check('client portal receives design board',read('netlify/functions/client-portal.mjs').includes('tenant_inspiration_items')&&read('portal.html').includes("['design','Design Board']"));
 check('client can leave design feedback',read('portal.html').includes('data-design-note')&&read('netlify/functions/client-portal.mjs').includes("d.action==='design-update'"));
-check('event workspace is command center',read('event.html').includes('Event Operations')&&read('event.html').includes('Planning Checklist')&&read('event.html').includes('Client Portal Permissions'));
+check('event workspace is command center',read('event.html').includes("['planning','Checklist']")&&read('event.html').includes("['timeline','Timeline']")&&read('event.html').includes('Client portal permissions'));
 check('event workspace has richer budget',read('event.html').includes('Proposed')&&read('event.html').includes('Approved')&&read('event.html').includes('Actual'));
 check('event book includes design board',read('event-book.html').includes("section('Design Board'"));
 check('account export includes design board config',read('netlify/functions/account-export.mjs').includes('tenant_inspiration_boards'));
@@ -246,8 +246,8 @@ check('new scheduling and quote data included in export',read('netlify/functions
 // v0.16 easy-mode usability + floor-plan discoverability
 for(const f of ['docs/V0.16-CHILD-SIMPLE-UX-FLOORPLAN.md'])check(`v0.16 exists ${f}`,exists(f));
 check('dashboard removes duplicate task launcher',!read('app.html').includes('What are you working on today?'));
-check('floor plan is event-workspace tool',read('event.html').includes('floorplan.html'));
-check('event workspace promotes floor plan',read('event.html').includes('id="floorQuick"')&&read('event.html').includes('/floorplan.html?event_id='));
+check('floor plan is event-workspace tool',read('event.html').includes("['floorplan','Floor Plan']")&&read('event.html').includes('adminFloorCanvas'));
+check('event workspace promotes floor plan',read('event.html').includes("['floorplan','Floor Plan']")&&read('event.html').includes('adminFloorPalette'));
 check('floor plan uses original drag-or-tap guidance',read('floorplan.html').includes('Drag an item from the library onto the room, or tap it to add'));
 check('global task launcher removed',!read('assets/app.js').includes('easyOpen'));
 check('easy mode toggle removed',!read('assets/app.js').includes('easyModeToggle')&&!read('assets/app.js').includes('cs-easy-mode')&&!read('assets/app.js').includes('simple-mode'));
@@ -266,7 +266,7 @@ check('ticket sales supports promo codes',read('netlify/functions/registration-p
 check('ticket refunds supported',read('netlify/functions/ticketing.mjs').includes("action==='refund-order'"));
 check('Stripe webhook completes ticket orders',read('netlify/functions/stripe-webhook.mjs').includes('ticket_order_id'));
 check('event workspace exposes tickets and QR checkin',read('event.html').includes('registration.html')&&read('event.html').includes('guest-checkin.html'));
-check('event workspace exposes ticketing',read('event.html').includes('Tickets & Registration')&&read('event.html').includes('QR Check-In'));
+check('event workspace exposes ticketing',read('event.html').includes("['registration','Registration & Tickets']")&&read('event.html').includes('guest-checkin.html'));
 check('guest suite includes ticket holders',read('guests.html').includes('Ticket Holders')&&read('guests.html').includes('RSVP QR'));
 check('account export includes ticket commerce',read('netlify/functions/account-export.mjs').includes('tenant_ticket_orders')&&read('netlify/functions/account-export.mjs').includes('tenant_ticket_attendees'));
 
@@ -303,7 +303,7 @@ check('QuickBooks webhook is signed and review first',read('netlify/functions/qu
 check('QuickBooks customer apply uses full_name',read('netlify/functions/quickbooks-changes.mjs').includes('full_name:snap.DisplayName'));
 check('support UI can update status and resolution',read('support.html').includes('Save update')&&read('support.html').includes('Waiting on user'));
 check('support backend sends followup notifications',read('netlify/functions/support.mjs').includes('SUPPORT_NOTIFICATION_EMAIL')&&read('netlify/functions/support.mjs').includes('resolved'));
-check('original event workspace route is compatible',read('event-workspace.html').includes('event.html'));
+check('original event workspace route is direct SaaS fork',read('event-workspace.html').includes('/.netlify/functions/event-workspace')&&read('netlify/functions/event-workspace.mjs').includes('tenantContext(request)'));
 check('original financial admin route is compatible',read('financials-admin.html').includes('financials.html'));
 check('export includes parity operational tables',read('netlify/functions/account-export.mjs').includes('tenant_inventory_movements')&&read('netlify/functions/account-export.mjs').includes('tenant_staff_availability')&&read('netlify/functions/account-export.mjs').includes('tenant_event_expenses'));
 

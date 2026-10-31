@@ -132,3 +132,7 @@ Floor Plan catalog rendering hotfix: 134 built-in objects are pre-rendered and v
 
 ## v0.23.0 — Original Workflow Core Clone
 Inventory and Floor Plan were rebuilt against the uploaded Sage & Celebration phase-9 code as the behavioral source of truth. Run `supabase/migrations/0021_ORIGINAL_CORE_WORKFLOW_CLONE.sql` after migration 0020. See `docs/V0.23-ORIGINAL-WORKFLOW-CORE-CLONE.md`.
+
+
+## v0.25.0 — Original SaaS Fork Baseline
+Celebration Suite now uses the working Sage & Celebration Event Workspace as the direct planner baseline instead of reconstructing it from disconnected SaaS pages. A unified tenant-safe compatibility endpoint preserves the original workspace contract, with compatibility routes for appointments and guest bulk seating updates. See `docs/V0.25-ORIGINAL-SAAS-FORK-BASELINE.md`. No new database migration is required.
