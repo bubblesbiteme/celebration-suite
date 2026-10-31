@@ -35,3 +35,49 @@ window.WLP={$, $$, api, esc, fmtDate};
   };
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',decorate); else decorate();
 })();
+
+// v0.16 Easy Mode: task-first navigation, plain-language help, global quick actions.
+(()=>{
+  const tools=[
+    ['📅','My events','Open or create an event','/app.html'],
+    ['🪑','Make a floor plan','Tables, chairs, stage & room layout','/floorplan.html'],
+    ['🎨','Design board','Build the event look visually','/inspiration.html'],
+    ['👥','Guests & RSVP','Invites, meals and check-in','/guests.html'],
+    ['🎟️','Tickets & registration','Sell free or paid event tickets','/registration.html'],
+    ['📷','Scan QR codes','Fast event-day guest check-in','/guest-checkin.html'],
+    ['💬','Messages','Email and text conversations','/communications.html'],
+    ['💵','Money','Invoices, payments and event costs','/financials.html'],
+    ['📦','Inventory','Find and reserve your items','/inventory.html'],
+    ['📷','Scan inventory QR','Open an item by scanning its label','/inventory-scan.html'],
+    ['⬆️','Bulk inventory upload','Import a CSV and match item photos','/inventory.html#bulk'],
+    ['✅','Questionnaires','Ask clients what you need','/questionnaires.html'],
+    ['🤝','Vendors','Contacts, quotes and bookings','/vendors.html'],
+    ['🗓️','Appointments','Client meetings and scheduling','/appointments.html'],
+    ['📄','Documents','Contracts and shared files','/documents.html'],
+    ['⚙️','Settings','Branding, integrations and account','/settings.html']
+  ];
+  const tips={
+    '/floorplan.html':['Floor Plan Maker','Pick an event, then use the big buttons to add tables, chairs, a stage or your venue plan. Drag anything to move it.'],
+    '/inspiration.html':['Design Board','Add pictures from inventory or upload inspiration. Drag, resize and layer them like a collage.'],
+    '/event.html':['Event Workspace','This is the home for one event. Start with the checklist, then use the big shortcuts for design, floor plan, guests and event day.'],
+    '/guests.html':['Guests & RSVP','Add guests, send invitations, make RSVP QR codes, and see ticket holders in one place.'],
+    '/registration.html':['Tickets & Registration','Turn sales on, add ticket types, then share one public link. Every attendee gets a QR ticket.'],
+    '/guest-checkin.html':['QR Check-In','Start the camera and scan either RSVP guest QR codes or ticket QR codes.'],
+    '/financials.html':['Money','Create invoices, record payments and keep event costs together.'],
+    '/communications.html':['Messages','Email or text clients here. Replies can come back into the same conversation center.']
+  };
+  function openDrawer(){const d=document.getElementById('easyDrawer');if(d)d.hidden=false}
+  function closeDrawer(){const d=document.getElementById('easyDrawer');if(d)d.hidden=true}
+  function inject(){
+    if(document.getElementById('easyUxRoot')||location.pathname.includes('login')||location.pathname.includes('public'))return;
+    const root=document.createElement('div');root.id='easyUxRoot';
+    root.innerHTML=`<div class="easy-floating"><button class="easy-fab secondary" id="easyModeToggle">Easy Mode</button><button class="easy-fab" id="easyOpen">+ Do something</button></div><div class="easy-drawer" id="easyDrawer" hidden><div class="easy-drawer-card"><div class="easy-drawer-head"><div><h2 style="margin:0">What do you want to do?</h2><p class="muted" style="margin:4px 0 0">Pick a task. You do not need to know which menu it lives under.</p></div><button class="btn" id="easyClose">Close</button></div><div class="easy-drawer-grid">${tools.map(x=>`<a href="${x[3]}"><b>${x[0]} ${x[1]}</b><small>${x[2]}</small></a>`).join('')}</div></div></div>`;
+    document.body.appendChild(root);
+    const saved=localStorage.getItem('cs-easy-mode');if(saved!=='off')document.body.classList.add('simple-mode');
+    easyOpen.onclick=openDrawer;easyClose.onclick=closeDrawer;easyDrawer.onclick=e=>{if(e.target===easyDrawer)closeDrawer()};
+    easyModeToggle.textContent=document.body.classList.contains('simple-mode')?'Show More Tools':'Easy Mode';
+    easyModeToggle.onclick=()=>{document.body.classList.toggle('simple-mode');const on=document.body.classList.contains('simple-mode');localStorage.setItem('cs-easy-mode',on?'on':'off');easyModeToggle.textContent=on?'Show More Tools':'Easy Mode'};
+    const tip=tips[location.pathname];if(tip){const main=document.querySelector('main');if(main&&!document.getElementById('easyHelpBar')){const bar=document.createElement('div');bar.id='easyHelpBar';bar.className='easy-helpbar';bar.innerHTML=`<div><strong>💡 ${tip[0]}</strong><small>${tip[1]}</small></div><button class="btn" type="button">Show all actions</button>`;bar.querySelector('button').onclick=openDrawer;main.prepend(bar)}}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',inject);else inject();
+})();

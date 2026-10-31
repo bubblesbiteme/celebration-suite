@@ -48,7 +48,7 @@ Adds reusable questionnaires, richer client portal workflows, event inventory pa
 See `docs/V0.12-PLATFORM-CONTROL-INTELLIGENCE.md`.
 
 
-## v0.15.0 Deep Workspace & Design Studio
+## v0.17.0 Deep Workspace & Design Studio
 The parity strategy now ports deep workflows from the original Sage & Celebration portal. This release rebuilds the Inspiration Board as a shared planner/client Design Studio, deepens the Event Workspace, adds per-event client permissions, inventory-linked design reservation reconciliation, image uploads, and design content in the Final Event Book. Run migration `0014_DEEP_WORKSPACE_DESIGN_STUDIO.sql`. See `docs/V0.13-DEEP-WORKSPACE-DESIGN-STUDIO.md`.
 
 
@@ -60,3 +60,14 @@ The parity strategy now ports deep workflows from the original Sage & Celebratio
 - Deeper lead CRM: temperature, tags, consultations, lost reasons and overdue follow-up visibility.
 - Expanded milestone automations for agreements, invoice due dates, questionnaires, overdue tasks and vendor-document expiration.
 - Migration: `0016_DEEP_CLIENT_JOURNEY_COMMUNICATIONS.sql`.
+
+
+## v0.17.0 Easy Mode
+See `docs/V0.17-CHILD-SIMPLE-UX-FLOORPLAN.md` for the global task-first UX and Floor Plan Maker visibility upgrade.
+
+
+## v0.17 Guest Commerce
+See `docs/V0.17-GUEST-COMMERCE-QR-TICKETING.md`. Run migration `0017_GUEST_COMMERCE_QR_TICKETING.sql`.
+
+## v0.18.0 — QR Inventory + Bulk Media + Reservation Sync
+Adds persistent inventory QR labels, native-camera inventory lookup, bulk CSV inventory import, bulk filename-matched photo uploads, inventory image galleries, and traceable Design Studio approval reservations. Run migration `0018_QR_INVENTORY_BULK_MEDIA_RESERVATIONS.sql` after 0017.

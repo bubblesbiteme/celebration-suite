@@ -1,0 +1,27 @@
+import {json,clean,supabase} from './_shared.mjs';
+import {tenantContext,requireActive,requirePermission} from './_tenant.mjs';
+import crypto from 'node:crypto';
+const env=k=>process.env[k]||'';
+export default async request=>{try{
+  const ctx=await tenantContext(request);requireActive(ctx);requirePermission(ctx,'manage_inventory');
+  if(request.method!=='POST')return json({error:'Method not allowed'},405);
+  const u=new URL(request.url),itemId=clean(u.searchParams.get('item_id'),80),name=clean(u.searchParams.get('name'),220)||'inventory.jpg';
+  if(!itemId)throw new Error('Inventory item is required.');
+  const item=(await supabase(`tenant_inventory_items?id=eq.${encodeURIComponent(itemId)}&tenant_id=eq.${encodeURIComponent(ctx.tenant.id)}&select=id,name&limit=1`))?.[0];
+  if(!item)throw new Error('Inventory item not found.');
+  const mime=(request.headers.get('content-type')||'').split(';')[0].trim().toLowerCase();
+  if(!['image/jpeg','image/png','image/webp','image/gif'].includes(mime))throw new Error('Upload a JPG, PNG, WEBP, or GIF image.');
+  const body=Buffer.from(await request.arrayBuffer());if(!body.length)throw new Error('Image is empty.');if(body.length>10*1024*1024)throw new Error('Image is too large. Maximum size is 10 MB.');
+  const ext=({'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[mime]||'jpg';
+  const path=`${ctx.tenant.id}/${itemId}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+  const base=env('SUPABASE_URL'),key=env('SUPABASE_SERVICE_ROLE_KEY');if(!base||!key)throw new Error('Supabase is not configured.');
+  const r=await fetch(`${base}/storage/v1/object/celebration-suite-inventory/${path}`,{method:'POST',headers:{apikey:key,authorization:`Bearer ${key}`,'content-type':mime,'x-upsert':'false'},body});
+  if(!r.ok)throw new Error(await r.text()||`Upload failed (${r.status}).`);
+  const url=`${base}/storage/v1/object/public/celebration-suite-inventory/${path}`;
+  const existing=await supabase(`tenant_inventory_images?tenant_id=eq.${encodeURIComponent(ctx.tenant.id)}&inventory_item_id=eq.${encodeURIComponent(itemId)}&select=id&limit=1`);
+  const primary=!existing?.length || u.searchParams.get('primary')==='1';
+  if(primary)await supabase(`tenant_inventory_images?tenant_id=eq.${encodeURIComponent(ctx.tenant.id)}&inventory_item_id=eq.${encodeURIComponent(itemId)}`,{method:'PATCH',body:{is_primary:false},prefer:'return=minimal'});
+  await supabase('tenant_inventory_images',{method:'POST',body:{tenant_id:ctx.tenant.id,inventory_item_id:itemId,image_url:url,image_path:path,file_name:name,is_primary:primary,sort_order:(existing||[]).length},prefer:'return=minimal'});
+  if(primary)await supabase(`tenant_inventory_items?id=eq.${encodeURIComponent(itemId)}&tenant_id=eq.${encodeURIComponent(ctx.tenant.id)}`,{method:'PATCH',body:{image_url:url,image_path:path,image_updated_at:new Date().toISOString()},prefer:'return=minimal'});
+  return json({ok:true,url,path,primary});
+}catch(e){return json({error:e.message},e.status||400)}};
