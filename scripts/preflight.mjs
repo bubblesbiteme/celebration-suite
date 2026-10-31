@@ -181,4 +181,24 @@ check('dashboard links notification center',read('app.html').includes('/notifica
 check('dashboard links integration center',read('app.html').includes('/integration-center.html'));
 check('event workspace links activity history',read('event.html').includes('/audit.html?event_id='));
 
+
+// v0.13 deep workspace + design studio
+for(const f of ['supabase/migrations/0014_DEEP_WORKSPACE_DESIGN_STUDIO.sql','inspiration.html','netlify/functions/inspiration.mjs','netlify/functions/inspiration-upload.mjs','docs/V0.13-DEEP-WORKSPACE-DESIGN-STUDIO.md'])check(`v0.13 exists ${f}`,exists(f));
+const m14=read('supabase/migrations/0014_DEEP_WORKSPACE_DESIGN_STUDIO.sql');
+check('design board table exists',m14.includes('tenant_inspiration_boards'));
+for(const c of ['rotation','height','requested_quantity','client_note','is_client_visible'])check(`design item field ${c}`,m14.includes(`add column if not exists ${c}`));
+check('design media bucket exists',m14.includes('celebration-suite-media'));
+check('design studio supports rotation',read('inspiration.html').includes("'rotateL'")&&read('inspiration.html').includes("'rotateR'"));
+check('design studio supports two dimensional resizing',read('inspiration.html').includes("gesture.kind==='resize'")&&read('inspiration.html').includes('x.height'));
+check('design studio supports layer controls',read('inspiration.html').includes("'front'")&&read('inspiration.html').includes("'back'"));
+check('design studio uses inventory gallery',read('inspiration.html').includes('Master Inventory')&&read('netlify/functions/inspiration.mjs').includes('tenant_inventory_items'));
+check('approved designs reconcile inventory',read('netlify/functions/inspiration.mjs').includes('reconcileDesignReservation'));
+check('manual and design reservation quantities split',m14.includes('manual_quantity')&&m14.includes('design_quantity'));
+check('client portal receives design board',read('netlify/functions/client-portal.mjs').includes('tenant_inspiration_items')&&read('portal.html').includes("['design','Design Board']"));
+check('client can leave design feedback',read('portal.html').includes('data-design-note')&&read('netlify/functions/client-portal.mjs').includes("d.action==='design-update'"));
+check('event workspace is command center',read('event.html').includes('Event Operations')&&read('event.html').includes('Planning Checklist')&&read('event.html').includes('Client Portal Permissions'));
+check('event workspace has richer budget',read('event.html').includes('Proposed')&&read('event.html').includes('Approved')&&read('event.html').includes('Actual'));
+check('event book includes design board',read('event-book.html').includes("section('Design Board'"));
+check('account export includes design board config',read('netlify/functions/account-export.mjs').includes('tenant_inspiration_boards'));
+
 console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);
