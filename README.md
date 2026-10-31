@@ -35,3 +35,7 @@ Celebration Suite now includes local-first + secure autosave, 45-second live ref
 - Resend-powered platform transactional email.
 - 24-hour password reset for planner/team, platform admin and client accounts.
 - Platform Launch Health dashboard.
+
+
+## v0.7.3 annual subscription hotfix
+Annual Unlimited now uses true recurring yearly Stripe subscription checkout. Monthly/Annual plan switches cancel the prior subscription to prevent duplicate billing. Single Event remains one-time. No database migration is required.

@@ -41,7 +41,7 @@ check('registration requires legal acceptance',read('register.html').includes('a
 check('registration stores legal acceptances',read('netlify/functions/auth-register.mjs').includes("['terms','privacy','eula']"));
 check('onboarding checks brand email payment and event',read('netlify/functions/onboarding.mjs').includes('brand_complete')&&read('netlify/functions/onboarding.mjs').includes('email_complete')&&read('netlify/functions/onboarding.mjs').includes('payment_complete')&&read('netlify/functions/onboarding.mjs').includes('first_event_complete'));
 check('billing supports renewal upgrade and export',read('billing.html').includes('Renew Current Plan')&&read('billing.html').includes('Upgrade to Annual')&&read('billing.html').includes('account-export'));
-check('annual renewal preserves remaining term',read('netlify/functions/checkout-activate.mjs').includes('currentEnd>now'));
+check('annual checkout uses recurring subscription',read('netlify/functions/checkout-create.mjs').includes("['monthly_unlimited','annual_unlimited'].includes(plan)")&&read('netlify/functions/checkout-activate.mjs').includes("['monthly_unlimited','annual_unlimited'].includes(plan)")&&read('netlify/functions/checkout-activate.mjs').includes('oldSubscriptionId!==newSubscriptionId'));
 check('marketplace fulfillment creates license code',read('netlify/functions/marketplace-order.mjs').includes('license_codes')&&read('netlify/functions/marketplace-order.mjs').includes('activation_url'));
 check('marketplace fulfillment is admin protected',read('netlify/functions/marketplace-order.mjs').includes('x-platform-admin-key'));
 check('direct Stripe purchases recorded as platform orders',read('netlify/functions/checkout-activate.mjs').includes("source:'stripe'")&&read('netlify/functions/checkout-activate.mjs').includes('platform_orders'));
@@ -61,7 +61,7 @@ check('monthly billing stores subscription id',m6.includes('stripe_subscription_
 check('billing recovery fields exist',m6.includes('past_due_at')&&m6.includes('grace_until'));
 check('billing suspension tenant state exists',m6.includes('billing_suspended'));
 check('client account tables exist',m6.includes('tenant_client_users')&&m6.includes('tenant_client_event_access'));
-check('monthly checkout uses subscription mode',read('netlify/functions/checkout-create.mjs').includes("plan==='monthly_unlimited'?'subscription':'payment'"));
+check('monthly checkout uses subscription mode',read('netlify/functions/checkout-create.mjs').includes("isSubscription?'subscription':'payment'"));
 check('monthly Stripe price env used',read('netlify/functions/checkout-create.mjs').includes('STRIPE_PRICE_MONTHLY'));
 check('Stripe payment failure enters past due',read('netlify/functions/stripe-webhook.mjs').includes("event.type==='invoice.payment_failed'")&&read('netlify/functions/stripe-webhook.mjs').includes("status:'past_due'"));
 check('Stripe payment recovery reactivates',read('netlify/functions/stripe-webhook.mjs').includes("event.type==='invoice.paid'")&&read('netlify/functions/stripe-webhook.mjs').includes("status:'active'"));
