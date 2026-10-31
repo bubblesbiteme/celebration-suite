@@ -41,6 +41,8 @@ main{max-width:1580px;margin:0 auto;padding:22px 24px 100px}
 
 @media(max-width:1180px){.fp-workspace{grid-template-columns:280px minmax(0,1fr)}.props-panel{position:static;grid-column:1/-1;max-height:none}.quick-strip{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:780px){main{padding:14px 10px 100px}.fp-head{grid-template-columns:1fr}.fp-toolbar{grid-template-columns:1fr}.fp-toolbar .row2{justify-content:flex-start}.quick-strip{grid-template-columns:1fr 1fr}.fp-workspace{display:block}.library-panel,.props-panel{position:static;max-height:none;margin-bottom:12px}.object-grid{grid-template-columns:repeat(3,1fr)}.floor-stage-shell{min-height:500px}.stage-panel{margin-bottom:12px}}
+
+.library-drag-ghost{position:fixed;z-index:99999;pointer-events:none;min-width:150px;max-width:220px;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid #b9c6ad;box-shadow:0 18px 40px rgba(52,35,61,.22);font-weight:800;font-size:12px;color:#34233d;transform:translate(-50%,-50%);opacity:.96}.library-drag-ghost small{display:block;margin-top:4px;color:#807584;font-weight:500}.object-card.pointer-dragging{opacity:.45;transform:scale(.98)}
 </style>
 </head>
 <body>
@@ -58,7 +60,7 @@ main{max-width:1580px;margin:0 auto;padding:22px 24px 100px}
  <button class="quick-action" onclick="quickAdd('bar')"><span class="quick-icon">▤</span><span><strong>Bar</strong><small>Food & beverage</small></span></button>
  <button class="quick-action" onclick="document.getElementById('bgFile').click()"><span class="quick-icon">⌂</span><span><strong>Venue plan</strong><small>Upload room image</small></span></button>
 </section>
-<section class="easy-floor-guide" aria-label="Easy mode steps"><div><b>1</b><span><strong>Pick an event</strong><small>Choose the event above.</small></span></div><div><b>2</b><span><strong>Add something</strong><small>Click or drag an item from the library.</small></span></div><div><b>3</b><span><strong>Move it</strong><small>Drag it anywhere on the room.</small></span></div><div><b>4</b><span><strong>Save</strong><small>Press Save Layout when finished.</small></span></div></section>
+
 <section class="fp-workspace">
  <aside class="panel library-panel">
   <div class="library-top">
@@ -208,21 +210,50 @@ $('planFilter').onchange=()=>{plan=plans.find(x=>x.id===$('planFilter').value)||
 $('bgFile').onchange=async()=>{const f=$('bgFile').files[0];if(!f)return;const r=await fetch('/.netlify/functions/inspiration-upload?event_id='+encodeURIComponent($('eventFilter').value)+'&name='+encodeURIComponent(f.name),{method:'POST',headers:{'content-type':f.type},body:f});const j=await r.json();if(!r.ok)return alert(j.error||'Upload failed');$('bgUrl').value=j.file_url||'';render()};
 window.addEventListener('keydown',e=>{if(!selected||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;const o=objects.find(x=>x.id===selected);if(!o)return;const step=e.shiftKey?10:1;if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();removeSelected();return}if(e.key==='ArrowLeft'){o.x=Math.max(0,o.x-step)}else if(e.key==='ArrowRight'){o.x+=step}else if(e.key==='ArrowUp'){o.y=Math.max(0,o.y-step)}else if(e.key==='ArrowDown'){o.y+=step}else return;e.preventDefault();render()});
 
-function bindLibraryDragDrop(){
- const palette=$('palette'),stage=$('stage'); if(!palette||!stage||palette.dataset.dragBound)return; palette.dataset.dragBound='1';
- palette.querySelectorAll('[data-catalog-key],[data-inventory-id]').forEach(card=>card.draggable=true);
- palette.addEventListener('dragstart',e=>{const card=e.target.closest('[data-catalog-key],[data-inventory-id]');if(!card)return;card.classList.add('dragging');const payload=card.dataset.catalogKey?{type:'catalog',id:card.dataset.catalogKey}:{type:'inventory',id:card.dataset.inventoryId};e.dataTransfer.effectAllowed='copy';e.dataTransfer.setData('application/x-celebration-floor-item',JSON.stringify(payload));e.dataTransfer.setData('text/plain',payload.type+':'+payload.id)});
- palette.addEventListener('dragend',e=>e.target.closest('[data-catalog-key],[data-inventory-id]')?.classList.remove('dragging'));
- stage.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='copy';stage.classList.add('drop-ready')});
- stage.addEventListener('dragleave',e=>{if(!stage.contains(e.relatedTarget))stage.classList.remove('drop-ready')});
- stage.addEventListener('drop',e=>{e.preventDefault();stage.classList.remove('drop-ready');let payload=null;try{payload=JSON.parse(e.dataTransfer.getData('application/x-celebration-floor-item'))}catch{}if(!payload){const raw=e.dataTransfer.getData('text/plain');const i=raw.indexOf(':');if(i>0)payload={type:raw.slice(0,i),id:raw.slice(i+1)}}if(!payload)return;const r=stage.getBoundingClientRect();const x=(e.clientX-r.left)/zoom,y=(e.clientY-r.top)/zoom;if(payload.type==='catalog'){const item=byKey[payload.id];if(item)addCatalogAt(payload.id,x-item[4]/2,y-item[5]/2)}else if(payload.type==='inventory')addInventoryAt(payload.id,x-35,y-35)});
+let palettePointerDrag=null;
+function endPalettePointerDrag(e,cancelled=false){
+ if(!palettePointerDrag)return;
+ const d=palettePointerDrag; palettePointerDrag=null;
+ d.card?.classList.remove('pointer-dragging'); d.ghost?.remove();
+ document.body.style.userSelect='';
+ if(cancelled)return;
+ const stage=$('stage'); if(!stage)return;
+ const r=stage.getBoundingClientRect();
+ if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)return;
+ const x=(e.clientX-r.left)/zoom, y=(e.clientY-r.top)/zoom;
+ if(d.type==='catalog'){
+   const item=byKey[d.id]; if(item)addCatalogAt(d.id,x-item[4]/2,y-item[5]/2);
+ }else if(d.type==='inventory') addInventoryAt(d.id,x-35,y-35);
 }
-function refreshDraggableCards(){document.querySelectorAll('#palette [data-catalog-key],#palette [data-inventory-id]').forEach(c=>c.draggable=true)}
-const originalRenderPalette=renderPalette;renderPalette=function(){originalRenderPalette();refreshDraggableCards()};
-function applyFloorEasyMode(showToast=false){const easy=document.body.classList.contains('simple-mode');if(easy&&['Production & Entertainment','Room & Logistics','Custom Shapes & Notes','Outdoor & Specialty'].includes(activeCategory)){activeCategory='All';renderTabs();renderPalette()}if(showToast){let t=document.createElement('div');t.className='mode-toast';t.innerHTML=easy?'Easy Mode is on<small>Advanced controls are hidden. Click or drag an item to place it.</small>':'Full Tools are on<small>Grid, measurements, versions and advanced categories are visible.</small>';document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}}
-window.addEventListener('cs:easymodechange',()=>applyFloorEasyMode(true));
+function bindLibraryPointerDrag(){
+ const palette=$('palette'); if(!palette||palette.dataset.pointerDragBound)return;
+ palette.dataset.pointerDragBound='1';
+ palette.addEventListener('pointerdown',e=>{
+   if(e.button!==0||e.target.closest('.fav-btn'))return;
+   const card=e.target.closest('[data-catalog-key],[data-inventory-id]'); if(!card)return;
+   e.preventDefault();
+   const type=card.dataset.catalogKey?'catalog':'inventory';
+   const id=card.dataset.catalogKey||card.dataset.inventoryId;
+   const label=card.querySelector('strong')?.textContent?.trim()||'Floor-plan item';
+   const detail=card.querySelector('small')?.textContent?.trim()||'Release over the floor plan to place';
+   const ghost=document.createElement('div'); ghost.className='library-drag-ghost'; ghost.innerHTML=`${escLocal(label)}<small>${escLocal(detail)}</small>`; document.body.appendChild(ghost);
+   ghost.style.left=e.clientX+'px'; ghost.style.top=e.clientY+'px';
+   card.classList.add('pointer-dragging'); document.body.style.userSelect='none';
+   palettePointerDrag={pointerId:e.pointerId,card,type,id,ghost,startX:e.clientX,startY:e.clientY,moved:false};
+   try{card.setPointerCapture(e.pointerId)}catch{}
+ });
+ palette.addEventListener('pointermove',e=>{
+   const d=palettePointerDrag; if(!d||d.pointerId!==e.pointerId)return;
+   e.preventDefault(); d.ghost.style.left=e.clientX+'px'; d.ghost.style.top=e.clientY+'px';
+   if(Math.hypot(e.clientX-d.startX,e.clientY-d.startY)>4)d.moved=true;
+   const r=$('stage')?.getBoundingClientRect();
+   $('stage')?.classList.toggle('drop-ready',!!r&&e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom);
+ });
+ palette.addEventListener('pointerup',e=>{if(!palettePointerDrag||palettePointerDrag.pointerId!==e.pointerId)return;$('stage')?.classList.remove('drop-ready');endPalettePointerDrag(e,false)});
+ palette.addEventListener('pointercancel',e=>{if(!palettePointerDrag||palettePointerDrag.pointerId!==e.pointerId)return;$('stage')?.classList.remove('drop-ready');endPalettePointerDrag(e,true)});
+}
 $('clearPaletteSearch').onclick=()=>{$('paletteSearch').value='';renderPalette();$('paletteSearch').focus()};
-bindLibraryDragDrop();applyFloorEasyMode(false);
+bindLibraryPointerDrag();
 
 bindStaticLibrary();renderTabs();renderPalette();
 async function load(){try{const b=await WLP.api('bootstrap');tenant=b.tenant;brand();events=(await WLP.api('events')).events||[];$('eventFilter').innerHTML='<option value="">Choose event</option>'+events.map(e=>`<option value="${e.id}">${WLP.esc(e.title)}</option>`).join('');if(requestedEvent&&events.some(e=>e.id===requestedEvent))$('eventFilter').value=requestedEvent;else if(events[0])$('eventFilter').value=events[0].id;if($('eventFilter').value)await refresh(true);else{renderTabs();renderPalette()}}catch(err){console.error('Floor plan data load failed',err);renderTabs();renderPalette();const msg=document.createElement('div');msg.className='notice';msg.style.margin='0 0 12px';msg.innerHTML='<strong>The floor-plan library is ready.</strong><br><small>Event data could not be loaded yet. Refresh or return to the dashboard, but you can still browse the professional catalog.</small>';document.querySelector('.fp-workspace')?.before(msg)}}load();

@@ -249,8 +249,10 @@ check('dashboard has task-first easy actions',read('app.html').includes('What ar
 check('floor plan is primary dashboard shortcut',read('app.html').includes('🪑 Floor Plan Maker'));
 check('event workspace promotes floor plan',read('event.html').includes('id="floorQuick"')&&read('event.html').includes('/floorplan.html?event_id='));
 check('floor plan has child-simple start controls',read('floorplan.html').includes('Guest table')&&read('floorplan.html').includes('Banquet table')&&read('floorplan.html').includes('Venue plan'));
-check('global easy mode launcher exists',read('assets/app.js').includes('What do you want to do?')&&read('assets/app.js').includes('cs-easy-mode'));
-check('easy mode defaults on',read('assets/app.js').includes("saved!=='off'"));
+check('global task launcher remains available',read('assets/app.js').includes('What do you want to do?')&&read('assets/app.js').includes('easyOpen'));
+check('easy mode toggle removed',!read('assets/app.js').includes('easyModeToggle')&&!read('assets/app.js').includes('cs-easy-mode')&&!read('assets/app.js').includes('simple-mode'));
+check('floorplan uses pointer-driven library drag',read('floorplan.html').includes('bindLibraryPointerDrag')&&read('floorplan.html').includes('library-drag-ghost'));
+check('floorplan library drag drops by coordinates',read('floorplan.html').includes('endPalettePointerDrag')&&read('floorplan.html').includes('getBoundingClientRect'));
 
 
 // v0.17 Guest Commerce, QR Ticketing & unified check-in

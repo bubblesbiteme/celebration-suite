@@ -110,7 +110,7 @@ This release uses the uploaded Sage & Celebration Phase 12 build as the source-o
 ## v0.22.2
 Floor Plan catalog rendering hotfix: 134 built-in objects are pre-rendered and visible before any API call.
 
-## v0.22.3 — Floor Plan Interaction + Modern UX Hotfix
+## v0.22.4 — Floor Plan Interaction + Modern UX Hotfix
 
 - Fixed object dragging on the floor-plan canvas by preserving pointer capture during movement instead of re-rendering the object mid-drag.
 - Added drag-from-library to canvas placement for built-in catalog objects and Master Inventory objects.

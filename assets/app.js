@@ -76,14 +76,10 @@ window.WLP={$, $$, api, esc, fmtDate};
   function inject(){
     if(document.getElementById('easyUxRoot')||location.pathname.includes('login')||location.pathname.includes('public'))return;
     const root=document.createElement('div');root.id='easyUxRoot';
-    root.innerHTML=`<div class="easy-floating"><button class="easy-fab secondary" id="easyModeToggle">Easy Mode</button><button class="easy-fab" id="easyOpen">+ Do something</button></div><div class="easy-drawer" id="easyDrawer" hidden><div class="easy-drawer-card"><div class="easy-drawer-head"><div><h2 style="margin:0">What do you want to do?</h2><p class="muted" style="margin:4px 0 0">Pick a task. You do not need to know which menu it lives under.</p></div><button class="btn" id="easyClose">Close</button></div><div class="easy-drawer-grid">${tools.map(x=>`<a href="${x[3]}"><b>${x[0]} ${x[1]}</b><small>${x[2]}</small></a>`).join('')}</div></div></div>`;
+    root.innerHTML=`<div class="easy-floating"><button class="easy-fab" id="easyOpen">+ Do something</button></div><div class="easy-drawer" id="easyDrawer" hidden><div class="easy-drawer-card"><div class="easy-drawer-head"><div><h2 style="margin:0">What do you want to do?</h2><p class="muted" style="margin:4px 0 0">Pick a task. You do not need to know which menu it lives under.</p></div><button class="btn" id="easyClose">Close</button></div><div class="easy-drawer-grid">${tools.map(x=>`<a href="${x[3]}"><b>${x[0]} ${x[1]}</b><small>${x[2]}</small></a>`).join('')}</div></div></div>`;
     document.body.appendChild(root);
-    const saved=localStorage.getItem('cs-easy-mode');if(saved!=='off')document.body.classList.add('simple-mode');
-    const easyOpenBtn=document.getElementById('easyOpen'),easyCloseBtn=document.getElementById('easyClose'),easyDrawerEl=document.getElementById('easyDrawer'),easyModeBtn=document.getElementById('easyModeToggle');
-    easyOpenBtn.onclick=openDrawer;easyCloseBtn.onclick=closeDrawer;easyDrawerEl.onclick=e=>{if(e.target===easyDrawerEl)closeDrawer()};
-    const syncEasyButton=()=>{const on=document.body.classList.contains('simple-mode');easyModeBtn.textContent=on?'Full Tools':'Simplify';easyModeBtn.setAttribute('aria-pressed',String(on));easyModeBtn.title=on?'Show advanced controls':'Hide advanced controls and show the guided view'};
-    syncEasyButton();
-    easyModeBtn.onclick=()=>{document.body.classList.toggle('simple-mode');const on=document.body.classList.contains('simple-mode');localStorage.setItem('cs-easy-mode',on?'on':'off');syncEasyButton();window.dispatchEvent(new CustomEvent('cs:easymodechange',{detail:{enabled:on}}))};
+    const easyOpenBtn=document.getElementById('easyOpen'),easyCloseBtn=document.getElementById('easyClose'),easyDrawerEl=document.getElementById('easyDrawer');
+    if(easyOpenBtn)easyOpenBtn.onclick=openDrawer;if(easyCloseBtn)easyCloseBtn.onclick=closeDrawer;if(easyDrawerEl)easyDrawerEl.onclick=e=>{if(e.target===easyDrawerEl)closeDrawer()};
     const tip=tips[location.pathname];if(tip){const main=document.querySelector('main');if(main&&!document.getElementById('easyHelpBar')){const bar=document.createElement('div');bar.id='easyHelpBar';bar.className='easy-helpbar';bar.innerHTML=`<div><strong>💡 ${tip[0]}</strong><small>${tip[1]}</small></div><button class="btn" type="button">Show all actions</button>`;bar.querySelector('button').onclick=openDrawer;main.prepend(bar)}}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',inject);else inject();
