@@ -1,3 +1,7 @@
+## v0.24.5 Event Workspace Recovery
+
+See `docs/V0.24.5-EVENT-WORKSPACE-RECOVERY.md`.
+
 
 ## v0.24.0 — Original Client Journey & Operations Clone
 
