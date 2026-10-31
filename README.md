@@ -1,4 +1,8 @@
 
+## v0.24.0 — Original Client Journey & Operations Clone
+
+Continues direct behavioral parity with the uploaded Sage & Celebration Phase 9 planner. Rebuilds Event Workspace, Guest/RSVP, Financial Center, Questionnaires and Client Portal around the original workflows. Run migration `0022_ORIGINAL_WORKFLOW_CLIENT_GUEST_FINANCIAL_PARITY.sql`.
+
 ## v0.22.1 — Floor Plan Library Rendering Hotfix
 
 - The built-in professional floor-plan catalog now renders immediately, before event/API data finishes loading.
