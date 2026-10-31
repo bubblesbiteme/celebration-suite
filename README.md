@@ -136,3 +136,7 @@ Inventory and Floor Plan were rebuilt against the uploaded Sage & Celebration ph
 
 ## v0.25.0 — Original SaaS Fork Baseline
 Celebration Suite now uses the working Sage & Celebration Event Workspace as the direct planner baseline instead of reconstructing it from disconnected SaaS pages. A unified tenant-safe compatibility endpoint preserves the original workspace contract, with compatibility routes for appointments and guest bulk seating updates. See `docs/V0.25-ORIGINAL-SAAS-FORK-BASELINE.md`. No new database migration is required.
+## v0.26.0 Original Surrounding Modules Fork
+
+This release extends the direct Sage & Celebration SaaS fork to Guest Management, Scheduling/Calendar administration, and Event Day Command Center. It keeps the working original interfaces while translating their server calls to tenant-safe Celebration Suite data. No database migration is required.
+
