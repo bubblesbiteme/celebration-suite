@@ -71,3 +71,8 @@ See `docs/V0.17-GUEST-COMMERCE-QR-TICKETING.md`. Run migration `0017_GUEST_COMME
 
 ## v0.18.0 — QR Inventory + Bulk Media + Reservation Sync
 Adds persistent inventory QR labels, native-camera inventory lookup, bulk CSV inventory import, bulk filename-matched photo uploads, inventory image galleries, and traceable Design Studio approval reservations. Run migration `0018_QR_INVENTORY_BULK_MEDIA_RESERVATIONS.sql` after 0017.
+
+
+## v0.19.0 — Full UI/UX Overhaul
+
+A product-wide usability and visual redesign. Adds persistent planner navigation, task-first Start Here panels, compact responsive working widths, improved cards/forms/tables/empty states, and page-specific guidance for Inventory, Event Inventory, Financials, Guests, Floor Plan, and Design Studio. No database migration is required. See `docs/V0.19-FULL-UI-UX-OVERHAUL.md`.

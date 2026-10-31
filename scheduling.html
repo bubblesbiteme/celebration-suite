@@ -7,4 +7,4 @@ async function editType(id){const x=data.types.find(v=>v.id===id);const name=pro
 async function newAvailability(){const weekday=Number(prompt('Weekday number: Sunday=0, Monday=1 ... Saturday=6','1'));const start_time=prompt('Start time (HH:MM)','09:00');const end_time=prompt('End time (HH:MM)','17:00');await WLP.api('scheduling?kind=availability',{method:'POST',body:JSON.stringify({weekday,start_time,end_time})});load()}
 async function newBlock(){const title=prompt('Reason/title','Unavailable');const starts_at=prompt('Start ISO/date-time','');if(!starts_at)return;const ends_at=prompt('End ISO/date-time','');if(!ends_at)return;await WLP.api('scheduling?kind=block',{method:'POST',body:JSON.stringify({title,starts_at,ends_at})});load()}
 async function del(kind,id){if(!confirm('Delete this record?'))return;await WLP.api(`scheduling?kind=${kind}&id=${encodeURIComponent(id)}`,{method:'DELETE'});load()}load();
-</script></body></html>
+</script><script src="/assets/ui-v019.js"></script></body></html>
