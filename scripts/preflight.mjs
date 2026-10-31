@@ -142,4 +142,23 @@ check('platform admin links launch health',read('platform-admin.html').includes(
 check('new elegant logo mark contains sparkle and botanical accent',read('assets/celebration-suite-mark.svg').includes('#D9BE8C')&&read('assets/celebration-suite-mark.svg').includes('#A9B89A'));
 check('full logo includes Sage and Celebration endorsement',read('assets/celebration-suite-logo.svg').includes('BY SAGE &amp; CELEBRATION'));
 
+
+// v0.11 business-grade operations
+for(const f of ['supabase/migrations/0012_BUSINESS_GRADE_OPERATIONS.sql','purchasing.html','vendor-reviews.html','partner-access.html','partner-portal.html','reconciliation.html','netlify/functions/purchasing.mjs','netlify/functions/vendor-reviews.mjs','netlify/functions/partner-links.mjs','netlify/functions/partner-public.mjs','netlify/functions/reconciliation.mjs','docs/V0.11-BUSINESS-GRADE-OPERATIONS.md'])check(`v0.11 exists ${f}`,exists(f));
+const m12=read('supabase/migrations/0012_BUSINESS_GRADE_OPERATIONS.sql');
+for(const t of ['tenant_vendor_reviews','tenant_purchasing_gaps','tenant_event_day_tasks','tenant_event_incidents','tenant_referral_partner_links','tenant_reconciliation_snapshots'])check(`v0.11 table ${t}`,m12.includes(t));
+check('purchasing API tenant scoped',read('netlify/functions/purchasing.mjs').includes('tenant_id=eq.')&&read('netlify/functions/purchasing.mjs').includes('requirePermission'));
+check('vendor reviews tenant scoped',read('netlify/functions/vendor-reviews.mjs').includes('tenant_id=eq.')&&read('netlify/functions/vendor-reviews.mjs').includes('manage_vendors'));
+check('partner portal uses token access',read('netlify/functions/partner-public.mjs').includes('token=eq.')&&read('partner-portal.html').includes('partner-public?token='));
+check('partner links can be disabled',read('netlify/functions/partner-links.mjs').includes('active:d.active!==false'));
+check('event day supports operational tasks',read('netlify/functions/event-day.mjs').includes("d.kind==='task'")&&read('event-day.html').includes('Run of Show / Tasks'));
+check('event day supports incident log',read('netlify/functions/event-day.mjs').includes("d.kind==='incident'")&&read('event-day.html').includes('Incident Log'));
+check('event day shows live labor',read('event-day.html').includes('Team on the Clock')&&read('netlify/functions/event-day.mjs').includes('tenant_time_entries'));
+check('QuickBooks helper exported for reconciliation',read('netlify/functions/quickbooks.mjs').includes('export async function getQuickBooksSummary'));
+check('reconciliation compares local and QuickBooks',read('netlify/functions/reconciliation.mjs').includes('invoice_delta')&&read('netlify/functions/reconciliation.mjs').includes('balance_delta'));
+check('new operations included in account export',read('netlify/functions/account-export.mjs').includes('tenant_purchasing_gaps')&&read('netlify/functions/account-export.mjs').includes('tenant_event_incidents'));
+check('dashboard links purchasing',read('app.html').includes('/purchasing.html'));
+check('dashboard links reconciliation',read('app.html').includes('/reconciliation.html'));
+check('referrals links partner access',read('referrals.html').includes('/partner-access.html'));
+
 console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);
