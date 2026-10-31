@@ -201,4 +201,26 @@ check('event workspace has richer budget',read('event.html').includes('Proposed'
 check('event book includes design board',read('event-book.html').includes("section('Design Board'"));
 check('account export includes design board config',read('netlify/functions/account-export.mjs').includes('tenant_inspiration_boards'));
 
+
+// v0.14 deep event operations parity
+for(const f of ['supabase/migrations/0015_DEEP_EVENT_OPERATIONS_PARITY.sql','guest-checkin.html','guests.html','floorplan.html','documents.html','closeouts.html','netlify/functions/file-upload.mjs','netlify/functions/document-open.mjs','netlify/functions/event-closeout-run.mjs','docs/V0.14-DEEP-EVENT-OPERATIONS-PARITY.md'])check(`v0.14 exists ${f}`,exists(f));
+const m15=read('supabase/migrations/0015_DEEP_EVENT_OPERATIONS_PARITY.sql');
+for(const c of ['invitation_settings','invitation_code','meal_choices','background_url','tenant_floorplan_versions','version_number','expiration_date','pnl_snapshot','inventory_verified'])check(`v0.14 migration capability ${c}`,m15.includes(c));
+check('guest suite has CSV bulk import',read('guests.html').includes('Import CSV')&&read('netlify/functions/guests.mjs').includes("action==='bulk-import'"));
+check('guest suite sends personalized invites',read('netlify/functions/guests.mjs').includes("action==='send-invite'")&&read('guests.html').includes('Copy Link'));
+check('public RSVP supports meal choices',read('rsvp-public.html').includes('Meal selection')&&read('netlify/functions/rsvp-public.mjs').includes('meal_choices'));
+check('mobile guest checkin exists',read('guest-checkin.html').includes('Event-Day Guest Check-In')&&read('guest-checkin.html').includes("guests?action=checkin"));
+check('floor plan has professional library',read('floorplan.html').includes('Production & Entertainment')&&read('floorplan.html').includes('Master Inventory'));
+check('floor plan supports real dimensions and rotation',read('floorplan.html').includes('Width ft')&&read('floorplan.html').includes('Rotation °'));
+check('floor plan versioning backend exists',read('netlify/functions/floorplans.mjs').includes("action==='version'")&&m15.includes('tenant_floorplan_versions'));
+check('document vault supports 30 MB upload',read('netlify/functions/file-upload.mjs').includes('30*1024*1024'));
+check('document vault supports locked versions and expiry',read('documents.html').includes('Lock permanent record')&&read('netlify/functions/documents.mjs').includes('expiration_date')&&read('netlify/functions/documents.mjs').includes('locked'));
+check('private documents open via fresh signed URLs',read('netlify/functions/document-open.mjs').includes('/storage/v1/object/sign/'));
+check('closeout has P&L and gates',read('netlify/functions/closeouts.mjs').includes('estimated_profit')&&read('netlify/functions/closeouts.mjs').includes('inventory_verified')&&read('closeouts.html').includes('Finalize & Archive'));
+check('daily closeout runner configured',read('netlify.toml').includes('event-closeout-run')&&read('netlify.toml').includes('15 8 * * *'));
+check('dashboard separates archive',read('app.html').includes('Active / Upcoming')&&read('app.html').includes('Archive'));
+check('client portal includes guests and floorplan',read('portal.html').includes("['guests','Invitations & Guests']")&&read('portal.html').includes("['floorplan','Floor Plan']"));
+check('client portal backend returns guests and floorplans',read('netlify/functions/client-portal.mjs').includes('guests,floorplans'));
+check('account export includes floor plan versions and closeouts',read('netlify/functions/account-export.mjs').includes('tenant_floorplan_versions')&&read('netlify/functions/account-export.mjs').includes('tenant_event_closeouts'));
+
 console.log(`\n${pass} checks passed, ${fail} failed`);if(fail)process.exit(1);

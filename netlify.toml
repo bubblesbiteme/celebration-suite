@@ -22,3 +22,6 @@
 
 [functions."automation-run"]
   schedule = "0 * * * *"
+
+[functions."event-closeout-run"]
+  schedule = "15 8 * * *"

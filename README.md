@@ -48,5 +48,5 @@ Adds reusable questionnaires, richer client portal workflows, event inventory pa
 See `docs/V0.12-PLATFORM-CONTROL-INTELLIGENCE.md`.
 
 
-## v0.13.0 Deep Workspace & Design Studio
+## v0.14.0 Deep Workspace & Design Studio
 The parity strategy now ports deep workflows from the original Sage & Celebration portal. This release rebuilds the Inspiration Board as a shared planner/client Design Studio, deepens the Event Workspace, adds per-event client permissions, inventory-linked design reservation reconciliation, image uploads, and design content in the Final Event Book. Run migration `0014_DEEP_WORKSPACE_DESIGN_STUDIO.sql`. See `docs/V0.13-DEEP-WORKSPACE-DESIGN-STUDIO.md`.
