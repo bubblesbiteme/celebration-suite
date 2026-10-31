@@ -121,3 +121,6 @@ Floor Plan catalog rendering hotfix: 134 built-in objects are pre-rendered and v
 - Reworked Easy Mode into a real Simplify / Full Tools state with visible UI changes.
 - Simplified mode hides advanced versioning, measurements, specialty categories, and room settings while showing a four-step guide and common items.
 - Full Tools exposes the complete professional catalog and advanced controls.
+
+## v0.23.0 — Original Workflow Core Clone
+Inventory and Floor Plan were rebuilt against the uploaded Sage & Celebration phase-9 code as the behavioral source of truth. Run `supabase/migrations/0021_ORIGINAL_CORE_WORKFLOW_CLONE.sql` after migration 0020. See `docs/V0.23-ORIGINAL-WORKFLOW-CORE-CLONE.md`.

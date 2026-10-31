@@ -12,7 +12,7 @@ const eventFn=read('netlify/functions/events.mjs');check('event API scopes by te
 for(const f of ['vendors.mjs','inventory.mjs','guests.mjs','appointments.mjs','approvals.mjs','registrations.mjs','floorplans.mjs','event-day.mjs']){const s=read('netlify/functions/'+f);check(`${f} requires active license`,s.includes('requireActive(ctx)'));check(`${f} tenant scoped`,s.includes('ctx.tenant.id'));}
 check('inventory enforces same-date availability',read('netlify/functions/inventory.mjs').includes('used+qty+designQty>Number(item.quantity||0)')&&read('netlify/functions/inventory.mjs').includes('available for manual reservation on that event date'));check('public RSVP tokenized',read('netlify/functions/rsvp-public.mjs').includes('client_portal_token=eq.'));check('public approval tokenized',read('netlify/functions/approval-public.mjs').includes('public_token=eq.'));check('public registration tokenized',read('netlify/functions/registration-public.mjs').includes('public_token=eq.'));check('paid registration uses tenant Stripe',read('netlify/functions/registration-public.mjs').includes('kind=eq.stripe'));check('paid registration verifies tenant metadata',read('netlify/functions/registration-verify.mjs').includes("metadata?.tenant_id!==reg.tenant_id"));check('event day tenant scoped',read('netlify/functions/event-day.mjs').includes('event_id=eq.${encodeURIComponent(eventId)}'));
 const settings=read('netlify/functions/tenant-settings.mjs');check('integration credentials encrypted',settings.includes('encrypt(JSON.stringify'));const env=read('.env.example');check('separate secrets documented',env.includes('INTEGRATION_ENCRYPTION_KEY')&&env.includes('PLATFORM_ADMIN_KEY'));
-const htmls=fs.readdirSync(root).filter(x=>x.endsWith('.html'));const all=htmls.map(x=>read(x)).join('\n');const tenantFacing=['app.html','event.html','portal.html','proposal-public.html','contract-public.html','rsvp-public.html','approval-public.html','registration-public.html','staff-invite.html'];const tenantFacingText=tenantFacing.map(x=>read(x)).join('\n');check('Sage seller branding stays out of tenant-facing white-label pages',!/(Sage\s*&\s*Celebration|sageandcelebration|702-827-7340)/i.test(tenantFacingText));check('Celebration Suite seller identity present',/Celebration Suite/.test(read('index.html'))&&/Sage\s*&amp;\s*Celebration LLC/.test(read('index.html')));check('dashboard links advanced tools',v3pages.filter(x=>!x.includes('public')).slice(0,8).every(x=>read('app.html').includes('/'+x)));check('event workspace links event day',read('event.html').includes('/event-day.html?event_id='));check('floor plan supports dragging',read('floorplan.html').includes('onpointermove')&&read('floorplan.html').includes('floorplans'));check('guest page shares RSVP link',read('guests.html').includes('/rsvp-public.html?token='));check('registration page shares public link',read('registration.html').includes('data.public_url')&&read('registration.html').includes('Copy Ticket Sales Link'));check('event day supports guest and ticket check-in',read('event-day.html').includes("checkin('guest'")&&read('event-day.html').includes("checkin('ticket'"));
+const htmls=fs.readdirSync(root).filter(x=>x.endsWith('.html'));const all=htmls.map(x=>read(x)).join('\n');const tenantFacing=['app.html','event.html','portal.html','proposal-public.html','contract-public.html','rsvp-public.html','approval-public.html','registration-public.html','staff-invite.html'];const tenantFacingText=tenantFacing.map(x=>read(x)).join('\n');check('Sage seller branding stays out of tenant-facing white-label pages',!/(Sage\s*&\s*Celebration|sageandcelebration|702-827-7340)/i.test(tenantFacingText));check('Celebration Suite seller identity present',/Celebration Suite/.test(read('index.html'))&&/Sage\s*&amp;\s*Celebration LLC/.test(read('index.html')));check('dashboard links advanced tools',v3pages.filter(x=>!x.includes('public')).slice(0,8).every(x=>read('app.html').includes('/'+x)));check('event workspace links event day',read('event.html').includes('/event-day.html?event_id='));check('floor plan supports original palette drag and placed-object movement',read('floorplan.html').includes('ondragstart')&&read('floorplan.html').includes('ondrop')&&read('floorplan.html').includes('onpointerdown')&&read('floorplan.html').includes('floorplans'));check('guest page shares RSVP link',read('guests.html').includes('/rsvp-public.html?token='));check('registration page shares public link',read('registration.html').includes('data.public_url')&&read('registration.html').includes('Copy Ticket Sales Link'));check('event day supports guest and ticket check-in',read('event-day.html').includes("checkin('guest'")&&read('event-day.html').includes("checkin('ticket'"));
 
 const v4pages=['team.html','staff-invite.html','time-tracking.html','automations.html','closeouts.html'];
 const v4fns=['team.mjs','staff-invite.mjs','time-entries.mjs','automations.mjs','automation-run.mjs','closeouts.mjs','_automation-engine.mjs'];
@@ -210,8 +210,8 @@ check('guest suite has CSV bulk import',read('guests.html').includes('Import CSV
 check('guest suite sends personalized invites',read('netlify/functions/guests.mjs').includes("action==='send-invite'")&&read('guests.html').includes('Copy Link'));
 check('public RSVP supports meal choices',read('rsvp-public.html').includes('Meal selection')&&read('netlify/functions/rsvp-public.mjs').includes('meal_choices'));
 check('mobile guest checkin exists',read('guest-checkin.html').includes('QR Guest Check-In')&&read('guest-checkin.html').includes('qr-checkin'));
-check('floor plan has professional library',read('floorplan.html').includes('Production & Entertainment')&&read('floorplan.html').includes('Master Inventory'));
-check('floor plan supports real dimensions and rotation',read('floorplan.html').includes('Width ft')&&read('floorplan.html').includes('Rotation °'));
+check('floor plan has original professional library',read('floorplan.html').includes('Production & Entertainment')&&read('floorplan.html').includes('Ceremony & Wedding')&&read('floorplan.html').includes('Room & Logistics'));
+check('floor plan supports room dimensions rotation and item dimensions',read('floorplan.html').includes('Room width (ft)')&&read('floorplan.html').includes('Rotate 45°')&&read('floorplan.html').includes('Width px'));
 check('floor plan versioning backend exists',read('netlify/functions/floorplans.mjs').includes("action==='version'")&&m15.includes('tenant_floorplan_versions'));
 check('document vault supports 30 MB upload',read('netlify/functions/file-upload.mjs').includes('30*1024*1024'));
 check('document vault supports locked versions and expiry',read('documents.html').includes('Lock permanent record')&&read('netlify/functions/documents.mjs').includes('expiration_date')&&read('netlify/functions/documents.mjs').includes('locked'));
@@ -248,11 +248,11 @@ for(const f of ['docs/V0.16-CHILD-SIMPLE-UX-FLOORPLAN.md'])check(`v0.16 exists $
 check('dashboard has task-first easy actions',read('app.html').includes('What are you working on today?')&&read('app.html').includes('Make a floor plan'));
 check('floor plan is primary dashboard shortcut',read('app.html').includes('🪑 Floor Plan Maker'));
 check('event workspace promotes floor plan',read('event.html').includes('id="floorQuick"')&&read('event.html').includes('/floorplan.html?event_id='));
-check('floor plan has child-simple start controls',read('floorplan.html').includes('Guest table')&&read('floorplan.html').includes('Banquet table')&&read('floorplan.html').includes('Venue plan'));
+check('floor plan uses original drag-or-tap guidance',read('floorplan.html').includes('Drag an item from the library onto the room, or tap it to add'));
 check('global task launcher remains available',read('assets/app.js').includes('What do you want to do?')&&read('assets/app.js').includes('easyOpen'));
 check('easy mode toggle removed',!read('assets/app.js').includes('easyModeToggle')&&!read('assets/app.js').includes('cs-easy-mode')&&!read('assets/app.js').includes('simple-mode'));
-check('floorplan uses pointer-driven library drag',read('floorplan.html').includes('bindLibraryPointerDrag')&&read('floorplan.html').includes('library-drag-ghost'));
-check('floorplan library drag drops by coordinates',read('floorplan.html').includes('endPalettePointerDrag')&&read('floorplan.html').includes('getBoundingClientRect'));
+check('floorplan uses original native library drag',read('floorplan.html').includes("setData('text/floor-type'")&&read('floorplan.html').includes("getData('text/floor-type'"));
+check('floorplan library drag drops by coordinates',read('floorplan.html').includes('(e.clientX-r.left)/r.width')&&read('floorplan.html').includes('(e.clientY-r.top)/r.height'));
 
 
 // v0.17 Guest Commerce, QR Ticketing & unified check-in
@@ -274,11 +274,11 @@ check('account export includes ticket commerce',read('netlify/functions/account-
 for(const f of ['supabase/migrations/0018_QR_INVENTORY_BULK_MEDIA_RESERVATIONS.sql','netlify/functions/inventory-image-upload.mjs','docs/V0.18-QR-INVENTORY-BULK-MEDIA-RESERVATIONS.md'])check(`v0.18 exists ${f}`,exists(f));
 const m18=read('supabase/migrations/0018_QR_INVENTORY_BULK_MEDIA_RESERVATIONS.sql');
 for(const c of ['qr_code','tenant_inventory_images','tenant_inventory_import_batches','design_item_ids','celebration-suite-inventory'])check(`v0.18 capability ${c}`,m18.includes(c));
-check('inventory bulk CSV import exists',read('inventory.html').includes('Bulk Inventory Upload')&&read('netlify/functions/inventory.mjs').includes("action==='bulk-import'"));
-check('bulk photo matching exists',read('inventory.html').includes('Match & Upload Photos')&&read('netlify/functions/inventory.mjs').includes("action==='match-photo'"));
+check('inventory bulk CSV import exists',read('inventory.html').includes('Bulk inventory CSV import')&&read('netlify/functions/inventory.mjs').includes("action==='bulk-import'"));
+check('bulk photo matching exists',read('inventory.html').includes('Match & upload photos')&&read('netlify/functions/inventory.mjs').includes("action==='match-photo'"));
 check('inventory photo upload syncs primary image',read('netlify/functions/inventory-image-upload.mjs').includes('image_url:url')&&read('netlify/functions/inventory-image-upload.mjs').includes('tenant_inventory_images'));
-check('inventory QR labels are 2x2',read('inventory.html').includes('width:2in;height:2in')&&read('inventory.html').includes('Print QR Labels'));
-check('inventory scanner uses camera',read('inventory-scan.html').includes('Html5Qrcode')&&read('inventory-scan.html').includes('Storage location'));
+check('inventory QR labels are 2x2',read('inventory.html').includes('width:2in;height:2in')&&read('inventory.html').includes('QR label'));
+check('inventory QR phone lookup matches original flow',read('inventory-scan.html').includes('STORAGE LOCATION')&&read('inventory-scan.html').includes('action=lookup&code='));
 check('design reservation stores source design ids',read('netlify/functions/inspiration.mjs').includes('design_item_ids:designIds')&&read('netlify/functions/client-portal.mjs').includes('design_item_ids:designIds'));
 check('event inventory separates manual and approved design',read('event-inventory.html').includes('Approved Design')&&read('event-inventory.html').includes('manual_quantity'));
 check('account export includes inventory media and import batches',read('netlify/functions/account-export.mjs').includes('tenant_inventory_images')&&read('netlify/functions/account-export.mjs').includes('tenant_inventory_import_batches'));
@@ -294,7 +294,7 @@ check('staff operations checks conflicts',read('netlify/functions/staff-operatio
 check('inventory operations preserve movement history',read('netlify/functions/inventory-operations.mjs').includes('tenant_inventory_movements')&&read('event-inventory.html').includes('Return'));
 check('inventory reservation calendar exists',read('inventory-reservation-calendar.html').includes('Reservation Calendar'));
 check('questionnaire analysis creates planning checklist',read('netlify/functions/questionnaire-tools.mjs').includes('create-plan')&&read('questionnaires.html').includes('Create Plan'));
-check('floor plans support multiple layout operations',read('netlify/functions/floorplans.mjs').includes("action==='duplicate'")&&read('floorplan.html').includes('Duplicate')&&read('floorplan.html').includes('Client can edit'));
+check('floor plans support multiple layout operations',read('netlify/functions/floorplans.mjs').includes("action==='duplicate'")&&read('floorplan.html').includes('+ New layout')&&read('floorplan.html').includes('Rename')&&read('floorplan.html').includes('Delete'));
 check('client can update shared floorplan objects',read('netlify/functions/client-portal.mjs').includes("d.action==='floorplan-object-update'")&&read('portal.html').includes('Save layout changes'));
 check('event finances separate service fee and decor allowance',read('financials.html').includes('Service Fee')&&read('financials.html').includes('Decor Allowance')&&read('netlify/functions/financials.mjs').includes('estimated_service_profit'));
 check('event book has three packet modes',read('event-book.html').includes('Staff Production Book')&&read('event-book.html').includes('Vendor Packet')&&read('event-book.html').includes('Client Final Details'));
@@ -320,11 +320,18 @@ check('workspace timeline has calendar mode',read('event.html').includes("timeli
 check('PWA shell exists',read('assets/app.js').includes("serviceWorker.register('/sw.js')")&&read('manifest.webmanifest').includes('standalone'));
 check('export includes vendor operations',read('netlify/functions/account-export.mjs').includes('tenant_vendor_operations')&&read('netlify/functions/account-export.mjs').includes('tenant_event_emergency_contacts'));
 
+
+check('v0.23 migration exists',exists('supabase/migrations/0021_ORIGINAL_CORE_WORKFLOW_CLONE.sql'));
+check('v0.23 inventory add form is inline',read('inventory.html').includes('Add inventory item')&&read('inventory.html').includes('Automatically reserve from floor plan'));
+check('v0.23 inventory save creates QR-ready record',read('netlify/functions/inventory.mjs').includes('autoSku')&&read('netlify/functions/inventory.mjs').includes('qr_code:qrcode'));
+check('v0.23 floorplan syncs linked inventory',exists('netlify/functions/floorplan-inventory-sync.mjs')&&read('floorplan.html').includes('floorplan-inventory-sync'));
+check('v0.23 floorplan matches original save/share model',read('floorplan.html').includes('Save + Share')&&read('floorplan.html').includes('Print / PDF')&&read('floorplan.html').includes('Measure distance'));
+
 const fp22=read('floorplan.html');
 check('v0.22 floorplan removes duplicate start-here sections',(fp22.match(/Start here/g)||[]).length<=1);
 check('v0.22 floorplan has pro catalog',fp22.includes('Decor & Floral')&&fp22.includes('Outdoor & Specialty')&&fp22.includes('Guest Experience'));
-check('v0.22 floorplan has starter layouts',fp22.includes('Wedding reception')&&fp22.includes('Gala / fundraiser')&&fp22.includes('applyStarter'));
-check('v0.22 floorplan has favorites recent and inventory',fp22.includes('Favorites')&&fp22.includes('Recently used')&&fp22.includes('Master Inventory'));
-check('v0.22 floorplan has snap grid controls',fp22.includes('snapToggle')&&fp22.includes('gridToggle'));
+check('v0.23 removes non-original starter-template behavior',!read('floorplan.html').includes('Starter layout'));
+check('v0.23 restores original category accordion library',read('floorplan.html').includes('<details')&&read('floorplan.html').includes('palette-grid'));
+check('v0.23 floorplan has original snap-to-grid control',read('floorplan.html').includes('snapToggle')&&read('floorplan.html').includes('Snap to grid'));
 console.log(`\n${pass} checks passed, ${fail} failed`);
 if(fail)process.exit(1);
