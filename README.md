@@ -105,3 +105,7 @@ This release uses the uploaded Sage & Celebration Phase 12 build as the source-o
 - Installable PWA shell with service worker and offline fallback.
 - Backup/export includes vendor operations and emergency contacts.
 - Run migration `0020_DEEP_OPERATIONS_WORKSPACE_PARITY.sql`.
+
+
+## v0.22.2
+Floor Plan catalog rendering hotfix: 134 built-in objects are pre-rendered and visible before any API call.
