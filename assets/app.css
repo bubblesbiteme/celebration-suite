@@ -226,3 +226,18 @@ body[data-page="event"] main{max-width:1220px!important}body[data-page="event"] 
 
 /* v0.22.3 Easy Mode clarity */
 
+
+/* v0.24.3 dashboard information architecture cleanup */
+body[data-page="app"] .layout{grid-template-columns:210px minmax(0,1fr)}
+body[data-page="app"] .sidebar{padding:18px 14px}
+body[data-page="app"] .nav{gap:2px}
+body[data-page="app"] .nav-group{margin:0 0 18px;padding:0;border:0}
+body[data-page="app"] .nav-label{margin:0 10px 7px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#8b808d;font-weight:900}
+body[data-page="app"] .nav a,body[data-page="app"] .nav button{min-height:42px;padding:10px 11px;border-radius:11px;font-size:14px}
+body[data-page="app"] main{max-width:1180px;width:100%;margin:0 auto;padding:34px 34px 60px}
+body[data-page="app"] #events.panel{padding:0;background:transparent;box-shadow:none;border:0}
+body[data-page="app"] .page-head{align-items:end;margin:0 0 24px}
+body[data-page="app"] #eventGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+body[data-page="app"] .event-card{min-height:190px}
+body[data-page="app"] .top-actions .btn{border-radius:10px}
+@media(max-width:900px){body[data-page="app"] .layout{display:block}body[data-page="app"] .sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--cs-line)}body[data-page="app"] .nav{grid-template-columns:repeat(3,1fr)}body[data-page="app"] .nav-group{display:contents}body[data-page="app"] .nav-label{display:none}body[data-page="app"] main{padding:22px 16px}body[data-page="app"] #eventGrid{grid-template-columns:1fr}}

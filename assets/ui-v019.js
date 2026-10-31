@@ -1,7 +1,7 @@
 (()=>{
   const path=(location.pathname.split('/').pop()||'app.html').toLowerCase();
   const publicPages=['index.html','login.html','register.html','forgot-password.html','reset-password.html','pricing.html','privacy.html','terms.html','eula.html','proposal-public.html','contract-public.html','approval-public.html','change-order-public.html','questionnaire-public.html','registration-public.html','rsvp-public.html','ticket.html','portal.html','client-login.html','partner-portal.html','platform-login.html','activate.html','checkout-success.html','license-expired.html','demo.html'];
-  if(publicPages.includes(path))return;
+  if(publicPages.includes(path)||path==='app.html')return;
   document.body.classList.add('cs-app-shell');
   document.body.dataset.page=path.replace('.html','');
   const items=[
