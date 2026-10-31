@@ -39,3 +39,6 @@ Celebration Suite now includes local-first + secure autosave, 45-second live ref
 
 ## v0.7.3 annual subscription hotfix
 Annual Unlimited now uses true recurring yearly Stripe subscription checkout. Monthly/Annual plan switches cancel the prior subscription to prevent duplicate billing. Single Event remains one-time. No database migration is required.
+
+## v0.10 Client Workflow & Event Operations
+Adds reusable questionnaires, richer client portal workflows, event inventory packing/check-out/return operations, printable Final Event Book, support issue tracking, expanded backup export coverage, and vendor-linked documents. Run migration `0011_CLIENT_WORKFLOW_EVENT_OPERATIONS.sql` after 0010.
