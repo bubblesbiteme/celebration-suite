@@ -8,7 +8,7 @@
 </head>
 <body><header class="top"><div class="brand">SAGE & CELEBRATION · LIVE EVENT</div><div class="actions"><a id="backLink" class="btn small" href="/app.html">← Return to Workspace</a><button class="btn small" id="refresh">Refresh</button></div></header><main class="page"><section id="hero" class="hero"><div class="empty">Loading command center…</div></section><section id="content"></section></main>
 <nav class="bottom-nav"><a href="#run">Run</a><a href="#arrivals">Arrivals</a><a href="#checklists">Lists</a><a href="#guests">Guests</a><a href="#inventory">Inventory</a><a href="#issues">Issues</a></nav><div id="toast" class="toast hidden"></div>
-<script src="/assets/runtime-compat.js"></script><script>
+<script src="/assets/runtime-compat.js"></script><script src="/assets/tenant-branding.js"></script><script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const qs=new URLSearchParams(location.search);const id=qs.get('id')||qs.get('event_id')||qs.get('booking_id');let data=null;$('#backLink').href=`/event-workspace.html?id=${encodeURIComponent(id||'')}`;
 function toast(m,bad=false){const t=$('#toast');t.textContent=m;t.style.background=bad?'#a33':'#171717';t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2800)}

@@ -84,3 +84,10 @@ window.CSInstallApp=async()=>{if(!csInstallPrompt)return false;csInstallPrompt.p
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',addHelp); else addHelp();
 })();
+
+// v0.32 planner-wide white-label branding. Product/auth/platform-owner pages opt out.
+(()=>{
+  const excluded=new Set(['/index.html','/pricing.html','/register.html','/login.html','/activate.html','/platform-admin.html','/platform-login.html','/privacy.html','/terms.html','/eula.html']);
+  const run=()=>{if(!excluded.has(location.pathname)&&window.CSBrand?.loadPlanner)CSBrand.loadPlanner()};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+})();

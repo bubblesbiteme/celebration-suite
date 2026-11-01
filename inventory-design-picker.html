@@ -4,7 +4,7 @@
 </style></head><body>
 <header class="top"><h1>Choose inventory for the inspiration board</h1><p>Propose an item and quantity to your client. Adding it here does not reserve stock until the design is approved.</p></header>
 <main class="wrap"><a id="back" class="back" href="/app.html">← Back to event workspace</a><section class="panel"><div class="toolbar"><label>Search inventory<input id="filter" type="search" placeholder="SKU, item name, category, storage location"></label><div id="count" class="count"></div></div><div id="msg" class="msg" role="status"></div><div id="items" class="grid"></div></section></main>
-<script src="/assets/runtime-compat.js"></script><script>
+<script src="/assets/runtime-compat.js"></script><script src="/assets/tenant-branding.js"></script><script>
 const params=new URLSearchParams(location.search);const eventId=params.get('booking_id')||params.get('event_id')||params.get('id')||'';
 const root=document.getElementById('items'),msg=document.getElementById('msg'),filter=document.getElementById('filter'),count=document.getElementById('count'),back=document.getElementById('back');
 back.href=eventId?'/event-workspace.html?id='+encodeURIComponent(eventId)+'&tab=design':'/app.html';
