@@ -42,3 +42,45 @@ window.WLP={$, $$, api, esc, fmtDate};
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
 let csInstallPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();csInstallPrompt=e;document.documentElement.dataset.installable='1';});
 window.CSInstallApp=async()=>{if(!csInstallPrompt)return false;csInstallPrompt.prompt();await csInstallPrompt.userChoice;csInstallPrompt=null;document.documentElement.dataset.installable='0';return true};
+
+// v0.29 contextual help / knowledge base
+(()=>{
+  const pageHelp={
+    '/app.html':'dashboard-events','/planner-dashboard.html':'dashboard-events','/my-events.html':'dashboard-events',
+    '/event.html':'event-workspace','/event-workspace.html':'event-workspace',
+    '/portal.html':'client-portal','/client-login.html':'client-portal','/portal-login.html':'client-portal','/client-security.html':'security',
+    '/inspiration.html':'design-studio','/inventory-design-picker.html':'inventory-picker-design','/floorplan.html':'floor-plan',
+    '/inventory.html':'inventory-master','/inventory-admin.html':'inventory-master','/inventory-scan.html':'inventory-qr','/inventory-reservation-calendar.html':'inventory-reservations','/inventory-reservation-calendar-admin.html':'inventory-reservations','/event-inventory.html':'inventory-reservations','/inventory-event-sheet.html':'inventory-reservations',
+    '/guests.html':'guests','/guests-admin.html':'guests','/guest-checkin.html':'guest-checkin','/rsvp-public.html':'rsvp-settings',
+    '/registration.html':'ticketing','/registration-admin.html':'ticketing','/registration-public.html':'ticketing','/ticket.html':'ticketing',
+    '/financials.html':'financials','/financials-admin.html':'financials','/pay-invoice.html':'financials',
+    '/vendors.html':'vendors','/vendors-admin.html':'vendors','/vendor-operations.html':'vendors','/vendor-reviews.html':'vendors','/vendor-quotes.html':'vendor-quotes','/vendor-document-vault.html':'documents',
+    '/communications.html':'communications','/communications-admin.html':'communications',
+    '/calendar.html':'calendar','/scheduling.html':'calendar','/scheduling-admin.html':'calendar','/appointments.html':'calendar',
+    '/accounting.html':'quickbooks','/quickbooks-admin.html':'quickbooks','/reconciliation.html':'quickbooks',
+    '/team.html':'team','/team-admin.html':'team','/staff-invite.html':'team','/staff-operations.html':'staff-scheduling','/staff-events.html':'staff-scheduling','/time-tracking.html':'staff-scheduling',
+    '/documents.html':'documents','/agreement-vault.html':'documents',
+    '/questionnaires.html':'questionnaires','/questionnaire-public.html':'questionnaires',
+    '/approvals.html':'approvals','/approval-public.html':'approvals','/change-orders.html':'approvals','/change-order-public.html':'approvals',
+    '/event-day.html':'event-day','/event-day-command.html':'event-day','/event-book.html':'event-book','/event-book-admin.html':'event-book','/closeouts.html':'closeout','/event-closeout.html':'closeout',
+    '/settings.html':'branding','/security.html':'security','/forgot-password.html':'security','/reset-password.html':'security','/backup.html':'backup','/backup-admin.html':'backup','/restore-admin.html':'backup',
+    '/support.html':'support','/platform-admin.html':'platform-admin','/platform-login.html':'platform-admin',
+    '/billing.html':'getting-started','/onboarding.html':'getting-started','/integration-center.html':'getting-started','/integrations-admin.html':'getting-started','/automations.html':'getting-started',
+    '/crm.html':'dashboard-events','/leads-admin.html':'dashboard-events','/proposals.html':'financials','/proposals-admin.html':'financials','/proposal-public.html':'financials',
+    '/audit.html':'platform-admin','/notifications.html':'getting-started','/system-health.html':'platform-admin','/launch-health.html':'platform-admin','/support-admin.html':'platform-admin',
+    '/referrals.html':'financials','/purchasing.html':'inventory-reservations','/partner-portal.html':'vendors','/partner-access.html':'vendors'
+  };
+  function addHelp(){
+    if(location.pathname==='/knowledge-base.html'||location.pathname==='/getting-started.html') return;
+    const id=pageHelp[location.pathname]||'getting-started';
+    const href='/knowledge-base.html?article='+encodeURIComponent(id);
+    if(document.querySelector('[data-context-help]')) return;
+    const a=document.createElement('a');a.href=href;a.className='btn';a.dataset.contextHelp='1';a.textContent='? Help';a.title='Help for this page';
+    const actions=document.querySelector('.top-actions');
+    if(actions){actions.insertBefore(a,actions.firstChild);return;}
+    const topbar=document.querySelector('.topbar,header');
+    if(topbar){a.style.marginLeft='auto';topbar.appendChild(a);return;}
+    a.style.cssText='position:fixed;right:18px;bottom:18px;z-index:9998;text-decoration:none';document.body.appendChild(a);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',addHelp); else addHelp();
+})();

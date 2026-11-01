@@ -157,3 +157,14 @@ This release extends the direct Sage & Celebration SaaS fork to Guest Management
 Run `supabase/migrations/0023_PLATFORM_ADMIN_OBSERVABILITY.sql` after the existing migrations. The Platform Owner Console is available at `/platform-admin.html` and now includes tenant/user lookup, last-login visibility, support tickets, activity logs, integrations, licenses, and runtime error diagnostics.
 
 A new site-wide runtime compatibility layer prevents legacy Sage pages from failing when browsers do not expose element IDs as globals. `tools/audit-runtime-globals.mjs` is the release preflight for this bug class.
+
+## v0.28.2 - Client Portal Branding & Preview Recovery
+- Client Portal now applies tenant business name, logo, primary, secondary and accent colors.
+- Tenant-facing logo fallback is business initials, never Sage & Celebration artwork.
+- Planner Preview Client Portal uses a secure read-only planner preview path instead of requiring a client session.
+- Real client sessions remain unchanged.
+- Event Workspace and event.html use tenant branding and no longer hard-code /assets/logo.png.
+- event.html is synchronized with event-workspace.html to prevent route drift.
+
+## v0.29.0 — Knowledge Base & Getting Started
+Adds `/getting-started.html`, `/knowledge-base.html`, contextual page help, setup/integration walkthroughs, troubleshooting guidance, and Support/Settings links. No database migration required.

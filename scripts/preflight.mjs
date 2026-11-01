@@ -92,7 +92,7 @@ check('client draft endpoint scopes event access',clientDraft.includes('tenant_c
 check('client portal refreshes every 45 seconds',portalV61.includes('},45000)'));
 check('client portal refreshes on focus and visibility',portalV61.includes("window.addEventListener('focus'")&&portalV61.includes("visibilitychange"));
 check('client portal pauses refresh during dirty active edit',portalV61.includes("Editing — refresh paused"));
-check('client message local autosave on input',portalV61.includes('storeLocalDraft()')&&portalV61.includes("messageBody.addEventListener('input'"));
+check('client message local autosave on input',portalV61.includes('storeLocalDraft()')&&(portalV61.includes("messageBody.addEventListener('input'")||portalV61.includes("messageBody?.addEventListener('input'")));
 check('client message secure cloud autosave after 2.5 seconds',portalV61.includes('setTimeout(run,2500)')&&portalV61.includes("client-draft?token="));
 check('client draft newer local or cloud recovery',portalV61.includes('localTime>=remoteTime'));
 check('client draft clears after successful send',portalV61.includes("method:'DELETE'"));
