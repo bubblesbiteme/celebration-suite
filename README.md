@@ -1,4 +1,11 @@
-# Celebration Suite v0.31.0
+# Celebration Suite v0.33.0
+
+## v0.33.0 — Release Candidate Readiness & End-to-End Reliability
+
+This release focuses on stability rather than broad new feature work. It adds tenant Account Health, platform-wide tenant health diagnostics, data-integrity warnings, platform support-snapshot export, integration diagnostics, expanded release-candidate audits, and critical interaction smoke contracts. The existing direct-fork planner/client workflows, two-way collaboration, branding, knowledge base, and client access model remain intact.
+
+No database migration is required for v0.33.0.
+
 
 Original Client Portal Parity & Access. The original Sage client portal is now the client-facing baseline, backed by tenant-safe compatibility actions and shared planner/client records. Adds event-specific client invitation links, permanent tenant website login URLs, copyable website button HTML, two-way Inspiration/Floor Plan/Documents/Messages collaboration, and dedicated portal parity audits. If not already applied, run migrations `0024_PLATFORM_ADMIN_ACTIONS.sql` and `0025_SHARED_EVENT_COLLABORATION.sql`.
 

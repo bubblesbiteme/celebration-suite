@@ -65,7 +65,7 @@ window.CSInstallApp=async()=>{if(!csInstallPrompt)return false;csInstallPrompt.p
     '/event-day.html':'event-day','/event-day-command.html':'event-day','/event-book.html':'event-book','/event-book-admin.html':'event-book','/closeouts.html':'closeout','/event-closeout.html':'closeout',
     '/settings.html':'branding','/security.html':'security','/forgot-password.html':'security','/reset-password.html':'security','/backup.html':'backup','/backup-admin.html':'backup','/restore-admin.html':'backup',
     '/support.html':'support','/platform-admin.html':'platform-admin','/platform-login.html':'platform-admin',
-    '/billing.html':'getting-started','/onboarding.html':'getting-started','/integration-center.html':'getting-started','/integrations-admin.html':'getting-started','/automations.html':'getting-started',
+    '/billing.html':'getting-started','/onboarding.html':'getting-started','/integration-center.html':'getting-started','/integration-health.html':'getting-started','/integrations-admin.html':'getting-started','/automations.html':'getting-started',
     '/crm.html':'dashboard-events','/leads-admin.html':'dashboard-events','/proposals.html':'financials','/proposals-admin.html':'financials','/proposal-public.html':'financials',
     '/audit.html':'platform-admin','/notifications.html':'getting-started','/system-health.html':'platform-admin','/launch-health.html':'platform-admin','/support-admin.html':'platform-admin',
     '/referrals.html':'financials','/purchasing.html':'inventory-reservations','/partner-portal.html':'vendors','/partner-access.html':'vendors'

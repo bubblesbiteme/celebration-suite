@@ -333,5 +333,16 @@ check('v0.22 floorplan has pro catalog',fp22.includes('Decor & Floral')&&fp22.in
 check('v0.23 removes non-original starter-template behavior',!read('floorplan.html').includes('Starter layout'));
 check('v0.23 restores original category accordion library',read('floorplan.html').includes('<details')&&read('floorplan.html').includes('palette-grid'));
 check('v0.23 floorplan has original snap-to-grid control',read('floorplan.html').includes('snapToggle')&&read('floorplan.html').includes('Snap to grid'));
+
+// v0.33 release-candidate hardening
+for(const f of ['integration-health.html','netlify/functions/tenant-health.mjs','netlify/functions/platform-health.mjs','tools/audit-release-candidate.mjs','tools/smoke-critical-pages.mjs'])check(`v0.33 exists ${f}`,exists(f));
+check('v0.33 platform admin exposes account health',read('platform-admin.html').includes('Account Health')&&read('platform-admin.html').includes('/.netlify/functions/platform-health'));
+check('v0.33 platform admin exports tenant support snapshot',read('platform-admin.html').includes('Export support snapshot')&&read('netlify/functions/platform-observability.mjs').includes("action==='export'"));
+check('v0.33 tenant account health shows integrations',read('integration-health.html').includes('Connected services')&&read('netlify/functions/tenant-health.mjs').includes('Google Calendar')&&read('netlify/functions/tenant-health.mjs').includes('QuickBooks'));
+check('v0.33 account health tracks webhook failures',read('netlify/functions/tenant-health.mjs').includes('failures_7d')&&read('netlify/functions/platform-health.mjs').includes('webhook_failures_7d'));
+check('v0.33 platform health includes data integrity checks',read('netlify/functions/platform-health.mjs').includes('orphan_client_access')&&read('netlify/functions/platform-health.mjs').includes('over_quantity_reservations')&&read('netlify/functions/platform-health.mjs').includes('orphan_floorplans'));
+check('v0.33 settings links integration health',read('settings.html').includes('/integration-health.html'));
+check('v0.33 workspace More Tools closes after navigation',read('event-workspace.html').includes('details.open=false')||read('event-workspace.html').includes("removeAttribute('open')"));
+
 console.log(`\n${pass} checks passed, ${fail} failed`);
 if(fail)process.exit(1);
