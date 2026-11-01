@@ -91,11 +91,11 @@ check('client draft endpoint checks client session',clientDraft.includes('readCl
 check('client draft endpoint scopes event access',clientDraft.includes('tenant_client_event_access'));
 check('client portal refreshes every 45 seconds',portalV61.includes('},45000)'));
 check('client portal refreshes on focus and visibility',portalV61.includes("window.addEventListener('focus'")&&portalV61.includes("visibilitychange"));
-check('client portal pauses refresh during dirty active edit',portalV61.includes("Editing — refresh paused"));
-check('client message local autosave on input',portalV61.includes('storeLocalDraft()')&&(portalV61.includes("messageBody.addEventListener('input'")||portalV61.includes("messageBody?.addEventListener('input'")));
-check('client message secure cloud autosave after 2.5 seconds',portalV61.includes('setTimeout(run,2500)')&&portalV61.includes("client-draft?token="));
-check('client draft newer local or cloud recovery',portalV61.includes('localTime>=remoteTime'));
-check('client draft clears after successful send',portalV61.includes("method:'DELETE'"));
+check('client portal pauses refresh during dirty questionnaire edit',portalV61.includes('Editing questionnaire — refresh paused')&&portalV61.includes('data-dirty="1"'));
+check('client messages use shared event thread',read('netlify/functions/client-data.mjs').includes('tenant_messages')&&portalV61.includes("api('add-message'"));
+check('client portal refreshes shared changes automatically',portalV61.includes('setInterval')&&portalV61.includes('45000')&&portalV61.includes("window.addEventListener('focus'"));
+check('questionnaire draft flow persists through shared client backend',portalV61.includes('save-questionnaire-draft')&&read('netlify/functions/client-data.mjs').includes("action==='save-questionnaire-draft'"));
+check('client message send returns refreshed shared portal state',read('netlify/functions/client-data.mjs').includes("action==='add-message'")&&read('netlify/functions/client-data.mjs').includes('tenant_messages'));
 check('event workspace recovery cache exists',eventV61.includes('sessionStorage.setItem(EVENT_CACHE_KEY')&&eventV61.includes('restoreEventCache()'));
 check('event workspace saves mutations immediately through unified API',read('netlify/functions/event-workspace.mjs').includes("action==='task-create'")&&read('netlify/functions/event-workspace.mjs').includes("action==='timeline-create'")&&read('netlify/functions/event-workspace.mjs').includes("action==='design-layout-save'"));
 check('event workspace restores cached state before refresh',eventV61.includes('restoreEventCache()')&&eventV61.includes('Refreshing…'));
@@ -194,8 +194,8 @@ check('design studio supports layer controls',read('inspiration.html').includes(
 check('design studio uses inventory gallery',read('inspiration.html').includes('Master Inventory')&&read('netlify/functions/inspiration.mjs').includes('tenant_inventory_items'));
 check('approved designs reconcile inventory',read('netlify/functions/inspiration.mjs').includes('reconcileDesignReservation'));
 check('manual and design reservation quantities split',m14.includes('manual_quantity')&&m14.includes('design_quantity'));
-check('client portal receives design board',read('netlify/functions/client-portal.mjs').includes('tenant_inspiration_items')&&read('portal.html').includes("['design','Design Board']"));
-check('client can leave design feedback',read('portal.html').includes('data-design-note')&&read('netlify/functions/client-portal.mjs').includes("d.action==='design-update'"));
+check('client portal receives inspiration board',read('netlify/functions/client-data.mjs').includes('tenant_inspiration_items')&&read('portal.html').includes("['inspiration','Inspiration Board']"));
+check('client can leave design feedback',read('portal.html').includes('data-feedback')&&read('portal.html').includes("api('review-design'")&&read('netlify/functions/client-data.mjs').includes("action==='review-design'"));
 check('event workspace is command center',read('event.html').includes("['planning','Checklist']")&&read('event.html').includes("['timeline','Timeline']")&&read('event.html').includes('Client portal permissions'));
 check('event workspace has richer budget',read('event.html').includes('Proposed')&&read('event.html').includes('Approved')&&read('event.html').includes('Actual'));
 check('event book includes design board',read('event-book.html').includes("section('Design Board'"));
@@ -235,7 +235,7 @@ check('client appointment cancellation has 24 hour rule',read('netlify/functions
 check('scheduling supports weekly availability and blackout periods',read('scheduling.html').includes('Weekly Availability')&&read('scheduling.html').includes('Blackout Periods'));
 check('vendor quotes compute full costs',read('netlify/functions/vendor-quotes.mjs').includes("'tax_amount'")&&read('netlify/functions/vendor-quotes.mjs').includes("'delivery_fee'"));
 check('vendor quote selection books vendor and commits budget',read('netlify/functions/vendor-quotes.mjs').includes("status:'booked'")&&read('netlify/functions/vendor-quotes.mjs').includes('source_quote_id'));
-check('client portal receives vendor options',read('netlify/functions/client-portal.mjs').includes('tenant_vendor_quotes')&&read('portal.html').includes("['vendors','Vendor Options']"));
+check('client portal exposes approval and change-order decisions',read('portal.html').includes("['approvals','Approvals']")&&read('netlify/functions/client-data.mjs').includes("action==='review-approval'")&&read('netlify/functions/client-data.mjs').includes("action==='review-change-order'"));
 check('Resend inbound webhook validates signature',read('netlify/functions/resend-inbound-webhook.mjs').includes('new Webhook(secret).verify'));
 check('Telnyx inbound webhook verifies signature',read('netlify/functions/telnyx-inbound-sms.mjs').includes('crypto.verify'));
 check('communications supports unmatched resolution',read('communications.html').includes('Resolve match')&&read('netlify/functions/communications-admin.mjs').includes("match_inbound"));
@@ -295,7 +295,7 @@ check('inventory operations preserve movement history',read('netlify/functions/i
 check('inventory reservation calendar exists',read('inventory-reservation-calendar.html').includes('Reservation Calendar'));
 check('questionnaire analysis creates planning checklist',read('netlify/functions/questionnaire-tools.mjs').includes('create-plan')&&read('questionnaires.html').includes('Create Plan'));
 check('floor plans support multiple layout operations',read('netlify/functions/floorplans.mjs').includes("action==='duplicate'")&&read('floorplan.html').includes('+ New layout')&&read('floorplan.html').includes('Rename')&&read('floorplan.html').includes('Delete'));
-check('client can update shared floorplan objects',read('netlify/functions/client-portal.mjs').includes("d.action==='floorplan-object-update'")&&read('portal.html').includes('Save layout changes'));
+check('client can update shared floorplan layouts',read('netlify/functions/client-data.mjs').includes('__SC_FLOOR_PLAN__')&&read('netlify/functions/client-data.mjs').includes('Object.entries(versions)')&&read('netlify/functions/client-data.mjs').includes('shared_editable')&&read('portal.html').includes('saveClientSpecial(SC_FLOOR_TITLE'));
 check('event finances separate service fee and decor allowance',read('financials.html').includes('Service / labor fee')&&read('financials.html').includes('Decor')&&read('netlify/functions/financial-admin.mjs').includes('client_decor_budget'));
 check('event book has three packet modes',read('event-book.html').includes('Staff Production Book')&&read('event-book.html').includes('Vendor Packet')&&read('event-book.html').includes('Client Final Details'));
 check('safe restore includes dry run and confirmation phrase',read('netlify/functions/account-restore.mjs').includes('RESTORE CELEBRATION DATA')&&read('backup.html').includes('Dry-run'));

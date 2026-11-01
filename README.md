@@ -1,6 +1,6 @@
-# Celebration Suite v0.27.2
+# Celebration Suite v0.31.0
 
-Client Portal + Guest Flow hotfix. Preview Client Portal now boots with explicit DOM bindings, client Guests/RSVP stays in the client portal, and planner Guest Management preserves event context and binds all controls explicitly.
+Original Client Portal Parity & Access. The original Sage client portal is now the client-facing baseline, backed by tenant-safe compatibility actions and shared planner/client records. Adds event-specific client invitation links, permanent tenant website login URLs, copyable website button HTML, two-way Inspiration/Floor Plan/Documents/Messages collaboration, and dedicated portal parity audits. If not already applied, run migrations `0024_PLATFORM_ADMIN_ACTIONS.sql` and `0025_SHARED_EVENT_COLLABORATION.sql`.
 
 ## v0.27.0 — Direct-Fork Business Modules
 
