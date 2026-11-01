@@ -1,3 +1,7 @@
+# Celebration Suite v0.27.2
+
+Client Portal + Guest Flow hotfix. Preview Client Portal now boots with explicit DOM bindings, client Guests/RSVP stays in the client portal, and planner Guest Management preserves event context and binds all controls explicitly.
+
 ## v0.27.0 — Direct-Fork Business Modules
 
 Financials, Vendors, and Communications now use the original Sage interfaces with tenant-safe compatibility APIs.
@@ -144,3 +148,12 @@ Celebration Suite now uses the working Sage & Celebration Event Workspace as the
 
 This release extends the direct Sage & Celebration SaaS fork to Guest Management, Scheduling/Calendar administration, and Event Day Command Center. It keeps the working original interfaces while translating their server calls to tenant-safe Celebration Suite data. No database migration is required.
 
+
+- v0.27.1: Design Studio Master Inventory now opens the event-specific inventory picker instead of generic inventory.
+
+
+## v0.28.0 sitewide runtime safety + platform administration
+
+Run `supabase/migrations/0023_PLATFORM_ADMIN_OBSERVABILITY.sql` after the existing migrations. The Platform Owner Console is available at `/platform-admin.html` and now includes tenant/user lookup, last-login visibility, support tickets, activity logs, integrations, licenses, and runtime error diagnostics.
+
+A new site-wide runtime compatibility layer prevents legacy Sage pages from failing when browsers do not expose element IDs as globals. `tools/audit-runtime-globals.mjs` is the release preflight for this bug class.
