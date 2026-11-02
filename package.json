@@ -1,6 +1,6 @@
 {
   "name": "celebration-suite",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -21,7 +21,8 @@
     "audit:v1": "node tools/audit-v1-launch.mjs",
     "audit:beta": "node tools/audit-beta-validation.mjs",
     "audit:original-parity": "node tools/audit-original-parity.mjs",
-    "audit:communications": "node tools/audit-communications-schema.mjs"
+    "audit:communications": "node tools/audit-communications-schema.mjs",
+    "audit:premium": "node scripts/audit-premium-reliability.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1"

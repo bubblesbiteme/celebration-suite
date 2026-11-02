@@ -5,11 +5,11 @@
   document.body.classList.add('cs-app-shell');
   document.body.dataset.page=path.replace('.html','');
   const items=[
-    ['app.html','⌂','Home'],['event.html','✦','Event'],['inspiration.html','🎨','Design'],['floorplan.html','▦','Floor'],['guests.html','♟','Guests'],['inventory.html','◫','Items'],['financials.html','$','Money'],['communications.html','✉','Inbox']
+    ['app.html','⌂','Home'],['event-workspace.html','✦','Event'],['inspiration.html','🎨','Design'],['floorplan.html','▦','Floor'],['guests.html','♟','Guests'],['inventory.html','◫','Items'],['financials.html','$','Money'],['communications.html','✉','Inbox']
   ];
-  const active=(href)=>path===href || (href==='event.html' && ['event-day.html','event-inventory.html','event-book.html','closeouts.html'].includes(path)) || (href==='guests.html' && ['guest-checkin.html','registration.html'].includes(path));
+  const active=(href)=>path===href || (href==='event-workspace.html' && ['event-day.html','event-inventory.html','event-book.html','closeouts.html'].includes(path)) || (href==='guests.html' && ['guest-checkin.html','registration.html'].includes(path));
   const q=new URLSearchParams(location.search),eid=q.get('event_id')||q.get('id');
-  const withEvent=(href)=>eid&&['event.html','inspiration.html','floorplan.html','guests.html'].includes(href)?`${href}?${href==='event.html'?'id':'event_id'}=${encodeURIComponent(eid)}`:href;
+  const withEvent=(href)=>eid&&['event-workspace.html','inspiration.html','floorplan.html','guests.html'].includes(href)?`${href}?${href==='event-workspace.html'?'id':'event_id'}=${encodeURIComponent(eid)}`:href;
   const nav=document.createElement('nav');nav.className='cs-nav-dock';nav.setAttribute('aria-label','Main navigation');
   nav.innerHTML='<div class="cs-nav-logo">CS</div>'+items.map(([h,i,l])=>`<a class="cs-nav-link ${active(h)?'active':''}" href="/${withEvent(h)}" title="${l}"><b aria-hidden="true">${i}</b><span>${l}</span></a>`).join('')+'<div class="cs-nav-spacer"></div><a class="cs-nav-link" href="/settings.html" title="Settings"><b>⚙</b><span>Settings</span></a>';
   document.body.appendChild(nav);

@@ -25,7 +25,7 @@ window.CSKnowledgeBase = [
   },
   {
     id:'event-workspace', category:'Events', title:'Using the Event Workspace', summary:'The Event Workspace is the home for one event and keeps the event planning tools connected.',
-    pages:['/event-workspace.html','/event.html'], keywords:['workspace','event','overview','checklist','timeline'],
+    pages:['/event-workspace.html','/event-workspace.html'], keywords:['workspace','event','overview','checklist','timeline'],
     steps:['Open an event from the Dashboard.','Review Overview for event status, finances, guests, vendors and next work.','Use Checklist for tasks and deadlines.','Use Timeline for event-day and planning schedule items.','Use Guests, Financials and Messages for the core event records.','Open More Tools for Design, Floor Plan, Questionnaires, Vendors, Inventory, Appointments, Event Book, Event Day and Closeout.','Use Preview Client Portal to confirm what the client sees.'],
     tips:['The event ID is carried between connected event tools automatically.']
   },
@@ -221,7 +221,7 @@ window.CSKnowledgeBase = [
   },
   {
     id:'client-portal-access', category:'Client Portal', title:'Share Client Portal Access', summary:'Invite a client to their event portal and add a permanent Client Login button to your website.',
-    pages:['/event-workspace.html','/event.html','/client-login.html','/my-events.html'], keywords:['client login','portal link','website','embed','invite client','client portal access'],
+    pages:['/event-workspace.html','/event-workspace.html','/client-login.html','/my-events.html'], keywords:['client login','portal link','website','embed','invite client','client portal access'],
     steps:['Open the client event and choose Settings / Client Access.','Use Event invitation / first-time login for a new client.','Choose Copy event link to send it yourself, or Email client to send the invitation from Celebration Suite.','The client uses that event link to create their password or sign in with the invited email.','For your website, copy the Permanent website client-login URL.','Paste that URL into a Client Login button in your website builder, or choose Copy website button HTML for a ready-made anchor tag.','Returning clients use the permanent login URL and then see My Events containing only events explicitly shared with their account.','Use Preview portal to confirm what the client sees without signing in as the client.'],
     tips:['The event invitation link is for first-time event access. The permanent tenant login URL is for returning clients and can stay on your website indefinitely.','Client Portal data is shared with the planner workspace for messages, documents, inspiration, shared floor plans, questionnaires, approvals, guests, appointments and client-visible financial information.']
   },

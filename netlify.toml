@@ -25,3 +25,12 @@
 
 [functions."event-closeout-run"]
   schedule = "15 8 * * *"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "camera=(self), microphone=(self), geolocation=()"
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"

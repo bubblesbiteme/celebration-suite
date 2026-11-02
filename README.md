@@ -1,4 +1,4 @@
-# Celebration Suite v1.0.4 — Client Portal Branding & Workspace Refresh Hotfix
+# Celebration Suite v1.1.0
 
 This build reconciles Celebration Suite against the complete 544-file Sage reference tree. See `ORIGINAL-PARITY-RECONCILIATION.md` for the page/function/table mapping. Apply migrations through `0031_ORIGINAL_PARITY_RECONCILIATION.sql`.
 
@@ -201,3 +201,8 @@ This release simplifies the first-login experience, hides optional financial fie
 
 ## v1.0.1 beta validation
 Platform owners can run controlled launch acceptance from `/beta-validation.html`. Apply migration `0030_BETA_VALIDATION_OPERATIONS.sql` after 0029. See `BETA-LAUNCH-RUNBOOK.md` and `RELEASE-NOTES-v1.0.1.md`.
+
+
+## v1.1.0 premium audit
+
+Start with `PREMIUM-PRODUCT-AUDIT.md`, `FEATURE-PRIORITY-MATRIX.md`, and `LIVE-ACCEPTANCE-REQUIREMENTS.md`. Run `npm run audit:premium` before deployment.

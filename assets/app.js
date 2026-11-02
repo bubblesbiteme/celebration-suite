@@ -47,7 +47,7 @@ window.CSInstallApp=async()=>{if(!csInstallPrompt)return false;csInstallPrompt.p
 (()=>{
   const pageHelp={
     '/app.html':'dashboard-events','/planner-dashboard.html':'dashboard-events','/my-events.html':'dashboard-events',
-    '/event.html':'event-workspace','/event-workspace.html':'event-workspace',
+    '/event-workspace.html':'event-workspace','/event-workspace.html':'event-workspace',
     '/portal.html':'client-portal','/client-login.html':'client-portal','/portal-login.html':'client-portal','/client-security.html':'security',
     '/inspiration.html':'design-studio','/inventory-design-picker.html':'inventory-picker-design','/floorplan.html':'floor-plan',
     '/inventory.html':'inventory-master','/inventory-admin.html':'inventory-master','/inventory-scan.html':'inventory-qr','/inventory-reservation-calendar.html':'inventory-reservations','/inventory-reservation-calendar-admin.html':'inventory-reservations','/event-inventory.html':'inventory-reservations','/inventory-event-sheet.html':'inventory-reservations',
