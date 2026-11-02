@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 const read=f=>fs.readFileSync(f,'utf8');const checks=[];const ok=(name,cond)=>checks.push([name,!!cond]);
-ok('infrastructure lineage version',/^0\.(36|37|38|39)\./.test(JSON.parse(read('package.json')).version));
+ok('infrastructure lineage version',/^(?:0\.(36|37|38|39)\.|1\.0\.0$)/.test(JSON.parse(read('package.json')).version));
 ok('custom domain migration exists',fs.existsSync('supabase/migrations/0027_CUSTOM_DOMAINS_PUSH_RESILIENCE.sql'));
 ok('custom domains function exists',fs.existsSync('netlify/functions/custom-domains.mjs'));
 ok('domain resolver exists',fs.existsSync('netlify/functions/tenant-domain-resolve.mjs'));

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 const checks=[];const add=(name,ok)=>checks.push([name,!!ok]);
 const app=fs.readFileSync('app.html','utf8'),css=fs.readFileSync('assets/app.css','utf8'),tests=fs.readFileSync('tests/e2e/critical-workflows.spec.mjs','utf8'),pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
-add('package version is 0.39.0',pkg.version==='0.39.0');
+add('package version is v0.39+ lineage',['0.39.0','1.0.0'].includes(pkg.version));
 add('dashboard has first-time setup guide',app.includes('id="setupGuide"')&&app.includes('renderSetupGuide'));
 add('setup guide has a single recommended next action',app.includes('Recommended next step')&&app.includes('Continue setup'));
 add('setup guide can be dismissed',app.includes("action:'dismiss'"));

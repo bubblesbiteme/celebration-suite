@@ -28,12 +28,33 @@
   };
   expose();
   if(document.documentElement){
-    new MutationObserver(expose).observe(document.documentElement,{childList:true,subtree:true});
+    new MutationObserver(function(){expose();accessibilityBaseline()}).observe(document.documentElement,{childList:true,subtree:true});
+  }
+
+  function accessibilityBaseline(){
+    try{
+      document.documentElement.lang=document.documentElement.lang||'en';
+      const main=document.querySelector('main,[role="main"]');
+      if(main){
+        if(!main.id) main.id='main-content';
+        if(!document.querySelector('.cs-skip-link')){
+          const skip=document.createElement('a');skip.className='cs-skip-link';skip.href='#'+main.id;skip.textContent='Skip to main content';
+          document.body.insertBefore(skip,document.body.firstChild);
+        }
+      }
+      document.querySelectorAll('button,[role="button"]').forEach(function(el){
+        const named=(el.getAttribute('aria-label')||el.getAttribute('aria-labelledby')||el.textContent||'').trim();
+        if(named) return;
+        const hint=el.getAttribute('title')||el.getAttribute('data-action')||el.id||'Action';
+        el.setAttribute('aria-label',String(hint).replace(/[-_]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').trim());
+      });
+      document.querySelectorAll('img:not([alt])').forEach(function(img){img.alt=''});
+    }catch(_){ }
   }
   function report(kind,message,stack,source){
     try{fetch('/.netlify/functions/client-error-report',{method:'POST',credentials:'same-origin',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify({severity:'error',source:source||kind,page_path:location.pathname+location.search,message:String(message||kind).slice(0,2000),stack:String(stack||'').slice(0,12000),context:{kind}})}).catch(function(){})}catch(_){ }
   }
   window.addEventListener('error',function(e){report('window.error',e.message,e.error&&e.error.stack,e.filename)});
   window.addEventListener('unhandledrejection',function(e){const r=e.reason;report('unhandledrejection',r&&r.message?r.message:String(r||'Unhandled promise rejection'),r&&r.stack,'promise')});
-  document.addEventListener('DOMContentLoaded',expose,{once:true});
+  document.addEventListener('DOMContentLoaded',function(){expose();accessibilityBaseline()},{once:true});
 })();
