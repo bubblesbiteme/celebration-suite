@@ -1,22 +1,13 @@
 {
-  "version": "1.1.0",
-  "source": "started from v1.0.5 communications hotfix",
-  "generated_at_utc": "2026-11-02T07:00:04Z",
-  "counts": {
-    "html_pages": 136,
-    "server_functions": 163,
-    "migrations": 32,
-    "literal_transitions": 1259,
-    "literal_api_reference_occurrences": 105,
-    "distinct_literal_api_functions": 54
-  },
-  "release_gates": {
-    "premium_audit": false,
-    "javascript_syntax": true,
-    "missing_local_targets": 63,
-    "missing_literal_api_functions": 0,
-    "playwright": "unavailable-locally"
-  },
-  "historical_audits": [],
-  "all_required_local_gates_pass": false
+  "release": "1.2.0",
+  "html_pages": 136,
+  "netlify_functions": 163,
+  "migrations": 32,
+  "files": 468,
+  "luxury_audit": "33/33",
+  "historical_release_audit": "passed",
+  "literal_reference_failures": 0,
+  "inline_script_parse_failures": 0,
+  "new_migration_required": false,
+  "database_current_through": "0032_PREMIUM_RELIABILITY_SECURITY.sql"
 }

@@ -1,4 +1,4 @@
-# Live Acceptance Requirements
+# Live Acceptance Requirements — v1.2.0
 
 The following cannot be proven by a source-only audit and must be tested on the deployed staging site with disposable planner, client, staff, partner and guest records.
 
@@ -21,3 +21,13 @@ The following cannot be proven by a source-only audit and must be tested on the 
 ## Release decision
 
 Do not represent a feature as production-proven until its corresponding Beta Validation check includes evidence from staging. Static audits establish route, syntax, schema-contract and package integrity; they do not replace live provider or browser acceptance.
+
+
+## Ultra-premium visual acceptance
+
+- Review planner, client, public and operational surfaces with realistic populated data rather than empty demos.
+- Confirm tenant logos and colors remain visible without reducing readability or contrast.
+- Confirm the portal, Event Workspace, Communications, Financials, Inventory, Guests, Inspiration and Floor Plan use one coherent visual system.
+- Check Chrome, Safari and Firefox at desktop, tablet and phone widths.
+- Verify Command/Ctrl + K, Guided Planning, Professional Workspace, keyboard focus and reduced-motion behavior.
+- Reject any screen that exposes provider/database internals, uses accidental brand-color flooding, or presents multiple equally dominant primary actions.

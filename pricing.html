@@ -1,3 +1,96 @@
-<!doctype html><html lang="en"><head><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#38223f"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><title>Plans</title><link rel="stylesheet" href="/assets/app.css">  <link rel="stylesheet" href="/assets/premium-experience.css">
-</head><body><header class="topbar"><div class="brand"><div class="brand-mark product-mark"><img src="/assets/celebration-suite-mark.svg" alt="Celebration Suite"></div><div><div class="brand-title">Celebration Suite</div><small>Choose your access</small></div></div><div class="top-actions"><a class="btn" href="/login.html">Sign In</a><a class="btn primary" href="/register.html">Create Account</a></div></header><main style="max-width:1250px;margin:auto"><div class="page-head"><div><h1>Choose the plan that fits</h1><p class="muted">One event when you need it. Flexible monthly access or the best annual value for professional planners.</p></div></div><div class="grid cols-3"><div class="card"><div class="badge">DIY / ONE EVENT</div><h2>Single Event</h2><div style="font-size:46px;font-weight:950" id="singlePrice">$99</div><p>One event workspace with access through 90 days after the event date.</p><ul><li>White-label branding</li><li>Client portal</li><li>Guests & RSVP</li><li>Budget, vendors, inventory and floor plan</li><li>Proposals, contracts and payments</li><li>Event Day tools</li></ul><a class="btn primary" href="/register.html?plan=single_event">Start Single Event</a></div><div class="card"><div class="badge">MONTH TO MONTH</div><h2>Planner Unlimited Monthly</h2><div style="font-size:46px;font-weight:950"><span id="monthlyPrice">$59</span><span style="font-size:18px">/mo</span></div><p>Unlimited events with month-to-month flexibility.</p><ul><li>Everything in Single Event</li><li>Unlimited events</li><li>Lead CRM</li><li>Team accounts & permissions</li><li>Time tracking & labor cost</li><li>Automation center</li></ul><a class="btn primary" href="/register.html?plan=monthly_unlimited">Start Monthly Access</a></div><div class="card" style="border-width:4px"><div class="badge">BEST VALUE</div><h2>Planner Unlimited Annual</h2><div style="font-size:46px;font-weight:950" id="annualPrice">$499</div><p>Unlimited events for 12 months at the lowest effective monthly cost.</p><ul><li>Everything in Monthly</li><li>Unlimited events</li><li>Lead CRM</li><li>Team accounts & permissions</li><li>Time tracking & labor cost</li><li>Automation center</li></ul><a class="btn primary" href="/register.html?plan=annual_unlimited">Start Annual Access</a></div></div><div class="product-footer">Celebration Suite is operated by Sage &amp; Celebration LLC · <a href="mailto:support@sageandcelebration.com">support@sageandcelebration.com</a></div></main><script src="/assets/app.js"></script><script src="/assets/tenant-branding.js"></script><script src="/assets/runtime-compat.js"></script><script>WLP.api('pricing-config').then(d=>{singlePrice.textContent=`$${d.single_event.price}`;monthlyPrice.textContent=`$${d.monthly_unlimited.price}`;annualPrice.textContent=`$${d.annual_unlimited.price}`}).catch(()=>{});</script>  <script src="/assets/premium-experience.js" defer></script>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#1d191f">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Choose Celebration Suite access for one event, flexible monthly planning, or a full year of professional event operations.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <title>Celebration Suite Plans</title>
+  <link rel="stylesheet" href="/assets/app.css">
+  <link rel="stylesheet" href="/assets/premium-experience.css">
+  <link rel="stylesheet" href="/assets/ultra-luxury.css">
+</head>
+<body class="lux-public-page">
+  <header class="topbar lux-public-nav">
+    <a class="brand" href="/index.html" aria-label="Celebration Suite home">
+      <div class="brand-mark product-mark"><img src="/assets/celebration-suite-mark.svg" alt=""></div>
+      <div><div class="brand-title">Celebration Suite</div><small>Choose the way you plan</small></div>
+    </a>
+    <nav class="top-actions" aria-label="Account navigation"><a class="btn ghost" href="/demo.html">Explore</a><a class="btn ghost" href="/login.html">Sign in</a><a class="btn primary" href="/register.html">Create account</a></nav>
+  </header>
+
+  <main class="lux-pricing-page">
+    <section class="lux-pricing-hero">
+      <div class="lux-eyebrow">FLEXIBLE ACCESS · COMPLETE EXPERIENCE</div>
+      <h1>Choose the level of access that matches the way you plan.</h1>
+      <p>Every plan includes the complete planning experience. The difference is how many events you need and how long you need the workspace.</p>
+    </section>
+
+    <section class="lux-pricing-grid" aria-label="Celebration Suite plans">
+      <article class="lux-plan-card">
+        <div class="lux-plan-top"><div class="badge">ONE CELEBRATION</div><h2>Single Event</h2><p>For a wedding, birthday, shower or milestone you are planning yourself.</p></div>
+        <div class="lux-price"><span id="singlePrice">$99</span><small>one-time access</small></div>
+        <p class="lux-plan-term">One active event with access through 90 days after the event date.</p>
+        <ul><li>Guided planning workspace</li><li>Branded client and collaborator portal</li><li>Guests, RSVP and QR check-in</li><li>Budget, vendors and documents</li><li>Inspiration Board and Floor Plan</li><li>Event Day command center</li></ul>
+        <a class="btn primary" href="/register.html?plan=single_event">Plan one event</a>
+      </article>
+
+      <article class="lux-plan-card">
+        <div class="lux-plan-top"><div class="badge">FLEXIBLE PROFESSIONAL</div><h2>Planner Unlimited Monthly</h2><p>For working planners who want complete operations without an annual commitment.</p></div>
+        <div class="lux-price"><span id="monthlyPrice">$59</span><small>per month</small></div>
+        <p class="lux-plan-term">Unlimited active events with month-to-month access.</p>
+        <ul><li>Everything in Single Event</li><li>Unlimited client events</li><li>Lead CRM and proposals</li><li>Team accounts and permissions</li><li>Inventory, rentals and purchasing</li><li>Automations and integrations</li></ul>
+        <a class="btn primary" href="/register.html?plan=monthly_unlimited">Start monthly access</a>
+      </article>
+
+      <article class="lux-plan-card recommended">
+        <div class="lux-recommended-label">MOST COMPLETE VALUE</div>
+        <div class="lux-plan-top"><div class="badge">PROFESSIONAL ANNUAL</div><h2>Planner Unlimited Annual</h2><p>For planning businesses building a consistent, premium client experience all year.</p></div>
+        <div class="lux-price"><span id="annualPrice">$499</span><small>per year</small></div>
+        <p class="lux-plan-term">Unlimited events for 12 months at the lowest effective monthly cost.</p>
+        <ul><li>Everything in Planner Monthly</li><li>Unlimited event history</li><li>White-label portals and storefronts</li><li>Business analytics and reporting</li><li>Custom-domain readiness</li><li>Full professional operations suite</li></ul>
+        <a class="btn primary" href="/register.html?plan=annual_unlimited">Choose annual access</a>
+      </article>
+    </section>
+
+    <section class="lux-included-section">
+      <div class="lux-section-heading compact"><div class="lux-eyebrow">INCLUDED THROUGHOUT</div><h2>No stripped-down experience.</h2><p>Every planner receives the same polished planning foundation. Your license controls scale, not quality.</p></div>
+      <div class="lux-included-grid">
+        <div><strong>Planning</strong><span>Checklist, timeline, appointments, questionnaires and approvals</span></div>
+        <div><strong>Design</strong><span>Inspiration boards, inventory selection and true-scale floor plans</span></div>
+        <div><strong>Guests</strong><span>Invitations, RSVP, meal choices, seating and QR check-in</span></div>
+        <div><strong>Financials</strong><span>Proposals, agreements, invoices, payments, refunds and budgets</span></div>
+        <div><strong>Operations</strong><span>Vendors, staff, rentals, Event Day and closeout</span></div>
+        <div><strong>Branding</strong><span>Your logo, colors, client portal, communications and public links</span></div>
+      </div>
+    </section>
+
+    <section class="lux-pricing-faq">
+      <div class="lux-section-heading compact"><div class="lux-eyebrow">A FEW USEFUL DETAILS</div><h2>Clear access, no guesswork.</h2></div>
+      <details><summary>Can a DIY planner use the professional tools later?</summary><p>Yes. Guided Planning keeps advanced tools out of the way, but they remain available whenever the event grows more complex.</p></details>
+      <details><summary>Will clients see Celebration Suite branding?</summary><p>Planner-facing product branding and client-facing white-label branding are separate. Your clients see the business identity configured for your workspace.</p></details>
+      <details><summary>Can I change plans?</summary><p>Plan changes and renewal options are managed from Billing. Access and account-recovery terms are shown before a change takes effect.</p></details>
+      <details><summary>Does the platform replace my payment processor?</summary><p>No. Professional planners can connect their own supported payment account so client transactions flow through their business configuration.</p></details>
+    </section>
+
+    <section class="lux-closing-cta"><div><div class="lux-eyebrow">READY WHEN YOU ARE</div><h2>Begin with one event—or build the operating system for your planning business.</h2></div><div class="lux-closing-actions"><a class="btn primary" href="/register.html">Create your account</a><a class="btn" href="/demo.html">Explore the platform</a></div></section>
+
+    <footer class="product-footer lux-footer"><div><strong>Celebration Suite</strong><span>Operated by Sage &amp; Celebration LLC.</span></div><div><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="mailto:support@sageandcelebration.com">Support</a></div></footer>
+  </main>
+
+  <script src="/assets/app.js"></script>
+  <script src="/assets/tenant-branding.js"></script>
+  <script src="/assets/runtime-compat.js"></script>
+  <script>
+    WLP.api('pricing-config').then((d)=>{
+      if(d?.single_event?.price!=null) singlePrice.textContent=`$${d.single_event.price}`;
+      if(d?.monthly_unlimited?.price!=null) monthlyPrice.textContent=`$${d.monthly_unlimited.price}`;
+      if(d?.annual_unlimited?.price!=null) annualPrice.textContent=`$${d.annual_unlimited.price}`;
+    }).catch(()=>{});
+  </script>
+  <script src="/assets/premium-experience.js" defer></script>
+  <script src="/assets/ultra-luxury.js" defer></script>
+</body>
+</html>

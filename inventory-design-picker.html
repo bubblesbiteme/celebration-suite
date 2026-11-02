@@ -1,7 +1,12 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Choose Inventory for Inspiration | Celebration Suite</title>
 <style>
 :root{--ink:#251a2a;--plum:#3a2340;--sage:#70866a;--cream:#fbf8f2;--paper:#fff;--muted:#746b75;--line:#ddd5df}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px Inter,system-ui,Arial,sans-serif}.top{background:var(--plum);color:#fff;padding:20px 26px}.top h1{margin:0 0 5px;font:700 1.7rem Georgia,serif}.top p{margin:0;color:#eadfeb}.wrap{max-width:1120px;margin:auto;padding:24px}.back{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-weight:800;text-decoration:none;margin-bottom:18px}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 10px 28px rgba(45,30,48,.06)}.toolbar{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}.toolbar label{font-weight:800}.toolbar input{width:100%;margin-top:6px;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff}.count{color:var(--muted);font-weight:700;padding-bottom:10px}.msg{min-height:24px;color:var(--muted);font-weight:700;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}.item{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}.photo{aspect-ratio:4/3;background:#f0ece6;display:grid;place-items:center;overflow:hidden}.photo img{width:100%;height:100%;object-fit:cover}.no-photo{color:#8b838b;font-weight:800}.body{padding:12px;display:flex;flex-direction:column;gap:7px;flex:1}.body h3{margin:0;font-size:1rem}.meta{color:var(--muted);font-size:.82rem;line-height:1.35}.qtyrow{display:flex;align-items:center;gap:8px;margin-top:auto}.qtyrow input{width:74px;border:1px solid var(--line);border-radius:9px;padding:9px}.add{border:0;background:var(--sage);color:#fff;border-radius:9px;padding:10px 12px;font-weight:850;cursor:pointer;flex:1}.add:disabled{opacity:.55;cursor:wait}.empty{grid-column:1/-1;border:1px dashed #cfc5d1;border-radius:14px;padding:36px;text-align:center;color:var(--muted)}@media(max-width:620px){.toolbar{grid-template-columns:1fr}.wrap{padding:16px}.grid{grid-template-columns:1fr 1fr}}@media(max-width:440px){.grid{grid-template-columns:1fr}}
-</style>  <link rel="stylesheet" href="/assets/premium-experience.css">
+</style>  
+
+
+
+  <link rel="stylesheet" href="/assets/premium-experience.css">
+  <link rel="stylesheet" href="/assets/ultra-luxury.css">
 </head><body>
 <header class="top"><h1>Choose inventory for the inspiration board</h1><p>Propose an item and quantity to your client. Adding it here does not reserve stock until the design is approved.</p></header>
 <main class="wrap"><a id="back" class="back" href="/app.html">← Back to event workspace</a><section class="panel"><div class="toolbar"><label>Search inventory<input id="filter" type="search" placeholder="SKU, item name, category, storage location"></label><div id="count" class="count"></div></div><div id="msg" class="msg" role="status"></div><div id="items" class="grid"></div></section></main>
@@ -17,5 +22,12 @@ async function addItem(btn){const item=inventory.find(x=>x.id===btn.dataset.add)
 msg.textContent=out.already_added?'Already on board. Returning to the existing item…':'Added. Returning to your inspiration board…';try{sessionStorage.removeItem('sage_event_workspace_'+eventId+'_v2')}catch{}const focus=out.item?.id||'';location.assign('/event-workspace.html?id='+encodeURIComponent(eventId)+'&tab=design'+(focus?'&focus_item='+encodeURIComponent(focus):''));}catch(e){msg.textContent=e.message;btn.disabled=false;btn.textContent=old;}}
 filter.addEventListener('input',draw);
 (async()=>{if(!eventId){msg.textContent='Open this page from a specific event workspace.';return}msg.textContent='Loading inventory…';try{const d=await api('/.netlify/functions/inventory?event_id='+encodeURIComponent(eventId));inventory=(d.items||[]).filter(x=>x.is_active!==false);draw();msg.textContent='';}catch(e){msg.textContent=e.message;root.innerHTML='<div class="empty">Inventory could not be loaded.</div>';}})();
-</script>  <script src="/assets/premium-experience.js" defer></script>
+</script>  
+
+
+
+  <script src="/assets/premium-experience.js" defer></script>
+  <script src="/assets/ultra-luxury.js" defer></script>
 </body></html>
+
+

@@ -26,8 +26,8 @@
     root.style.setProperty('--brand-accent',brand.accent);
     // Compatibility aliases retained for legacy page CSS; tenant-facing markup uses neutral brand hooks.
     root.style.setProperty('--sage',brand.primary);
-    root.style.setProperty('--ink',brand.secondary);
-    root.style.setProperty('--cream',brand.accent);
+    root.style.setProperty('--ink','#1D191F');
+    root.style.setProperty('--cream',`color-mix(in srgb, ${brand.accent} 12%, #fffaf4)`);
     root.style.setProperty('--pink',brand.primary);
     root.style.setProperty('--lime',brand.accent);
     root.style.setProperty('--blue',brand.secondary);
@@ -35,7 +35,7 @@
     document.querySelectorAll('[data-tenant-business-name]').forEach(el=>el.textContent=brand.business_name);
     document.querySelectorAll('[data-tenant-logo]').forEach(img=>{img.src=brand.logo_url;img.alt=`${brand.business_name} logo`;img.hidden=false});
     document.querySelectorAll('[data-tenant-logo-fallback]').forEach(el=>{el.hidden=true});
-    let dyn=document.getElementById('tenantBrandDynamic');if(!dyn){dyn=document.createElement('style');dyn.id='tenantBrandDynamic';document.head.appendChild(dyn)}dyn.textContent=`.top,.topbar,.header{background:${brand.secondary}!important}.btn.primary,.btn.pink,button.primary{background:${brand.primary}!important}.btn.accent{background:${brand.accent}!important}.active,.active-link{--tenant-active:${brand.primary}}`; 
+    let dyn=document.getElementById('tenantBrandDynamic');if(!dyn){dyn=document.createElement('style');dyn.id='tenantBrandDynamic';document.head.appendChild(dyn)}dyn.textContent=`html[data-tenant-branded="1"]{--tenant-primary:${brand.primary};--tenant-secondary:${brand.secondary};--tenant-accent:${brand.accent}}html[data-tenant-branded="1"] .btn.primary,html[data-tenant-branded="1"] .btn.pink,html[data-tenant-branded="1"] button.primary{--tenant-button:${brand.primary}}html[data-tenant-branded="1"] .active,html[data-tenant-branded="1"] .active-link{--tenant-active:${brand.primary}}`; 
     if(opts.replaceShell!==false){
       document.querySelectorAll('.brand:not(.product-brand) .brand-title').forEach(el=>el.textContent=brand.business_name);
       document.querySelectorAll('.brand:not(.product-brand) .brand-mark img:not(.product-logo)').forEach(img=>{img.src=brand.logo_url;img.alt=`${brand.business_name} logo`});

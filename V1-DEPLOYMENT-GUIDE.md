@@ -1,4 +1,4 @@
-# Celebration Suite v1.0.0 Deployment Guide
+# Celebration Suite v1.2.0 Deployment Guide
 
 ## 1. Database migration order
 Apply every migration in `supabase/migrations` in numeric order on a fresh environment:
@@ -32,8 +32,11 @@ Apply every migration in `supabase/migrations` in numeric order on a fresh envir
 27. `0027_CUSTOM_DOMAINS_PUSH_RESILIENCE.sql`
 28. `0028_CONFLICT_REFUND_ACCEPTANCE.sql`
 29. `0029_COMMERCIAL_LAUNCH_OPERATIONS.sql`
+30. `0030_BETA_VALIDATION_OPERATIONS.sql`
+31. `0031_ORIGINAL_PARITY_RECONCILIATION.sql`
+32. `0032_PREMIUM_RELIABILITY_SECURITY.sql`
 
-Existing v0.39 databases already current through `0029` need no new v1 migration.
+Existing deployments must be current through `0032_PREMIUM_RELIABILITY_SECURITY.sql`. v1.2.0 does not add another database migration.
 
 ## 2. Required environment
 Start from `.env.example`. At minimum configure production Supabase, platform URL, email, Stripe/platform billing variables, Google OAuth, and any integration credentials you intend to offer.
@@ -68,7 +71,8 @@ For browser acceptance testing install Playwright browsers and use the configura
 7. Test one custom domain through DNS and HTTPS.
 8. Review Launch Readiness and resolve every blocker.
 9. Review legal documents with counsel.
-10. Promote the exact tested build to production.
+10. Complete the ultra-premium visual acceptance pass on desktop and mobile.
+11. Promote the exact tested build to production.
 
 
 ## v1.0.1 beta validation migration
@@ -84,3 +88,8 @@ After the v1.0.1 beta validation migration, apply:
 This restores tenant-scoped Event Workspace AI settings/history/audit storage. If the AI Event Assistant will be enabled, configure `OPENAI_API_KEY` and optionally `OPENAI_MODEL`.
 
 Before launch, review `ORIGINAL-PARITY-RECONCILIATION.md`; Sage public marketing/SEO pages are intentionally excluded from Celebration Suite.
+
+
+## v1.2.0 ultra-premium release
+
+No new migration is introduced by v1.2.0. Run `npm run release:audit` and review `ULTRA-PREMIUM-UX-AUDIT.md`, `ULTRA-PREMIUM-DESIGN-SYSTEM.md`, and `LUXURY-FEATURE-ROADMAP.md`. Clear the service-worker cache or deploy with the included `celebration-suite-v120` cache version so the new shared CSS and runtime are activated.

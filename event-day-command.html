@@ -5,7 +5,12 @@
 </style><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#171717"><link rel="stylesheet" href="/mobile-app.css"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/mobile-hardening.css">
 <link rel="stylesheet" href="assets/ux-polish.css">
 <link rel="stylesheet" href="/assets/admin-closeout.css">
+  
+
+
+
   <link rel="stylesheet" href="/assets/premium-experience.css">
+  <link rel="stylesheet" href="/assets/ultra-luxury.css">
 </head>
 <body><header class="top"><div class="brand"><span data-tenant-business-name>Celebration Suite</span> · LIVE EVENT</div><div class="actions"><a id="backLink" class="btn small" href="/app.html">← Return to Workspace</a><button class="btn small" id="refresh">Refresh</button></div></header><main class="page"><section id="hero" class="hero"><div class="empty">Loading command center…</div></section><section id="content"></section></main>
 <nav class="bottom-nav"><a href="#run">Run</a><a href="#arrivals">Arrivals</a><a href="#checklists">Lists</a><a href="#guests">Guests</a><a href="#inventory">Inventory</a><a href="#issues">Issues</a></nav><div id="toast" class="toast hidden"></div>
@@ -51,5 +56,12 @@ $$('[data-resolve]').forEach(x=>x.onclick=async()=>{const resolution=prompt('Res
 async function mutate(action,body,msg){try{await api(action,body);toast(msg);await load()}catch(e){toast(e.message,true)}}
 async function load(){if(!id){$('#hero').innerHTML='<div class="empty">Missing event ID.</div>';return}const cacheKey=`sc_event_day_${id}`;try{data=await api();localStorage.setItem(cacheKey,JSON.stringify({saved_at:new Date().toISOString(),data}));render()}catch(e){const cached=localStorage.getItem(cacheKey);if(cached){try{data=JSON.parse(cached).data;render();toast('Offline snapshot shown. Reconnect before making changes.',true);return}catch{}}$('#hero').innerHTML=`<div class="empty"><b>Could not load event.</b><br>${esc(e.message)}</div>`}}
 $('#refresh').onclick=load;load();setInterval(()=>{if(!document.hidden)load()},45000);
-</script><script src="/pwa.js" defer></script><script src="/admin-google-ui.js"></script>  <script src="/assets/premium-experience.js" defer></script>
+</script><script src="/pwa.js" defer></script><script src="/admin-google-ui.js"></script>  
+
+
+
+  <script src="/assets/premium-experience.js" defer></script>
+  <script src="/assets/ultra-luxury.js" defer></script>
 </body></html>
+
+

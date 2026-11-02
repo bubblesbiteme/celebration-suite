@@ -1,7 +1,7 @@
-# Celebration Suite v1.0.0 Launch Checklist
+# Celebration Suite v1.2.0 Launch Checklist
 
 ## Platform
-- [ ] Production Supabase project is configured and migrations `0001`–`0029` are applied in order.
+- [ ] Production Supabase project is configured and migrations `0001`–`0032` are applied in order.
 - [ ] Netlify production environment matches the required `.env.example` values.
 - [ ] Platform owner/admin login works with 2FA as intended.
 - [ ] Backups and restore procedures have been tested on non-production data.
@@ -78,3 +78,16 @@
 - [ ] Event Workspace AI tab loads and, when `OPENAI_API_KEY` is configured, can generate/review/delete an event-scoped response.
 - [ ] Legacy staff/admin/client/payment/proposal/agreement links redirect to their current Celebration Suite equivalents without a 404.
 - [ ] `ORIGINAL-PARITY-RECONCILIATION.md` reviewed; Sage-only marketing exclusions are understood.
+
+
+## Ultra-premium visual acceptance
+- [ ] Planner, client, public and operational pages clearly belong to one design system.
+- [ ] Tenant colors appear as controlled accents and never reduce text contrast.
+- [ ] No page uses thick black borders, emoji navigation, raw JSON/provider errors, or large accidental color floods.
+- [ ] Landing and pricing pages render correctly at desktop, tablet and phone widths.
+- [ ] Client Portal branding, navigation, action hierarchy and empty states are visually approved.
+- [ ] Event Workspace, Communications, Financials, Guests, Inventory, Floor Plan and Inspiration are reviewed with realistic populated data.
+- [ ] Command/Ctrl + K opens quick navigation and preserves the active event.
+- [ ] Guided Planning hides professional navigation noise without removing access to needed tools.
+- [ ] Professional Workspace exposes the complete operating toolset.
+- [ ] Safari, Chrome and Firefox receive a visual smoke test before launch.

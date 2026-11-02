@@ -2,7 +2,12 @@
 :root{--cream:#fff9ef;--ink:#151515;--pink:#ff4fa3;--lime:#d8f36a;--sage:#9db9a6;--muted:#6a655f}*{box-sizing:border-box}body{margin:0;background:var(--cream);font-family:Arial,sans-serif;color:var(--ink)}header{background:#111;color:#fff;padding:16px 24px;border-bottom:5px solid var(--pink);display:flex;justify-content:space-between;align-items:center}header a{color:#fff;text-decoration:none;font-weight:800}.page{max-width:1250px;margin:auto;padding:28px}.hero,.card{border:3px solid var(--ink);border-radius:22px;background:#fff;padding:22px;box-shadow:7px 7px 0 var(--ink)}.hero{margin-bottom:24px;box-shadow:8px 8px 0 var(--sage)}h1,h2{margin:0 0 10px;text-transform:uppercase}p{color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.stack{display:grid;gap:16px}.row{border:2px solid var(--ink);border-radius:14px;padding:13px;background:var(--cream)}.row-head{display:flex;justify-content:space-between;gap:12px;align-items:start}.btn{border:2px solid var(--ink);border-radius:999px;background:var(--pink);color:#fff;padding:9px 13px;font-weight:900;cursor:pointer}.btn.light{background:#fff;color:var(--ink)}.btn.lime{background:var(--lime);color:var(--ink)}input,select,textarea{width:100%;border:2px solid var(--ink);border-radius:10px;padding:10px;background:#fff;font:inherit}label{font-weight:800;font-size:.84rem;display:block;margin-bottom:5px}.form{display:grid;grid-template-columns:1fr 1fr;gap:11px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap}.notice{border:2px solid var(--ink);border-radius:12px;background:var(--lime);padding:12px;font-weight:800;margin-bottom:18px}.hidden{display:none}.toast{position:fixed;right:18px;bottom:18px;background:#111;color:#fff;padding:12px 16px;border-radius:12px;font-weight:800}.weekday{font-weight:900;text-transform:uppercase;font-size:.75rem;color:#e8318d}.busy-block{border:2px solid var(--ink);border-radius:14px;background:var(--cream);overflow:hidden}.busy-block+ .busy-block{margin-top:10px}.busy-block summary{cursor:pointer;list-style:none;padding:13px;display:flex;justify-content:space-between;gap:12px;align-items:center}.busy-block summary::-webkit-details-marker{display:none}.busy-block summary:after{content:"+";font-weight:900;font-size:1.15rem;flex:0 0 auto}.busy-block[open] summary:after{content:"−"}.busy-block-body{padding:0 13px 13px;border-top:1px solid #d9d1c6}.busy-block-meta{color:var(--muted);font-size:.88rem;line-height:1.45;margin-top:10px}.busy-block-actions{margin-top:12px;display:flex;justify-content:flex-end}@media(max-width:800px){.grid,.form{grid-template-columns:1fr}.full{grid-column:auto}.page{padding:16px}}</style><link rel="stylesheet" href="assets/mobile-hardening.css">
 <link rel="stylesheet" href="assets/ux-polish.css">
 <link rel="stylesheet" href="/assets/admin-closeout.css">
+  
+
+
+
   <link rel="stylesheet" href="/assets/premium-experience.css">
+  <link rel="stylesheet" href="/assets/ultra-luxury.css">
 </head><body>
 <header><div><b><span data-tenant-business-name>Celebration Suite</span></b><div style="font-size:.8rem;opacity:.75">Scheduling Settings</div></div><a href="/app.html">← Admin dashboard</a></header>
 <main class="page"><section class="hero"><h1>Client Appointment Scheduling</h1><p>Control what clients can book, your normal weekly availability, buffers between meetings, and blackout periods. Times are shown in Pacific Time (America/Los_Angeles).</p></section><div id="pageStatus" class="notice">Loading scheduling settings…</div>
@@ -35,5 +40,12 @@ $('#disconnectGoogle').onclick=async()=>{if(!confirm('Disconnect Google Calendar
 const qs=new URLSearchParams(location.search);if(qs.get('google')==='connected')toast('Google Calendar connected');if(qs.get('google')==='error')toast(qs.get('message')||'Google Calendar connection failed');
 loadGoogle();
 load();
-</script><script src="/admin-google-ui.js"></script>  <script src="/assets/premium-experience.js" defer></script>
+</script><script src="/admin-google-ui.js"></script>  
+
+
+
+  <script src="/assets/premium-experience.js" defer></script>
+  <script src="/assets/ultra-luxury.js" defer></script>
 </body></html>
+
+
