@@ -373,6 +373,8 @@ source,reference,type,status
 "custom-domains.html","/settings.html",page,OK
 "custom-domains.html","/assets/app.js",asset,OK
 "custom-domains.html","/assets/runtime-compat.js",asset,OK
+"custom-domains.html","/assets/premium-experience.css",asset,OK
+"custom-domains.html","/assets/ultra-luxury.css",asset,OK
 "custom-domains.html","/assets/premium-experience.js",asset,OK
 "custom-domains.html","/assets/ultra-luxury.js",asset,OK
 "decor-rental-requests-admin.html","/assets/app.css",asset,OK

@@ -41,7 +41,7 @@ check('visible focus baseline remains available',read('assets/premium-experience
 
 const ux=read('assets/ultra-luxury.js');
 check('quick navigation command palette exists',ux.includes('mountCommandPalette')&&ux.includes('metaKey')&&ux.includes("key.toLowerCase()==='k'"));
-check('guided and professional experiences exist',ux.includes('Guided planning')&&ux.includes('Professional workspace'));
+check('guided and professional experiences exist',ux.includes('data-mode=\"diy\"')&&ux.includes('data-mode=\"professional\"')&&ux.includes('cs-mode-segmented'));
 check('event context is preserved across tools',ux.includes('withEvent')&&ux.includes('eventPages'));
 check('navigation uses refined SVG icons',ux.includes('<svg')&&ux.includes('refineDock'));
 check('brand contrast is calculated dynamically',ux.includes('contrastText')&&ux.includes('--brand-on-primary'));

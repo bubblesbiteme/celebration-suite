@@ -136,19 +136,17 @@
     let mode=localStorage.getItem('celebration_suite_experience_mode')||'professional';
     const wrap=doc.createElement('div');
     wrap.className='cs-luxury-mode-wrap';
-    wrap.innerHTML=`<button type="button" class="btn cs-luxury-mode-button" aria-haspopup="menu" aria-expanded="false"><span class="cs-mode-dot"></span><span class="cs-mode-text">${mode==='diy'?'Guided':'Professional'}</span><span aria-hidden="true">⌄</span></button>
-      <div class="cs-luxury-mode-menu" role="menu" hidden>
-        <button type="button" class="cs-luxury-mode-option" role="menuitemradio" data-mode="diy" aria-checked="${mode==='diy'}"><i>✦</i><span><b>Guided planning</b><small>Focus on the essential steps for one celebration.</small></span><em>${mode==='diy'?'✓':''}</em></button>
-        <button type="button" class="cs-luxury-mode-option" role="menuitemradio" data-mode="professional" aria-checked="${mode!=='diy'}"><i>◇</i><span><b>Professional workspace</b><small>Show agency, staff, finance and operations tools.</small></span><em>${mode!=='diy'?'✓':''}</em></button>
+    wrap.setAttribute('role','group');
+    wrap.setAttribute('aria-label','Workspace experience');
+    wrap.innerHTML=`<span class="cs-mode-label">Workspace</span>
+      <div class="cs-mode-segmented">
+        <button type="button" class="cs-mode-segment" data-mode="diy" aria-pressed="${mode==='diy'}">Guided</button>
+        <button type="button" class="cs-mode-segment" data-mode="professional" aria-pressed="${mode!=='diy'}">Professional</button>
       </div>`;
     bar.insertBefore(wrap,bar.firstChild);
-    const trigger=wrap.querySelector('.cs-luxury-mode-button');
-    const menu=wrap.querySelector('.cs-luxury-mode-menu');
-    const close=()=>{menu.hidden=true;trigger.setAttribute('aria-expanded','false')};
-    trigger.addEventListener('click',(e)=>{e.stopPropagation();menu.hidden=!menu.hidden;trigger.setAttribute('aria-expanded',String(!menu.hidden))});
-    wrap.querySelectorAll('.cs-luxury-mode-option').forEach((b)=>b.addEventListener('click',()=>{setMode(b.dataset.mode);wrap.querySelectorAll('em').forEach(x=>x.textContent='');b.querySelector('em').textContent='✓';close()}));
-    doc.addEventListener('click',(e)=>{if(!wrap.contains(e.target))close()});
-    doc.addEventListener('keydown',(e)=>{if(e.key==='Escape')close()});
+    const apply=()=>wrap.querySelectorAll('.cs-mode-segment').forEach((b)=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));
+    wrap.querySelectorAll('.cs-mode-segment').forEach((b)=>b.addEventListener('click',()=>{mode=b.dataset.mode;setMode(mode);apply()}));
+    apply();
     setMode(mode);
   }
 

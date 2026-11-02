@@ -1,4 +1,4 @@
-## Current release: v1.2.4 — True-Scale Floor Plan
+## Current release: v1.2.6 — Custom Domain TXT Generation Hotfix
 
 > Current release: **v1.2.3 — Dashboard Freeze / License Bootstrap Hotfix**
 

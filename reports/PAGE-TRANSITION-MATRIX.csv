@@ -370,6 +370,8 @@ source,reference,target,exists,context
 "custom-domains.html","/settings.html","settings.html",yes,not-event-scoped
 "custom-domains.html","/assets/app.js","assets/app.js",yes,not-event-scoped
 "custom-domains.html","/assets/runtime-compat.js","assets/runtime-compat.js",yes,not-event-scoped
+"custom-domains.html","/assets/premium-experience.css","assets/premium-experience.css",yes,not-event-scoped
+"custom-domains.html","/assets/ultra-luxury.css","assets/ultra-luxury.css",yes,not-event-scoped
 "custom-domains.html","/assets/premium-experience.js","assets/premium-experience.js",yes,not-event-scoped
 "custom-domains.html","/assets/ultra-luxury.js","assets/ultra-luxury.js",yes,not-event-scoped
 "decor-rental-requests-admin.html","/assets/app.css","assets/app.css",yes,not-event-scoped

@@ -1,5 +1,5 @@
 check,status,detail
-"package version is in the 1.2 release line",PASS,"1.2.4"
+"package version is in the 1.2 release line",PASS,"1.2.6"
 "ultra luxury stylesheet exists",PASS,""
 "ultra luxury runtime exists",PASS,""
 "compatibility PWA helper exists",PASS,""
