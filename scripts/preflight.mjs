@@ -211,7 +211,7 @@ check('guest suite sends personalized invites',read('netlify/functions/guests.mj
 check('public RSVP supports meal choices',read('rsvp-public.html').includes('Meal selection')&&read('netlify/functions/rsvp-public.mjs').includes('meal_choices'));
 check('mobile guest checkin exists',read('guest-checkin.html').includes('QR Guest Check-In')&&read('guest-checkin.html').includes('qr-checkin'));
 check('floor plan has original professional library',read('floorplan.html').includes('Production & Entertainment')&&read('floorplan.html').includes('Ceremony & Wedding')&&read('floorplan.html').includes('Room & Logistics'));
-check('floor plan supports room dimensions rotation and item dimensions',read('floorplan.html').includes('Room width (in)')&&read('floorplan.html').includes('Rotate 45°')&&read('floorplan.html').includes('Width px')&&read('floorplan.html').includes('room_width_in'));
+check('floor plan supports room dimensions rotation and item dimensions',read('floorplan.html').includes('Room width (in)')&&read('floorplan.html').includes('Rotate 45°')&&read('floorplan.html').includes('Width (in)')&&read('floorplan.html').includes('room_width_in'));
 check('floor plan versioning backend exists',read('netlify/functions/floorplans.mjs').includes("action==='version'")&&m15.includes('tenant_floorplan_versions'));
 check('document vault supports 30 MB upload',read('netlify/functions/file-upload.mjs').includes('30*1024*1024'));
 check('document vault supports locked versions and expiry',read('documents.html').includes('Lock permanent record')&&read('netlify/functions/documents.mjs').includes('expiration_date')&&read('netlify/functions/documents.mjs').includes('locked'));

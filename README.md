@@ -1,3 +1,5 @@
+## Current release: v1.2.4 — True-Scale Floor Plan
+
 > Current release: **v1.2.3 — Dashboard Freeze / License Bootstrap Hotfix**
 
 # Celebration Suite v1.2.2
