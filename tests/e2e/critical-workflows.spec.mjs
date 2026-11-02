@@ -79,3 +79,41 @@ test('white-label commerce storefronts load for a configured tenant',async({page
 });
 
 // v0.36 infrastructure pages are included in authenticated staging smoke coverage.
+
+test('stale collaboration writes are rejected instead of overwriting newer planner work',async({page})=>{
+  test.skip(!eventId,'Set CS_E2E_EVENT_ID to exercise collaboration conflict protection.');
+  await plannerLogin(page);
+  const result=await page.evaluate(async(eventId)=>{
+    async function call(path,options={}){const r=await fetch('/.netlify/functions/'+path,{credentials:'same-origin',headers:{'content-type':'application/json',...(options.headers||{})},...options});let j={};try{j=await r.json()}catch{}return {status:r.status,body:j}}
+    const fp=await call('floorplans?event_id='+encodeURIComponent(eventId));
+    const plan=fp.body?.floorplans?.[0];
+    let floor=null;
+    if(plan){const version=Number(plan.lock_version||1),payload={id:plan.id,name:plan.name,lock_version:version};const first=await call('floorplans?event_id='+encodeURIComponent(eventId),{method:'PATCH',body:JSON.stringify(payload)});const stale=await call('floorplans?event_id='+encodeURIComponent(eventId),{method:'PATCH',body:JSON.stringify(payload)});floor={first:first.status,stale:stale.status,code:stale.body?.code}}
+    const ins=await call('inspiration?event_id='+encodeURIComponent(eventId));
+    const item=ins.body?.items?.[0];
+    let inspiration=null;
+    if(item){const version=Number(item.lock_version||1),payload={notes:item.notes||null,lock_version:version};const first=await call('inspiration?event_id='+encodeURIComponent(eventId)+'&id='+encodeURIComponent(item.id),{method:'PATCH',body:JSON.stringify(payload)});const stale=await call('inspiration?event_id='+encodeURIComponent(eventId)+'&id='+encodeURIComponent(item.id),{method:'PATCH',body:JSON.stringify(payload)});inspiration={first:first.status,stale:stale.status,code:stale.body?.code}}
+    return {floor,inspiration};
+  },eventId);
+  test.skip(!result.floor&&!result.inspiration,'The staging event needs at least one floor plan or inspiration item.');
+  if(result.floor){expect(result.floor.first).toBe(200);expect(result.floor.stale).toBe(409);expect(result.floor.code).toBe('EDIT_CONFLICT')}
+  if(result.inspiration){expect(result.inspiration.first).toBe(200);expect(result.inspiration.stale).toBe(409);expect(result.inspiration.code).toBe('EDIT_CONFLICT')}
+});
+
+test('custom domain production diagnostics can be exercised on an explicitly designated staging domain',async({page})=>{
+  const domainId=process.env.CS_E2E_DOMAIN_ID;
+  test.skip(!domainId,'Set CS_E2E_DOMAIN_ID to a verified staging custom domain.');
+  await plannerLogin(page);
+  const result=await page.evaluate(async(domainId)=>{const r=await fetch('/.netlify/functions/custom-domains?id='+encodeURIComponent(domainId),{method:'PATCH',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({action:'diagnose'})});return {status:r.status,body:await r.json()}},domainId);
+  expect(result.status).toBe(200);expect(result.body.dns_ok).toBeTruthy();expect(typeof result.body.https_ok).toBe('boolean');
+});
+
+// Stripe refund acceptance is intentionally opt-in because it moves real money in the connected test account.
+test('designated Stripe test payment can be partially refunded',async({page})=>{
+  const paymentId=process.env.CS_E2E_REFUND_PAYMENT_ID;
+  const amount=Number(process.env.CS_E2E_REFUND_AMOUNT||0);
+  test.skip(!paymentId||!(amount>0),'Set CS_E2E_REFUND_PAYMENT_ID and CS_E2E_REFUND_AMOUNT only for a disposable Stripe test payment.');
+  await plannerLogin(page);
+  const result=await page.evaluate(async({paymentId,amount})=>{const r=await fetch('/.netlify/functions/financial-admin?action=refundPayment',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({id:paymentId,amount})});return {status:r.status,body:await r.json()}},{paymentId,amount});
+  expect(result.status).toBe(200);expect(result.body.ok).toBeTruthy();expect(result.body.refund_id).toBeTruthy();
+});

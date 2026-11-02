@@ -182,3 +182,6 @@ Adds `/getting-started.html`, `/knowledge-base.html`, contextual page help, setu
 
 ## v0.35.0 commerce parity
 See `RELEASE-NOTES-v0.35.0.md` for the new white-label booking and decor-rental storefronts.
+
+## v0.37.0 — Production Acceptance & Failure-Mode Hardening
+Adds optimistic planner/client edit conflict protection for Floor Plans and Inspiration, verified Stripe partial/full refunds in Financial Center, custom-domain DNS/SSL diagnostics, and staging acceptance tests for stale writes and external integrations. Apply `supabase/migrations/0028_CONFLICT_REFUND_ACCEPTANCE.sql`. See `RELEASE-NOTES-v0.37.0.md`.
