@@ -1,4 +1,4 @@
-# Celebration Suite v1.0.3 — Client Portal Branding & Workspace Refresh Hotfix
+# Celebration Suite v1.0.4 — Client Portal Branding & Workspace Refresh Hotfix
 
 This build reconciles Celebration Suite against the complete 544-file Sage reference tree. See `ORIGINAL-PARITY-RECONCILIATION.md` for the page/function/table mapping. Apply migrations through `0031_ORIGINAL_PARITY_RECONCILIATION.sql`.
 
