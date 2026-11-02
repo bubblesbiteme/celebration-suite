@@ -117,3 +117,52 @@ test('designated Stripe test payment can be partially refunded',async({page})=>{
   const result=await page.evaluate(async({paymentId,amount})=>{const r=await fetch('/.netlify/functions/financial-admin?action=refundPayment',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({id:paymentId,amount})});return {status:r.status,body:await r.json()}},{paymentId,amount});
   expect(result.status).toBe(200);expect(result.body.ok).toBeTruthy();expect(result.body.refund_id).toBeTruthy();
 });
+
+test('first paying-planner journey can create, use, and archive a disposable event',async({page})=>{
+  test.skip(process.env.CS_E2E_MUTATING!=='1','Set CS_E2E_MUTATING=1 only on a disposable staging tenant.');
+  await plannerLogin(page);
+  const marker=`Launch UX ${Date.now()}`;
+  await page.getByRole('button',{name:/new event/i}).click();
+  const modal=page.locator('#eventModal');await expect(modal).toHaveClass(/open/);
+  await modal.locator('input[name=title]').fill(marker);
+  await modal.locator('input[name=event_type]').fill('Launch Test');
+  await modal.locator('input[name=venue]').fill('Staging Venue');
+  await modal.locator('button[type=submit]').click();
+  await expect(page).toHaveURL(/event-workspace\.html\?id=/,{timeout:15000});
+  const id=new URL(page.url()).searchParams.get('id');expect(id).toBeTruthy();
+  await expect(page.locator('#hero')).toContainText(marker);
+  // Core planning surfaces should remain reachable from a brand-new event.
+  for(const label of [/planning/i,/timeline/i,/design/i,/floor/i,/financial/i,/settings/i]){
+    const tab=page.getByRole('button',{name:label}).first();
+    if(await tab.count()){await tab.click();await expect(page.locator('#content')).toBeVisible()}
+  }
+  // Verify the dedicated visual tools open with the new event context.
+  for(const route of [`/inspiration.html?event_id=${id}`,`/floorplan.html?event_id=${id}`,`/guests.html?event_id=${id}`,`/event-day.html?event_id=${id}`]){
+    await page.goto(route);await expect(page.locator('body')).toBeVisible();
+  }
+  // Archive the disposable event so the test does not pollute normal upcoming work.
+  const archived=await page.evaluate(async id=>{const r=await fetch('/.netlify/functions/events',{method:'PATCH',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({id,status:'archived'})});return r.status},id);
+  expect(archived).toBe(200);
+});
+
+test('planner and client can keep the same event open concurrently without fatal browser errors',async({browser})=>{
+  test.skip(!plannerEmail||!plannerPassword||!clientUrl,'Set planner credentials and CS_E2E_CLIENT_URL for simultaneous-session acceptance.');
+  const planner=await browser.newContext(),client=await browser.newContext();
+  const pp=await planner.newPage(),cp=await client.newPage();
+  const pe=watchPage(pp),ce=watchPage(cp);
+  await plannerLogin(pp);if(eventId)await pp.goto(`/event-workspace.html?id=${eventId}`);
+  await cp.goto(clientUrl);await expect(cp.locator('body')).toBeVisible();
+  if(eventId)await expect(pp.locator('body')).toBeVisible();
+  await pp.waitForTimeout(1000);await cp.waitForTimeout(1000);
+  expect(pe).toEqual([]);expect(ce).toEqual([]);
+  await planner.close();await client.close();
+});
+
+test('mobile planner dashboard exposes a compact menu instead of the full navigation wall',async({page},testInfo)=>{
+  test.skip(!testInfo.project.name.includes('mobile'),'Mobile-only UX assertion.');
+  await plannerLogin(page);await page.goto('/app.html');
+  await expect(page.locator('#mobileMenuBtn')).toBeVisible();
+  await expect(page.locator('#plannerSidebar')).not.toBeVisible();
+  await page.locator('#mobileMenuBtn').click();await expect(page.locator('#plannerSidebar')).toBeVisible();
+  await page.locator('#mobileMenuBtn').click();await expect(page.locator('#plannerSidebar')).not.toBeVisible();
+});

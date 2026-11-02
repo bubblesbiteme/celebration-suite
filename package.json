@@ -1,6 +1,6 @@
 {
   "name": "celebration-suite",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -12,11 +12,12 @@
     "preflight": "node scripts/preflight.mjs",
     "test:e2e": "playwright test",
     "test:e2e:critical": "playwright test tests/e2e/critical-workflows.spec.mjs",
-    "release:audit": "node scripts/preflight.mjs && node tools/audit-release-candidate.mjs && node tools/smoke-critical-pages.mjs && node tools/audit-native-branding.mjs && node tools/audit-commerce-parity.mjs && node tools/audit-infrastructure-parity.mjs && node tools/audit-production-acceptance.mjs && node tools/audit-commercial-launch.mjs",
+    "release:audit": "node scripts/preflight.mjs && node tools/audit-release-candidate.mjs && node tools/smoke-critical-pages.mjs && node tools/audit-native-branding.mjs && node tools/audit-commerce-parity.mjs && node tools/audit-infrastructure-parity.mjs && node tools/audit-production-acceptance.mjs && node tools/audit-commercial-launch.mjs && node tools/audit-launch-ux.mjs",
     "audit:commerce": "node tools/audit-commerce-parity.mjs",
     "audit:infrastructure": "node tools/audit-infrastructure-parity.mjs",
     "audit:acceptance": "node tools/audit-production-acceptance.mjs",
-    "audit:launch": "node tools/audit-commercial-launch.mjs"
+    "audit:launch": "node tools/audit-commercial-launch.mjs",
+    "audit:launch-ux": "node tools/audit-launch-ux.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1"

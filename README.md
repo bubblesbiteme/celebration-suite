@@ -189,3 +189,8 @@ Adds optimistic planner/client edit conflict protection for Floor Plans and Insp
 
 ## v0.38 commercial launch operations
 See `RELEASE-NOTES-v0.38.0.md` for tenant provisioning, entitlements, launch readiness, release notices and support escalation.
+
+
+## v0.39.0 — First Customer UX & Launch Acceptance
+
+This release simplifies the first-login experience, hides optional financial fields during event creation, replaces the crowded mobile dashboard navigation with a compact menu, and adds an opt-in full first-planner browser journey. See `RELEASE-NOTES-v0.39.0.md`. No new database migration is required beyond migrations through `0029_COMMERCIAL_LAUNCH_OPERATIONS.sql`.

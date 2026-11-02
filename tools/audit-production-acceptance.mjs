@@ -11,7 +11,7 @@ const verify=read('netlify/functions/invoice-checkout-verify.mjs');
 const domains=read('netlify/functions/custom-domains.mjs');
 const domainUi=read('custom-domains.html');
 const tests=read('tests/e2e/critical-workflows.spec.mjs');
-ok('v0.37+ package lineage',['0.37.0','0.38.0'].includes(pkg.version));
+ok('v0.37+ package lineage',['0.37.0','0.38.0','0.39.0'].includes(pkg.version));
 ok('acceptance migration exists',fs.existsSync('supabase/migrations/0028_CONFLICT_REFUND_ACCEPTANCE.sql'));
 ok('floorplans have lock version',mig.includes('tenant_floorplans add column if not exists lock_version'));
 ok('inspiration has lock version',mig.includes('tenant_inspiration_items add column if not exists lock_version'));
