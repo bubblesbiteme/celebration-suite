@@ -1,6 +1,6 @@
-# Celebration Suite v1.2.0
+# Celebration Suite v1.2.1
 
-Ultra-Premium Experience & Usability. This release unifies planner, client and public pages under a calm editorial design system, adds Command/Ctrl + K navigation, compact Guided/Professional modes, contrast-aware white-label branding, premium public pages, normalized HTML structure and a new luxury release gate. No new migration is required beyond `0032_PREMIUM_RELIABILITY_SECURITY.sql`. Start with `ULTRA-PREMIUM-UX-AUDIT.md`, `ULTRA-PREMIUM-DESIGN-SYSTEM.md`, `LUXURY-FEATURE-ROADMAP.md`, and `RELEASE-NOTES-v1.2.0.md`.
+Ultra-Premium Experience & Functional Workspace Modes. This release unifies planner, client and public pages under a calm editorial design system, adds Command/Ctrl + K navigation, fully functional Guided/Professional workspace modes, contrast-aware white-label branding, premium public pages, normalized HTML structure and a new luxury release gate. No new migration is required beyond `0032_PREMIUM_RELIABILITY_SECURITY.sql`. Start with `ULTRA-PREMIUM-UX-AUDIT.md`, `ULTRA-PREMIUM-DESIGN-SYSTEM.md`, `LUXURY-FEATURE-ROADMAP.md`, and `RELEASE-NOTES-v1.2.1.md`.
 
 # Celebration Suite v1.1.0
 
