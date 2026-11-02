@@ -194,3 +194,6 @@ See `RELEASE-NOTES-v0.38.0.md` for tenant provisioning, entitlements, launch rea
 ## v0.39.0 — First Customer UX & Launch Acceptance
 
 This release simplifies the first-login experience, hides optional financial fields during event creation, replaces the crowded mobile dashboard navigation with a compact menu, and adds an opt-in full first-planner browser journey. See `RELEASE-NOTES-v0.39.0.md`. No new database migration is required beyond migrations through `0029_COMMERCIAL_LAUNCH_OPERATIONS.sql`.
+
+## v1.0.1 beta validation
+Platform owners can run controlled launch acceptance from `/beta-validation.html`. Apply migration `0030_BETA_VALIDATION_OPERATIONS.sql` after 0029. See `BETA-LAUNCH-RUNBOOK.md` and `RELEASE-NOTES-v1.0.1.md`.

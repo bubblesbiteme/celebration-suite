@@ -4,7 +4,7 @@ const root=process.cwd();
 let pass=0,fail=0;
 function check(name,ok,detail=''){if(ok){pass++;console.log('PASS',name)}else{fail++;console.error('FAIL',name,detail)}}
 const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
-check('package version is 1.0.0',pkg.version==='1.0.0',pkg.version);
+check('package version is v1.0.x',/^1\.0\.[0-9]+$/.test(pkg.version),pkg.version);
 check('v1 release notes exist',fs.existsSync('RELEASE-NOTES-v1.0.0.md'));
 check('launch checklist exists',fs.existsSync('V1-LAUNCH-CHECKLIST.md'));
 check('deployment guide exists',fs.existsSync('V1-DEPLOYMENT-GUIDE.md'));

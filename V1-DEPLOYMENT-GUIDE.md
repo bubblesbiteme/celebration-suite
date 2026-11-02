@@ -69,3 +69,7 @@ For browser acceptance testing install Playwright browsers and use the configura
 8. Review Launch Readiness and resolve every blocker.
 9. Review legal documents with counsel.
 10. Promote the exact tested build to production.
+
+
+## v1.0.1 beta validation migration
+After the v1.0 migration sequence through `0029_COMMERCIAL_LAUNCH_OPERATIONS.sql`, apply `0030_BETA_VALIDATION_OPERATIONS.sql` before using the Beta Validation console.

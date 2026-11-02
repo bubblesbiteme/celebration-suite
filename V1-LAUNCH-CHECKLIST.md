@@ -60,3 +60,12 @@
 - [ ] Urgent support ticket escalation is tested on staging.
 - [ ] Release notice appears once and stores dismissal/read state.
 - [ ] Privacy Notice, Terms, and EULA have been reviewed/approved by qualified counsel before public launch.
+
+
+## Controlled beta sign-off
+- [ ] Create a run in `/beta-validation.html`.
+- [ ] Complete every P0 acceptance check with evidence.
+- [ ] Record all defects as P0/P1/P2.
+- [ ] Confirm the run decision is not NO-GO.
+- [ ] Save/print the final launch report.
+- [ ] Repeat a production smoke run before inviting more planners.
