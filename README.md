@@ -214,3 +214,7 @@ Platform owners can run controlled launch acceptance from `/beta-validation.html
 ## v1.1.0 premium audit
 
 Start with `PREMIUM-PRODUCT-AUDIT.md`, `FEATURE-PRIORITY-MATRIX.md`, and `LIVE-ACCEPTANCE-REQUIREMENTS.md`. Run `npm run audit:premium` before deployment.
+
+## v1.2.7 JavaScript Stability Hotfix
+
+Shared browser helpers are now isolated from page-level lexical declarations, preventing duplicate `const $` / `const esc` syntax failures. Generic cross-origin/extension `Script error.` noise is filtered when the browser provides no actionable source details. See `RELEASE-NOTES-v1.2.7.md`.

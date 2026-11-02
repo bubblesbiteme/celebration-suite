@@ -54,7 +54,14 @@
   function report(kind,message,stack,source){
     try{fetch('/.netlify/functions/client-error-report',{method:'POST',credentials:'same-origin',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify({severity:'error',source:source||kind,page_path:location.pathname+location.search,message:String(message||kind).slice(0,2000),stack:String(stack||'').slice(0,12000),context:{kind}})}).catch(function(){})}catch(_){ }
   }
-  window.addEventListener('error',function(e){report('window.error',e.message,e.error&&e.error.stack,e.filename)});
+  window.addEventListener('error',function(e){
+    const message=String(e.message||'');
+    const filename=String(e.filename||'');
+    // Browsers intentionally hide details for some cross-origin scripts/extensions and emit only
+    // "Script error.". That signal is not actionable and previously flooded Platform Admin.
+    if(/^script error\.?$/i.test(message)&&(!filename||/^(chrome-extension|moz-extension|edge-extension):/i.test(filename))) return;
+    report('window.error',message,e.error&&e.error.stack,filename||'window.error');
+  });
   window.addEventListener('unhandledrejection',function(e){const r=e.reason;report('unhandledrejection',r&&r.message?r.message:String(r||'Unhandled promise rejection'),r&&r.stack,'promise')});
   document.addEventListener('DOMContentLoaded',function(){expose();accessibilityBaseline()},{once:true});
 })();

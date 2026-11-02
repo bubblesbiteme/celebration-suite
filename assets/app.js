@@ -1,8 +1,18 @@
-const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const api=async(path,options={})=>{const r=await fetch('/.netlify/functions/'+path,{headers:{'content-type':'application/json',...(options.headers||{})},credentials:'same-origin',...options});const j=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(j.error||'Request failed');e.status=r.status;e.payload=j;throw e}return j};
-const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const fmtDate=v=>v?new Date(v+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}):'TBD';
-window.WLP={$, $$, api, esc, fmtDate};
+(()=>{
+  const selectOne=(s,r=document)=>r.querySelector(s);
+  const selectAll=(s,r=document)=>[...r.querySelectorAll(s)];
+  const api=async(path,options={})=>{const r=await fetch('/.netlify/functions/'+path,{headers:{'content-type':'application/json',...(options.headers||{})},credentials:'same-origin',...options});const j=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(j.error||'Request failed');e.status=r.status;e.payload=j;throw e}return j};
+  const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const fmtDate=v=>v?new Date(v+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}):'TBD';
+  window.WLP={$:selectOne,$$:selectAll,api,esc:escapeHtml,fmtDate};
+  // Backward-compatible window properties. These are ordinary object properties,
+  // not global lexical declarations, so legacy pages can define their own const $/esc safely.
+  if(typeof window.$==='undefined') window.$=selectOne;
+  if(typeof window.$$==='undefined') window.$$=selectAll;
+  if(typeof window.api==='undefined') window.api=api;
+  if(typeof window.esc==='undefined') window.esc=escapeHtml;
+  if(typeof window.fmtDate==='undefined') window.fmtDate=fmtDate;
+})();
 
 
 // Celebration Suite shared UI polish: local inline icons, no external dependency.
