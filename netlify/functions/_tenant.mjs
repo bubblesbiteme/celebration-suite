@@ -13,7 +13,7 @@ export async function tenantContext(request){
  const license=usable[0]||licenses?.[0]||null;
  const expires=license?.expires_at?Date.parse(license.expires_at):0,graceEnd=license?.grace_until?Date.parse(license.grace_until):0;
  const licenseUsable=Boolean(license&&((['active','grace'].includes(license.status)&&(!expires||expires>now))||(license.status==='past_due'&&graceEnd>now)));
- const tenantUsable=!['billing_suspended','suspended','closed'].includes(tenant.status);
+ const tenantUsable=!tenant.launch_blocked&&!['billing_suspended','suspended','closed'].includes(tenant.status);
  return{session:{...session,role:user.role},user,tenant,license,active:licenseUsable&&tenantUsable}
 }
 export function requireActive(ctx){if(!ctx.active)throw Object.assign(new Error('Subscription or license inactive. Update billing to restore access.'),{status:402})}

@@ -48,3 +48,5 @@
   const skip=new Set(['/index.html','/pricing.html','/register.html','/login.html','/activate.html','/platform-admin.html','/platform-login.html','/privacy.html','/terms.html','/eula.html','/proposal-public.html','/questionnaire-public.html','/approval-public.html','/change-order-public.html','/registration-public.html','/ticket.html','/rsvp-public.html','/pay-invoice.html','/portal.html','/client-login.html','/portal-login.html','/my-events.html']);
   const auto=()=>{if(!skip.has(location.pathname))loadPlanner()};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',auto);else auto();
 })();
+
+;(()=>{if(!document.querySelector("script[data-cs-release-notices]")){const s=document.createElement("script");s.src="/assets/release-notices.js";s.dataset.csReleaseNotices="1";document.head.appendChild(s)}})();
