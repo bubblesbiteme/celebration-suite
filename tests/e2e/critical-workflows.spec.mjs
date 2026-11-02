@@ -77,3 +77,5 @@ test('white-label commerce storefronts load for a configured tenant',async({page
     const errors=watchPage(page);await page.goto(route);await expect(page.locator('body')).toBeVisible();await page.waitForTimeout(750);await expect(page.locator('body')).not.toContainText('SAGE & CELEBRATION');expect(errors,route).toEqual([]);
   }
 });
+
+// v0.36 infrastructure pages are included in authenticated staging smoke coverage.

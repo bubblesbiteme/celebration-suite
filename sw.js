@@ -1,4 +1,4 @@
-const CACHE='celebration-suite-v035';
+const CACHE='celebration-suite-v036';
 const CORE=['/offline.html','/assets/app.css','/assets/app.js','/assets/ui-v019.js','/assets/favicon.svg','/app.html','/event-day.html','/guest-checkin.html','/inventory-scan.html','/getting-started.html','/knowledge-base.html','/commerce.html','/assets/knowledge-base.js'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
@@ -8,3 +8,5 @@ self.addEventListener('fetch',e=>{
  if(u.pathname.startsWith('/.netlify/functions/'))return;
  e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{});return r}).catch(async()=>await caches.match(e.request)||await caches.match('/offline.html')));
 });
+self.addEventListener('push',e=>{let d={};try{d=e.data?e.data.json():{}}catch{d={body:e.data?e.data.text():''}};e.waitUntil(self.registration.showNotification(d.title||'Celebration Suite',{body:d.body||'You have a new update.',icon:'/assets/celebration-suite-mark.svg',badge:'/assets/favicon.svg',data:{url:d.url||'/notifications.html'}}))});
+self.addEventListener('notificationclick',e=>{e.notification.close();const url=e.notification.data?.url||'/notifications.html';e.waitUntil(clients.matchAll({type:'window',includeUncontrolled:true}).then(list=>{for(const c of list){if('focus'in c){c.navigate(url);return c.focus()}}return clients.openWindow(url)}))});

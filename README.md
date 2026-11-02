@@ -1,3 +1,7 @@
+# Celebration Suite v0.36.0
+
+White-label event planning platform. v0.36 adds custom tenant domains, browser push notifications, and active integration health/reconnect handling.
+
 # Celebration Suite v0.33.0
 
 ## v0.33.0 — Release Candidate Readiness & End-to-End Reliability
