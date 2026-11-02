@@ -555,3 +555,9 @@ html.cs-ultra-luxury body.cs-page-event-workspace .workspace-mode-note{border-co
 html.cs-ultra-luxury body.cs-page-event-workspace .workspace-mode-note strong{color:var(--lux-ink)!important}
 html[data-cs-audience='diy'] body.cs-page-event-workspace .workspace-more>summary{background:color-mix(in srgb,var(--lux-brand) 10%,#fff)!important}
 @media(max-width:680px){.cs-command-trigger{min-width:42px!important}.cs-command-trigger span,.cs-command-trigger kbd{display:none!important}.cs-luxury-mode-button{min-width:46px!important}.cs-luxury-mode-button .cs-mode-text{display:none!important}}
+
+/* Tenant-selectable typography colors */
+html[data-tenant-branded="1"] body{color:var(--brand-body-text,var(--lux-ink))}
+html[data-tenant-branded="1"] h1,html[data-tenant-branded="1"] h2,html[data-tenant-branded="1"] h3,html[data-tenant-branded="1"] h4,html[data-tenant-branded="1"] .brand-title{color:var(--brand-heading-text,var(--lux-ink))}
+html[data-tenant-branded="1"] .muted,html[data-tenant-branded="1"] p{color:var(--brand-body-text,var(--lux-muted))}
+html[data-tenant-branded="1"] .btn.primary,html[data-tenant-branded="1"] button.primary{color:var(--brand-button-text,#fff)!important}

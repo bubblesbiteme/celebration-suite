@@ -93,3 +93,7 @@ Before launch, review `ORIGINAL-PARITY-RECONCILIATION.md`; Sage public marketing
 ## v1.2.0 ultra-premium release
 
 No new migration is introduced by v1.2.0. Run `npm run release:audit` and review `ULTRA-PREMIUM-UX-AUDIT.md`, `ULTRA-PREMIUM-DESIGN-SYSTEM.md`, and `LUXURY-FEATURE-ROADMAP.md`. Clear the service-worker cache or deploy with the included `celebration-suite-v120` cache version so the new shared CSS and runtime are activated.
+
+
+## v1.2.2 update
+Apply `supabase/migrations/0033_FLOORPLAN_INCHES_BRANDING_RESILIENCE.sql` after `0032_PREMIUM_RELIABILITY_SECURITY.sql`. Verify floor-plan room sizing in inches, tenant font colors, Event Workspace branding load, and dashboard license timeout/retry behavior.

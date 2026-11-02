@@ -91,3 +91,7 @@
 - [ ] Guided Planning hides professional navigation noise without removing access to needed tools.
 - [ ] Professional Workspace exposes the complete operating toolset.
 - [ ] Safari, Chrome and Firefox receive a visual smoke test before launch.
+
+
+## v1.2.2 update
+Apply `supabase/migrations/0033_FLOORPLAN_INCHES_BRANDING_RESILIENCE.sql` after `0032_PREMIUM_RELIABILITY_SECURITY.sql`. Verify floor-plan room sizing in inches, tenant font colors, Event Workspace branding load, and dashboard license timeout/retry behavior.

@@ -4,7 +4,10 @@
     logo_url:'/assets/celebration-suite-mark.svg',
     primary:'#A9B89A',
     secondary:'#37243F',
-    accent:'#D9BE8C'
+    accent:'#D9BE8C',
+    heading_text:'#1D191F',
+    body_text:'#4F4852',
+    button_text:'#FFFFFF'
   };
   const cleanHex=(v,f)=>/^#[0-9a-fA-F]{6}$/.test(String(v||''))?String(v):f;
   function normalize(input={}){
@@ -16,7 +19,10 @@
       has_custom_logo:!!(b.logo_url||b.logo||input.logo_url),
       primary:cleanHex(b.primary||b.primary_color||input.primary,DEFAULTS.primary),
       secondary:cleanHex(b.secondary||b.secondary_color||input.secondary,DEFAULTS.secondary),
-      accent:cleanHex(b.accent||b.accent_color||input.accent,DEFAULTS.accent)
+      accent:cleanHex(b.accent||b.accent_color||input.accent,DEFAULTS.accent),
+      heading_text:cleanHex(b.heading_text||b.heading_text_color||input.heading_text,DEFAULTS.heading_text),
+      body_text:cleanHex(b.body_text||b.body_text_color||input.body_text,DEFAULTS.body_text),
+      button_text:cleanHex(b.button_text||b.button_text_color||input.button_text,DEFAULTS.button_text)
     };
   }
   function apply(input={},opts={}){
@@ -24,6 +30,9 @@
     root.style.setProperty('--brand-primary',brand.primary);
     root.style.setProperty('--brand-secondary',brand.secondary);
     root.style.setProperty('--brand-accent',brand.accent);
+    root.style.setProperty('--brand-heading-text',brand.heading_text);
+    root.style.setProperty('--brand-body-text',brand.body_text);
+    root.style.setProperty('--brand-button-text',brand.button_text);
     // Compatibility aliases retained for legacy page CSS; tenant-facing markup uses neutral brand hooks.
     root.style.setProperty('--sage',brand.primary);
     root.style.setProperty('--ink','#1D191F');
@@ -35,7 +44,7 @@
     document.querySelectorAll('[data-tenant-business-name]').forEach(el=>el.textContent=brand.business_name);
     document.querySelectorAll('[data-tenant-logo]').forEach(img=>{img.src=brand.logo_url;img.alt=`${brand.business_name} logo`;img.hidden=false});
     document.querySelectorAll('[data-tenant-logo-fallback]').forEach(el=>{el.hidden=true});
-    let dyn=document.getElementById('tenantBrandDynamic');if(!dyn){dyn=document.createElement('style');dyn.id='tenantBrandDynamic';document.head.appendChild(dyn)}dyn.textContent=`html[data-tenant-branded="1"]{--tenant-primary:${brand.primary};--tenant-secondary:${brand.secondary};--tenant-accent:${brand.accent}}html[data-tenant-branded="1"] .btn.primary,html[data-tenant-branded="1"] .btn.pink,html[data-tenant-branded="1"] button.primary{--tenant-button:${brand.primary}}html[data-tenant-branded="1"] .active,html[data-tenant-branded="1"] .active-link{--tenant-active:${brand.primary}}`; 
+    let dyn=document.getElementById('tenantBrandDynamic');if(!dyn){dyn=document.createElement('style');dyn.id='tenantBrandDynamic';document.head.appendChild(dyn)}dyn.textContent=`html[data-tenant-branded="1"]{--tenant-primary:${brand.primary};--tenant-secondary:${brand.secondary};--tenant-accent:${brand.accent};--tenant-heading-text:${brand.heading_text};--tenant-body-text:${brand.body_text};--tenant-button-text:${brand.button_text}}html[data-tenant-branded="1"] .btn.primary,html[data-tenant-branded="1"] .btn.pink,html[data-tenant-branded="1"] button.primary{--tenant-button:${brand.primary}}html[data-tenant-branded="1"] .active,html[data-tenant-branded="1"] .active-link{--tenant-active:${brand.primary}}`; 
     if(opts.replaceShell!==false){
       document.querySelectorAll('.brand:not(.product-brand) .brand-title').forEach(el=>el.textContent=brand.business_name);
       document.querySelectorAll('.brand:not(.product-brand) .brand-mark img:not(.product-logo)').forEach(img=>{img.src=brand.logo_url;img.alt=`${brand.business_name} logo`});
