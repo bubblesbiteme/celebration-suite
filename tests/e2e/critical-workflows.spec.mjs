@@ -70,3 +70,10 @@ test('client portal loads from a real share/login URL without planner branding l
   await expect(page.locator('body')).not.toContainText('SAGE & CELEBRATION');
   expect(errors).toEqual([]);
 });
+
+test('white-label commerce storefronts load for a configured tenant',async({page})=>{
+  const slug=process.env.CS_E2E_TENANT_SLUG;test.skip(!slug,'Set CS_E2E_TENANT_SLUG to a tenant with commerce enabled.');
+  for(const route of [`/instant-book.html?tenant=${encodeURIComponent(slug)}`,`/decor-rentals.html?tenant=${encodeURIComponent(slug)}`]){
+    const errors=watchPage(page);await page.goto(route);await expect(page.locator('body')).toBeVisible();await page.waitForTimeout(750);await expect(page.locator('body')).not.toContainText('SAGE & CELEBRATION');expect(errors,route).toEqual([]);
+  }
+});

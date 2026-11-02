@@ -68,7 +68,7 @@ window.CSInstallApp=async()=>{if(!csInstallPrompt)return false;csInstallPrompt.p
     '/billing.html':'getting-started','/onboarding.html':'getting-started','/integration-center.html':'getting-started','/integration-health.html':'getting-started','/integrations-admin.html':'getting-started','/automations.html':'getting-started',
     '/crm.html':'dashboard-events','/leads-admin.html':'dashboard-events','/proposals.html':'financials','/proposals-admin.html':'financials','/proposal-public.html':'financials',
     '/audit.html':'platform-admin','/notifications.html':'getting-started','/system-health.html':'platform-admin','/launch-health.html':'platform-admin','/support-admin.html':'platform-admin',
-    '/referrals.html':'financials','/purchasing.html':'inventory-reservations','/partner-portal.html':'vendors','/partner-access.html':'vendors'
+    '/referrals.html':'financials','/commerce.html':'financials','/instant-book.html':'financials','/decor-rentals.html':'inventory-reservations','/purchasing.html':'inventory-reservations','/partner-portal.html':'vendors','/partner-access.html':'vendors'
   };
   function addHelp(){
     if(location.pathname==='/knowledge-base.html'||location.pathname==='/getting-started.html') return;

@@ -175,3 +175,6 @@ A new site-wide runtime compatibility layer prevents legacy Sage pages from fail
 
 ## v0.29.0 — Knowledge Base & Getting Started
 Adds `/getting-started.html`, `/knowledge-base.html`, contextual page help, setup/integration walkthroughs, troubleshooting guidance, and Support/Settings links. No database migration required.
+
+## v0.35.0 commerce parity
+See `RELEASE-NOTES-v0.35.0.md` for the new white-label booking and decor-rental storefronts.
