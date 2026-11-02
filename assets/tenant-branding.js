@@ -24,7 +24,7 @@
     root.style.setProperty('--brand-primary',brand.primary);
     root.style.setProperty('--brand-secondary',brand.secondary);
     root.style.setProperty('--brand-accent',brand.accent);
-    // Original Sage portal aliases. Keep layout intact while letting tenant colors drive it.
+    // Compatibility aliases retained for legacy page CSS; tenant-facing markup uses neutral brand hooks.
     root.style.setProperty('--sage',brand.primary);
     root.style.setProperty('--ink',brand.secondary);
     root.style.setProperty('--cream',brand.accent);
@@ -35,8 +35,6 @@
     document.querySelectorAll('[data-tenant-business-name]').forEach(el=>el.textContent=brand.business_name);
     document.querySelectorAll('[data-tenant-logo]').forEach(img=>{img.src=brand.logo_url;img.alt=`${brand.business_name} logo`;img.hidden=false});
     document.querySelectorAll('[data-tenant-logo-fallback]').forEach(el=>{el.hidden=true});
-    document.querySelectorAll('img[src="/assets/logo.png"],img[alt="Sage & Celebration"]').forEach(img=>{img.src=brand.logo_url;img.alt=`${brand.business_name} logo`});
-    document.querySelectorAll('.brand h1,.brand-title,.topin h1').forEach(el=>{if(/Sage & Celebration|Celebration Suite/i.test(el.textContent||''))el.textContent=brand.business_name});
     let dyn=document.getElementById('tenantBrandDynamic');if(!dyn){dyn=document.createElement('style');dyn.id='tenantBrandDynamic';document.head.appendChild(dyn)}dyn.textContent=`.top,.topbar,.header{background:${brand.secondary}!important}.btn.primary,.btn.pink,button.primary{background:${brand.primary}!important}.btn.accent{background:${brand.accent}!important}.active,.active-link{--tenant-active:${brand.primary}}`; 
     if(opts.replaceShell!==false){
       document.querySelectorAll('.brand:not(.product-brand) .brand-title').forEach(el=>el.textContent=brand.business_name);
