@@ -69,3 +69,12 @@
 - [ ] Confirm the run decision is not NO-GO.
 - [ ] Save/print the final launch report.
 - [ ] Repeat a production smoke run before inviting more planners.
+
+
+## Original Sage parity verification
+
+- [ ] Migration `0031_ORIGINAL_PARITY_RECONCILIATION.sql` applied.
+- [ ] `npm run audit:original-parity` passes.
+- [ ] Event Workspace AI tab loads and, when `OPENAI_API_KEY` is configured, can generate/review/delete an event-scoped response.
+- [ ] Legacy staff/admin/client/payment/proposal/agreement links redirect to their current Celebration Suite equivalents without a 404.
+- [ ] `ORIGINAL-PARITY-RECONCILIATION.md` reviewed; Sage-only marketing exclusions are understood.

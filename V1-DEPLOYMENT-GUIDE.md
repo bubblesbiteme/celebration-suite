@@ -73,3 +73,14 @@ For browser acceptance testing install Playwright browsers and use the configura
 
 ## v1.0.1 beta validation migration
 After the v1.0 migration sequence through `0029_COMMERCIAL_LAUNCH_OPERATIONS.sql`, apply `0030_BETA_VALIDATION_OPERATIONS.sql` before using the Beta Validation console.
+
+
+## v1.0.2 parity reconciliation
+
+After the v1.0.1 beta validation migration, apply:
+
+`0031_ORIGINAL_PARITY_RECONCILIATION.sql`
+
+This restores tenant-scoped Event Workspace AI settings/history/audit storage. If the AI Event Assistant will be enabled, configure `OPENAI_API_KEY` and optionally `OPENAI_MODEL`.
+
+Before launch, review `ORIGINAL-PARITY-RECONCILIATION.md`; Sage public marketing/SEO pages are intentionally excluded from Celebration Suite.
