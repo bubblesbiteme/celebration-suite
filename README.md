@@ -1,3 +1,5 @@
+> Current release: **v1.2.3 — Dashboard Freeze / License Bootstrap Hotfix**
+
 # Celebration Suite v1.2.2
 
 Ultra-Premium Experience & Functional Workspace Modes. This release unifies planner, client and public pages under a calm editorial design system, adds Command/Ctrl + K navigation, fully functional Guided/Professional workspace modes, contrast-aware white-label branding, premium public pages, normalized HTML structure and a new luxury release gate. Apply `0033_FLOORPLAN_INCHES_BRANDING_RESILIENCE.sql` after `0032_PREMIUM_RELIABILITY_SECURITY.sql`. Start with `ULTRA-PREMIUM-UX-AUDIT.md`, `ULTRA-PREMIUM-DESIGN-SYSTEM.md`, `LUXURY-FEATURE-ROADMAP.md`, and `RELEASE-NOTES-v1.2.1.md`.

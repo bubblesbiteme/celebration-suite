@@ -61,7 +61,10 @@
     const dock = doc.querySelector('.cs-nav-dock');
     if(!dock) return;
     const logo = dock.querySelector('.cs-nav-logo');
-    if(logo) logo.innerHTML='<img src="/assets/celebration-suite-mark.svg" alt="" aria-hidden="true">';
+    if(logo && logo.dataset.csLuxuryLogoApplied!=='1'){
+      logo.innerHTML='<img src="/assets/celebration-suite-mark.svg" alt="" aria-hidden="true">';
+      logo.dataset.csLuxuryLogoApplied='1';
+    }
     const map = [
       ['app.html','home'],['event-workspace.html','event'],['inspiration.html','design'],['floorplan.html','floor'],
       ['guests.html','guests'],['inventory.html','items'],['financials.html','money'],['communications.html','inbox'],['settings.html','settings']
@@ -70,7 +73,9 @@
       const target = (new URL(a.href,location.href).pathname.split('/').pop()||'').toLowerCase();
       const icon = map.find(([name])=>name===target)?.[1];
       const b = a.querySelector('b');
-      if(icon && b) b.innerHTML=icons[icon];
+      if(!icon || !b || b.dataset.csLuxuryIcon===icon) return;
+      b.innerHTML=icons[icon];
+      b.dataset.csLuxuryIcon=icon;
     });
   }
 
@@ -229,7 +234,14 @@
     mountModeControl();
     mountCommandPalette();
     doc.querySelectorAll('h1,h2').forEach((h)=>{if(!h.title)h.title=h.textContent.trim()});
-    const observer=new MutationObserver(()=>{refineDock()});
+    let dockRefreshQueued=false;
+    const observer=new MutationObserver((records)=>{
+      if(dockRefreshQueued) return;
+      const relevant=records.some(r=>[...r.addedNodes].some(n=>n.nodeType===1 && (n.matches?.('.cs-nav-dock,.cs-nav-dock *') || n.querySelector?.('.cs-nav-dock'))));
+      if(!relevant) return;
+      dockRefreshQueued=true;
+      requestAnimationFrame(()=>{dockRefreshQueued=false;refineDock()});
+    });
     observer.observe(doc.body,{childList:true,subtree:true});
   }
   onReady(enhancePage);
