@@ -1,0 +1,22 @@
+import fs from 'node:fs';
+const read=p=>fs.readFileSync(p,'utf8');
+const checks=[]; const check=(name,ok)=>checks.push([name,!!ok]);
+const pkg=JSON.parse(read('package.json'));
+const ew=read('event-workspace.html');
+const ewfn=read('netlify/functions/event-workspace.mjs');
+const fp=read('floorplan.html');
+const sw=read('sw.js');
+check('package version is 1.2.8',pkg.version==='1.2.8');
+check('design upload returns image_url from public URL',ew.includes("image_url:sign.public_url||''"));
+check('media upload signing returns public_url',ewfn.includes("public_url=bucket==='celebration-suite-media'"));
+check('floor workspace saves use canonical syncFloorStore',ewfn.includes("async function syncFloorStore")&&ewfn.includes("if(d.title==='__SC_FLOOR_PLAN__')"));
+check('floor sync writes tenant_floorplans',ewfn.includes("supabase('tenant_floorplans'")&&ewfn.includes("room_width_in:rw")&&ewfn.includes("room_height_in:rh"));
+check('active floor layout name persists',ewfn.includes('floor_plan_active_name')&&ewfn.includes('preferredName'));
+check('load bundle prefers saved active layout',ewfn.includes("w.portal_data?.floor_plan_active_name"));
+check('standalone floor plan has layout name input',fp.includes('id="layoutName"'));
+check('standalone save uses layout name input',fp.includes("name:($('layoutName').value"));
+check('new layout prompts for custom name',fp.includes("prompt('Name this layout:'"));
+check('service worker cache is v128',sw.includes('celebration-suite-v128'));
+let fail=0; for(const [n,ok] of checks){console.log(`${ok?'PASS':'FAIL'} ${n}`); if(!ok)fail++;}
+console.log(`${checks.length-fail}/${checks.length} v1.2.8 persistence checks passed`);
+if(fail)process.exit(1);

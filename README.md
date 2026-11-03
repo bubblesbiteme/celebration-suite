@@ -218,3 +218,8 @@ Start with `PREMIUM-PRODUCT-AUDIT.md`, `FEATURE-PRIORITY-MATRIX.md`, and `LIVE-A
 ## v1.2.7 JavaScript Stability Hotfix
 
 Shared browser helpers are now isolated from page-level lexical declarations, preventing duplicate `const $` / `const esc` syntax failures. Generic cross-origin/extension `Script error.` noise is filtered when the browser provides no actionable source details. See `RELEASE-NOTES-v1.2.7.md`.
+
+
+## v1.2.8 Persistence Hotfix
+
+Inspiration image uploads now carry a usable public image URL into the saved design item. Event Workspace floor-plan saves now persist into the canonical `tenant_floorplans` records, preserving room dimensions, custom layout names, objects, and the active layout across reloads and across planner/client views. The standalone Floor Plan now exposes and saves the actual layout name. See `RELEASE-NOTES-v1.2.8.md`.
