@@ -3,7 +3,7 @@ const fp=fs.readFileSync('floorplan.html','utf8');
 const fn=fs.readFileSync('netlify/functions/floorplans.mjs','utf8');
 const sw=fs.readFileSync('sw.js','utf8');
 const checks=[]; const check=(name,ok)=>checks.push([name,!!ok]);
-check('frontend validates UUIDs before update',fp.includes('function validUuid')&&fp.includes("const persistedId=validUuid(plan?.id)?plan.id:null"));
+check('frontend validates UUIDs before update',fp.includes('function validUuid')&&fp.includes("persistedId=validUuid(plan?.id)?plan.id:null"));
 check('unsaved plans use POST instead of PATCH',fp.includes("if(persistedId)r=await api")&&fp.includes("else r=await api('floorplans?event_id='"));
 check('background upload cannot create fake persisted id',!fp.includes("plan??={name:'Reception',objects:[]}")&&fp.includes('background_url:url'));
 check('local draft recovery exists',fp.includes('cs-floor-draft:')&&fp.includes('saveDraftNow')&&fp.includes('readDraft'));

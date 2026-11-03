@@ -7,7 +7,7 @@ const alias=read('netlify/functions/platform-stripe-webhook.mjs');
 const health=read('netlify/functions/launch-health.mjs');
 const deploy=read('docs/DEPLOYMENT.md');
 const sw=read('sw.js');
-check('package version is 1.3.1+', /^1\.(?:[4-9]|\d{2,})\.\d+$/.test(pkg.version)||/^1\.3\.(?:1|[1-9]\d+)$/.test(pkg.version));
+check('package version is 1.3.1+', /^1\.(?:[4-9]|\d{2,})\.\d+$/.test(pkg.version)||/^1\.3\.(?:[1-9]\d*)$/.test(pkg.version));
 check('platform Stripe webhook compatibility route exists', alias.includes("export { default } from './stripe-webhook.mjs'"));
 check('canonical Stripe webhook verifies signatures', canonical.includes("request.headers.get('stripe-signature')"));
 check('platform-specific webhook secret supported', canonical.includes('PLATFORM_STRIPE_WEBHOOK_SECRET'));
@@ -17,6 +17,6 @@ check('platform webhook returns 200 on successful processing', canonical.include
 check('subscription billing events remain handled', ['invoice.paid','invoice.payment_failed','customer.subscription.updated','customer.subscription.deleted'].every(x=>canonical.includes(x)));
 check('launch health accepts platform webhook secret', health.includes("PLATFORM_STRIPE_WEBHOOK_SECRET')||yes('STRIPE_WEBHOOK_SECRET"));
 check('deployment docs use platform webhook endpoint', deploy.includes('/.netlify/functions/platform-stripe-webhook'));
-check('service worker cache is v131+', /celebration-suite-v(?:131|1[4-9][0-9]|[2-9][0-9]{2,})/.test(sw));
+check('service worker cache is v131+', /celebration-suite-v(?:13[1-9]|1[4-9][0-9]|[2-9][0-9]{2,})/.test(sw));
 let fail=0; for(const [n,ok] of checks){console.log(`${ok?'PASS':'FAIL'} ${n}`);if(!ok)fail++;}
 console.log(`\n${checks.length-fail}/${checks.length} v1.3.1 platform Stripe webhook checks passed.`); if(fail)process.exit(1);

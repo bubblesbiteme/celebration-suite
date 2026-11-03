@@ -1,6 +1,6 @@
 {
   "name": "celebration-suite",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -12,7 +12,7 @@
     "preflight": "node scripts/preflight.mjs",
     "test:e2e": "playwright test",
     "test:e2e:critical": "playwright test tests/e2e/critical-workflows.spec.mjs",
-    "release:audit": "node scripts/preflight.mjs && node tools/audit-release-candidate.mjs && node tools/smoke-critical-pages.mjs && node tools/audit-native-branding.mjs && node tools/audit-commerce-parity.mjs && node tools/audit-infrastructure-parity.mjs && node tools/audit-production-acceptance.mjs && node tools/audit-commercial-launch.mjs && node tools/audit-launch-ux.mjs && node tools/audit-v1-launch.mjs && node tools/audit-beta-validation.mjs && node tools/audit-original-parity.mjs && node tools/audit-communications-schema.mjs && node scripts/audit-ultra-luxury.mjs && node scripts/audit-workspace-modes.mjs && node scripts/audit-v122-hotfix.mjs && node scripts/audit-v123-freeze-hotfix.mjs && node scripts/audit-v124-true-scale-floorplan.mjs && node scripts/audit-v125-custom-domain.mjs && node scripts/audit-v126-premium-header.mjs && node scripts/audit-v127-js-stability.mjs && node scripts/audit-v128-persistence.mjs && node scripts/audit-v129-event-context.mjs && node scripts/audit-v130-floorplan-data-safety.mjs && node scripts/audit-v131-platform-stripe-webhook.mjs",
+    "release:audit": "node scripts/preflight.mjs && node tools/audit-release-candidate.mjs && node tools/smoke-critical-pages.mjs && node tools/audit-native-branding.mjs && node tools/audit-commerce-parity.mjs && node tools/audit-infrastructure-parity.mjs && node tools/audit-production-acceptance.mjs && node tools/audit-commercial-launch.mjs && node tools/audit-launch-ux.mjs && node tools/audit-v1-launch.mjs && node tools/audit-beta-validation.mjs && node tools/audit-original-parity.mjs && node tools/audit-communications-schema.mjs && node scripts/audit-ultra-luxury.mjs && node scripts/audit-workspace-modes.mjs && node scripts/audit-v122-hotfix.mjs && node scripts/audit-v123-freeze-hotfix.mjs && node scripts/audit-v124-true-scale-floorplan.mjs && node scripts/audit-v125-custom-domain.mjs && node scripts/audit-v126-premium-header.mjs && node scripts/audit-v127-js-stability.mjs && node scripts/audit-v128-persistence.mjs && node scripts/audit-v129-event-context.mjs && node scripts/audit-v130-floorplan-data-safety.mjs && node scripts/audit-v131-platform-stripe-webhook.mjs && node scripts/audit-v132-floorplan-autosave-print.mjs",
     "audit:commerce": "node tools/audit-commerce-parity.mjs",
     "audit:infrastructure": "node tools/audit-infrastructure-parity.mjs",
     "audit:acceptance": "node tools/audit-production-acceptance.mjs",

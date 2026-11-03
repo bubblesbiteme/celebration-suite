@@ -1,6 +1,6 @@
-# Celebration Suite v1.3.0
+# Celebration Suite v1.3.2
 
-Latest hotfix: event-context propagation and Inspiration upload reliability. See `RELEASE-NOTES-v1.3.0.md`.
+Latest hotfix: continuous Floor Plan autosave, layout-name persistence, refresh protection, and floor-plan-only PDF/print output. See `RELEASE-NOTES-v1.3.2.md`.
 
 ## Current release: v1.2.6 — Custom Domain TXT Generation Hotfix
 

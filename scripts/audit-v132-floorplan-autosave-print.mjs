@@ -1,0 +1,23 @@
+import fs from 'node:fs';
+const read=p=>fs.readFileSync(p,'utf8');
+const checks=[];const check=(n,o)=>checks.push([n,!!o]);
+const pkg=JSON.parse(read('package.json')),fp=read('floorplan.html'),ew=read('event-workspace.html'),sw=read('sw.js');
+check('package version is 1.3.2+', /^1\.3\.(?:2|[3-9]|[1-9]\d+)$/.test(pkg.version)||/^1\.(?:[4-9]|\d{2,})\.\d+$/.test(pkg.version));
+check('standalone floor plan has server autosave queue', fp.includes('function queuePersist()')&&fp.includes('persistPlan({manual:false})'));
+check('standalone autosave creates new layouts with POST', fp.includes("else r=await api('floorplans?event_id='")&&fp.includes("method:'POST'"));
+check('standalone autosave updates persisted layouts with PATCH', fp.includes("if(persistedId)r=await api('floorplans?event_id='")&&fp.includes("method:'PATCH'"));
+check('standalone layout name participates in autosave', fp.includes("$('layoutName').oninput")&&fp.includes("if(plan)plan.name=$('layoutName').value"));
+check('standalone drag completion queues persistence', fp.includes('draw();queueDraft()')&&fp.includes("el.addEventListener('pointerup',up)"));
+check('standalone Floor Plan has dedicated print sheet', fp.includes('id="fpPrintSheet"')&&fp.includes('function preparePrintSheet()')&&fp.includes('printFloorOnly'));
+check('standalone print CSS hides page chrome', fp.includes('body>*:not(#fpPrintSheet){display:none!important}'));
+check('event workspace blocks periodic refresh while Floor Plan is open', ew.includes("function canRefreshSharedWorkspace(){if(current==='floorplan')return false"));
+check('event workspace has debounced floor plan server autosave', ew.includes('function markAdminFloorDirty()')&&ew.includes('saveAdminFloorAuto(false)'));
+check('event workspace Floor Plan keeps local recovery draft', ew.includes('adminFloorDraftKey')&&ew.includes('writeAdminFloorDraft')&&ew.includes('readAdminFloorDraft'));
+check('event workspace exposes explicit persistent layout name', ew.includes('id="adminFloorLayoutName"')&&ew.includes('renameAdminFloorVersion'));
+check('event workspace repopulates all named layout options', ew.includes('function renderAdminFloorVersions()')&&ew.includes('Object.keys(adminFloorStore.versions'));
+check('floor plan mutations mark workspace dirty', ['addAdminFloor','adminFloorWidth','adminFloorHeight','adminFloorBgOpacity','adminDeleteFloor','adminClearMeasures'].every(x=>ew.includes(x))&&ew.includes('markAdminFloorDirty()'));
+check('event workspace uses dedicated floor-plan-only print sheet', ew.includes('id="adminFloorPrintSheet"')&&ew.includes('prepareAdminFloorPrint')&&ew.includes('printAdminFloorOnly'));
+check('event workspace print CSS hides non-floor content', ew.includes('body.print-floor>*:not(#adminFloorPrintSheet){display:none!important}'));
+check('service worker cache is v132+', /celebration-suite-v(?:13[2-9]|1[4-9][0-9]|[2-9][0-9]{2,})/.test(sw));
+let fail=0;for(const [n,ok] of checks){console.log(`${ok?'PASS':'FAIL'} ${n}`);if(!ok)fail++}
+console.log(`\n${checks.length-fail}/${checks.length} v1.3.2 Floor Plan autosave/print checks passed.`);if(fail)process.exit(1);
