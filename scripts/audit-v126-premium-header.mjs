@@ -5,7 +5,7 @@ const js=fs.readFileSync('assets/ultra-luxury.js','utf8');
 const css=fs.readFileSync('assets/ultra-luxury.css','utf8');
 const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
 const sw=fs.readFileSync('sw.js','utf8');
-check('version 1.2.6+',/^1\.2\.(?:6|[7-9]|[1-9][0-9]+)$/.test(pkg.version));
+check('version 1.2.6+',/^1\.(?:[3-9]|\d{2,})\.\d+$/.test(pkg.version)||/^1\.2\.(?:6|[7-9]|[1-9][0-9]+)$/.test(pkg.version));
 check('segmented workspace mode control',js.includes('cs-mode-segmented')&&js.includes('Workspace experience'));
 check('guided segment exists',js.includes('data-mode=\"diy\"'));
 check('professional segment exists',js.includes('data-mode=\"professional\"'));

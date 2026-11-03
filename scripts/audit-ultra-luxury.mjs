@@ -12,7 +12,7 @@ const pkg=JSON.parse(read('package.json'));
 const htmlFiles=fs.readdirSync(root).filter((f)=>f.endsWith('.html')).sort();
 const html=htmlFiles.map((f)=>[f,read(f)]);
 
-check('package version is in the 1.2 release line',/^1\.2\.\d+$/.test(pkg.version),pkg.version);
+check('package version is v1.2 or newer',/^1\.(?:[2-9]|\d{2,})\.\d+$/.test(pkg.version),pkg.version);
 check('ultra luxury stylesheet exists',exists('assets/ultra-luxury.css'));
 check('ultra luxury runtime exists',exists('assets/ultra-luxury.js'));
 check('compatibility PWA helper exists',exists('pwa.js'));

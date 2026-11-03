@@ -28,7 +28,8 @@ Required core values:
 
 Stripe platform billing:
 - `STRIPE_SECRET_KEY`
-- `STRIPE_WEBHOOK_SECRET`
+- `PLATFORM_STRIPE_WEBHOOK_SECRET` (recommended for the platform billing endpoint)
+- `STRIPE_WEBHOOK_SECRET` (legacy/fallback; either secret is accepted)
 - `STRIPE_PRICE_SINGLE_EVENT`
 - `STRIPE_PRICE_MONTHLY`
 - `STRIPE_PRICE_ANNUAL`
@@ -53,7 +54,7 @@ Create a recurring monthly Stripe Price for **$59 USD/month** and set its Price 
 
 Create a webhook endpoint:
 
-`https://planner.sageandcelebration.com/.netlify/functions/stripe-webhook`
+`https://planner.sageandcelebration.com/.netlify/functions/platform-stripe-webhook`
 
 Enable:
 - `invoice.paid`
@@ -61,7 +62,7 @@ Enable:
 - `customer.subscription.updated`
 - `customer.subscription.deleted`
 
-Copy the webhook signing secret to `STRIPE_WEBHOOK_SECRET`.
+Copy the endpoint signing secret to `PLATFORM_STRIPE_WEBHOOK_SECRET` (recommended). The legacy `STRIPE_WEBHOOK_SECRET` remains accepted for backward compatibility.
 
 Enable Stripe Customer Portal if you want monthly subscribers to update payment methods from Celebration Suite.
 

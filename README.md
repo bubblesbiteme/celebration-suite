@@ -1,3 +1,7 @@
+# Celebration Suite v1.3.0
+
+Latest hotfix: event-context propagation and Inspiration upload reliability. See `RELEASE-NOTES-v1.3.0.md`.
+
 ## Current release: v1.2.6 — Custom Domain TXT Generation Hotfix
 
 > Current release: **v1.2.3 — Dashboard Freeze / License Bootstrap Hotfix**

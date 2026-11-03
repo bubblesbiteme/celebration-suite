@@ -17,6 +17,6 @@ ok('client no pixel size editor',! /Width \(px\).*fpWidth/.test(po)&&! /Height \
 ok('standalone physical item dimensions',/width_in:d\[0\]/.test(fp)&&/physicalDims/.test(fp));
 ok('standalone real grid',/function applyGrid/.test(fp)&&/ma=60/.test(fp));
 ok('standalone real snapping',/function snapAxis/.test(fp));
-ok('service worker v124+',/celebration-suite-v12[4-9]/.test(fs.readFileSync('sw.js','utf8')));
+ok('service worker v124+',/celebration-suite-v(?:12[4-9]|1[3-9][0-9]|[2-9][0-9]{2,})/.test(fs.readFileSync('sw.js','utf8')));
 for(const [n,v] of checks) console.log(`${v?'PASS':'FAIL'} ${n}`);
 const fails=checks.filter(x=>!x[1]); console.log(`\n${checks.length-fails.length}/${checks.length} true-scale floor-plan checks passed.`); if(fails.length) process.exit(1);

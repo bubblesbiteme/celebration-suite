@@ -97,3 +97,12 @@ No new migration is introduced by v1.2.0. Run `npm run release:audit` and review
 
 ## v1.2.2 update
 Apply `supabase/migrations/0033_FLOORPLAN_INCHES_BRANDING_RESILIENCE.sql` after `0032_PREMIUM_RELIABILITY_SECURITY.sql`. Verify floor-plan room sizing in inches, tenant font colors, Event Workspace branding load, and dashboard license timeout/retry behavior.
+
+
+## Platform Stripe webhook endpoint
+
+Use the platform billing webhook URL:
+
+`https://planner.sageandcelebration.com/.netlify/functions/platform-stripe-webhook`
+
+Set its Stripe endpoint signing secret in Netlify as `PLATFORM_STRIPE_WEBHOOK_SECRET`. The existing `STRIPE_WEBHOOK_SECRET` is retained as a compatible fallback. The legacy `/stripe-webhook` route remains available so older Stripe endpoint configurations do not have to be changed immediately.
