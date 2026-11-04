@@ -1,15 +1,78 @@
-<!doctype html><html lang="en"><head><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#38223f"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><title>Demo Workspace</title><link rel="stylesheet" href="/assets/app.css">  
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#38223f">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explore a guided, interactive Celebration Suite demo for professional and DIY event planning workflows.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <title>Explore Celebration Suite</title>
+  <link rel="stylesheet" href="/assets/demo-explorer.css">
+</head>
+<body class="demo-page">
+  <header class="demo-topbar">
+    <div class="demo-brand">
+      <div class="demo-brand-mark"><img src="/assets/celebration-suite-mark.svg" alt="Celebration Suite"></div>
+      <div class="demo-brand-copy"><strong>Celebration Suite</strong><span>Read-only demo · Interactive product tour · Sample data only</span></div>
+    </div>
+    <div class="demo-top-actions">
+      <span class="demo-pill">Nothing here writes to a real account</span>
+      <a class="demo-cta" href="/pricing.html">View plans</a>
+      <a class="demo-cta primary" href="/register.html">Create account</a>
+    </div>
+  </header>
 
+  <div class="demo-shell">
+    <aside class="demo-rail" aria-label="Demo navigation">
+      <div class="demo-mode-card">
+        <b>Explore at your own pace</b>
+        <span>Click through the most important workflows. Small interactions are temporary and reset when the page reloads.</span>
+        <div class="demo-progress"><i id="demoProgress"></i></div>
+      </div>
+      <nav class="demo-nav" id="demoNav"></nav>
+      <div class="demo-rail-bottom">
+        <strong>Demo guardrails</strong><br>
+        No real events, payments, messages, uploads, client invitations, or full floor plans can be created here.
+        <button type="button" id="resetDemo">Reset demo activity</button>
+      </div>
+    </aside>
 
+    <main class="demo-main">
+      <div class="demo-wrap">
+        <section class="demo-hero">
+          <div class="demo-hero-copy">
+            <div class="demo-kicker">A COMPLETE EVENT OPERATING SYSTEM</div>
+            <h1>See how the entire planning journey connects.</h1>
+            <p>Celebration Suite brings leads, clients, design, floor plans, guests, inventory, vendors, payments, automations and event-day execution into one branded workspace. This guided demo uses a realistic sample event so you can explore the experience without creating a real account.</p>
+            <div class="demo-hero-tags"><span>DIY-friendly guided planning</span><span>Professional operations</span><span>White-label client portal</span><span>Real-time event workspace</span><span>Inventory + guest seating</span></div>
+          </div>
+          <div class="demo-tour-card">
+            <div>
+              <small id="tourStepLabel">Recommended tour · Step 1 of 13</small>
+              <h2 id="tourTitle">Start with the command center</h2>
+              <p id="tourText">See upcoming events, pipeline health, outstanding balances and what needs attention without opening five separate systems.</p>
+            </div>
+            <div class="demo-tour-actions"><button class="prev" id="tourPrev" type="button">Back</button><button class="next" id="tourNext" type="button">Next stop</button></div>
+          </div>
+        </section>
 
-  <link rel="stylesheet" href="/assets/premium-experience.css">
-  <link rel="stylesheet" href="/assets/ultra-luxury.css">
-</head><body><header class="topbar"><div class="brand"><div class="brand-mark"><span class="brand-fallback">YL</span></div><div><div class="brand-title">Your Logo Events</div><small>Read-only demo</small></div></div><div class="top-actions"><a class="btn" href="/pricing.html">See Plans</a><a class="btn primary" href="/register.html">Create Account</a></div></header><main style="max-width:1100px;margin:auto"><div class="license-banner good">DEMO MODE · Sample information only</div><div class="page-head"><div><h1>Planner Dashboard</h1><p class="muted">A sample of what a professional planner sees after branding their account.</p></div></div><div class="grid cols-4"><div class="card stat"><span class="muted">Active Events</span><strong>8</strong></div><div class="card stat"><span class="muted">Open Leads</span><strong>14</strong></div><div class="card stat"><span class="muted">Outstanding</span><strong>$7,450</strong></div><div class="card stat"><span class="muted">Upcoming</span><strong>3</strong></div></div><div class="grid cols-2" style="margin-top:18px"><div class="card"><h2>Upcoming Events</h2><div class="event-card"><h3>Jordan & Alex Wedding</h3><div class="event-meta"><span class="badge">Nov 14</span><span class="badge">Wedding</span><span class="badge">142 guests</span></div><p class="muted">Final walkthrough complete · 2 approvals pending</p></div><hr><div class="event-card"><h3>Acme Holiday Gala</h3><div class="event-meta"><span class="badge">Dec 5</span><span class="badge">Corporate</span><span class="badge">280 guests</span></div><p class="muted">Vendor confirmations due this week</p></div></div><div class="card"><h2>Lead Pipeline</h2><div class="grid"><div class="notice"><strong>New Inquiry · Taylor M.</strong><div class="muted">Birthday · $3,000 estimated budget</div></div><div class="notice good"><strong>Proposal Sent · Morgan R.</strong><div class="muted">Wedding · Follow up tomorrow</div></div><div class="notice"><strong>Consultation · BrightCo</strong><div class="muted">Corporate retreat · Jan 2027</div></div></div></div></div><div class="card" style="margin-top:18px"><h2>Event Planning Tools</h2><div class="tool-grid"><div class="tool-card"><strong>Guests & RSVP</strong><span class="muted">Invites, meals, seating and check-in</span></div><div class="tool-card"><strong>Floor Plan</strong><span class="muted">Drag-and-drop layouts</span></div><div class="tool-card"><strong>Financials</strong><span class="muted">Invoices, payments and balances</span></div><div class="tool-card"><strong>Event Day</strong><span class="muted">Live check-in and command center</span></div></div></div></main><script src="/assets/runtime-compat.js"></script><script src="/assets/tenant-branding.js"></script>  
+        <section class="demo-stage" aria-live="polite">
+          <div class="demo-stage-head">
+            <div class="demo-stage-title"><div class="demo-stage-icon" id="stageIcon">⌂</div><div><h2 id="stageTitle">Planner Command Center</h2><p id="stageSubtitle">A sample of what a planner sees after signing in.</p></div></div>
+            <div class="demo-stage-badge">DEMO · SAMPLE DATA</div>
+          </div>
+          <div class="demo-stage-body" id="demoStage"></div>
+        </section>
 
-
-
-  <script src="/assets/premium-experience.js" defer></script>
-  <script src="/assets/ultra-luxury.js" defer></script>
-</body></html>
-
-
+        <section class="demo-footer-cta">
+          <div><h2>Ready to build your own workspace?</h2><p>The demo resets. Your real Celebration Suite account saves your branding, clients, events, inventory and workflows.</p></div>
+          <div><a href="/register.html">Create your account</a><a href="/pricing.html">Compare plans</a></div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="demo-toast" id="demoToast"></div>
+  <script src="/assets/demo-explorer.js" defer></script>
+</body>
+</html>

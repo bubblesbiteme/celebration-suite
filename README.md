@@ -1,4 +1,6 @@
-**Current release: v1.3.4 — True-Scale Furniture Library & Chair Controls**
+**Current release: v1.3.6 — Interactive Product Demo**
+
+The public demo is now a guided, read-only product explorer with 13 major workflow stops and safe temporary interactions. See `RELEASE-NOTES-v1.3.6.md`. No database migration is required.
 
 
 # Celebration Suite v1.3.2

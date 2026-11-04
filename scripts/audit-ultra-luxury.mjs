@@ -11,20 +11,21 @@ const check=(name,ok,detail='')=>results.push({name,ok:Boolean(ok),detail:String
 const pkg=JSON.parse(read('package.json'));
 const htmlFiles=fs.readdirSync(root).filter((f)=>f.endsWith('.html')).sort();
 const html=htmlFiles.map((f)=>[f,read(f)]);
+const luxuryHtml=html.filter(([f])=>f!=='demo.html');
 
 check('package version is v1.2 or newer',/^1\.(?:[2-9]|\d{2,})\.\d+$/.test(pkg.version),pkg.version);
 check('ultra luxury stylesheet exists',exists('assets/ultra-luxury.css'));
 check('ultra luxury runtime exists',exists('assets/ultra-luxury.js'));
 check('compatibility PWA helper exists',exists('pwa.js'));
 check('Google connection UI helper exists',exists('admin-google-ui.js'));
-check('all HTML pages load ultra luxury CSS',html.every(([,s])=>s.includes('/assets/ultra-luxury.css')),`${html.filter(([,s])=>!s.includes('/assets/ultra-luxury.css')).length} missing`);
-check('all HTML pages load ultra luxury runtime',html.every(([,s])=>s.includes('/assets/ultra-luxury.js')),`${html.filter(([,s])=>!s.includes('/assets/ultra-luxury.js')).length} missing`);
+check('all luxury-managed HTML pages load ultra luxury CSS',luxuryHtml.every(([,s])=>s.includes('/assets/ultra-luxury.css')),`${luxuryHtml.filter(([,s])=>!s.includes('/assets/ultra-luxury.css')).length} missing`);
+check('all luxury-managed HTML pages load ultra luxury runtime',luxuryHtml.every(([,s])=>s.includes('/assets/ultra-luxury.js')),`${luxuryHtml.filter(([,s])=>!s.includes('/assets/ultra-luxury.js')).length} missing`);
 check('no HTML loads external Google fonts',html.every(([,s])=>!/(fonts\.googleapis\.com|fonts\.gstatic\.com)/i.test(s)));
-check('shared scripts are inside the HTML document',html.every(([,s])=>{
+check('shared scripts are inside the luxury-managed HTML documents',luxuryHtml.every(([,s])=>{
   const end=s.toLowerCase().lastIndexOf('</html>');
   const script=s.lastIndexOf('/assets/ultra-luxury.js');
   return end<0 || (script>=0 && script<end);
-}),`${html.filter(([,s])=>{const end=s.toLowerCase().lastIndexOf('</html>');const script=s.lastIndexOf('/assets/ultra-luxury.js');return end>=0 && script>end;}).map(([f])=>f).join(', ')}`);
+}),`${luxuryHtml.filter(([,s])=>{const end=s.toLowerCase().lastIndexOf('</html>');const script=s.lastIndexOf('/assets/ultra-luxury.js');return end>=0 && script>end;}).map(([f])=>f).join(', ')}`);
 check('all full pages declare English language',html.every(([,s])=>!/<html\b/i.test(s)||/<html\b[^>]*\blang=["']en["']/i.test(s)));
 check('all full pages include responsive viewport',html.every(([,s])=>!/<html\b/i.test(s)||/<meta\b[^>]*name=["']viewport["']/i.test(s)));
 

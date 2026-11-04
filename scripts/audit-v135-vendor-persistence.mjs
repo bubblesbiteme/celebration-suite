@@ -7,7 +7,7 @@ const migration=fs.readFileSync('supabase/migrations/0034_VENDOR_CRM_PERSISTENCE
 const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
 const sw=fs.readFileSync('sw.js','utf8');
 
-check('package version is 1.3.5',pkg.version==='1.3.5');
+check('package version is v1.3.5+',/^1\.(?:3\.(?:[5-9]|[1-9][0-9]+)|[4-9]\.|[1-9][0-9]+\.)/.test(pkg.version));
 check('service worker cache is v135+',/celebration-suite-v(?:13[5-9]|1[4-9][0-9]|[2-9][0-9]{2,})/.test(sw));
 check('migration adds operational vendor statuses',migration.includes("'active','busy','seasonal','inactive'")&&migration.includes('tenant_vendors_status_check'));
 check('migration persists vendor contact/location fields',['instagram','address','city','state','zip'].every(x=>migration.includes(`add column if not exists ${x}`)));
