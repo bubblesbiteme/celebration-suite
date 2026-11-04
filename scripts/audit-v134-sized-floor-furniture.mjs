@@ -16,6 +16,6 @@ check('workspace true physical table dimensions',ew.includes('round60:[5,5]')&&e
 check('client portal true physical table dimensions',portal.includes('round60:[5,5]')&&portal.includes('rect96:[8,2.5]'));
 check('chair rendering scales from 18 inch physical chair size',fp.includes('18/wi*100')&&ew.includes('18/wi*100')&&portal.includes('18/wi*100'));
 check('cocktail tables default with chairs hidden',fp.includes("!String(type).startsWith('cocktail')")&&ew.includes("!String(type).startsWith('cocktail')")&&portal.includes("!String(type).startsWith('cocktail')"));
-check('package version 1.3.4',pkg.version==='1.3.4');
-check('service worker cache v134',sw.includes('celebration-suite-v134'));
+check('package version 1.3.4+',/^1\.3\.(?:[4-9]|[1-9][0-9]+)$/.test(pkg.version)||/^1\.(?:[4-9]|[1-9][0-9]+)\./.test(pkg.version));
+check('service worker cache v134+',/celebration-suite-v(?:13[4-9]|1[4-9][0-9]|[2-9][0-9]{2,})/.test(sw));
 console.log(`\n${pass}/${pass+fail} v1.3.4 sized floor-furniture checks passed.`);if(fail)process.exit(1);
