@@ -1,3 +1,6 @@
+**Current release: v1.3.4 — True-Scale Furniture Library & Chair Controls**
+
+
 # Celebration Suite v1.3.2
 
 Latest hotfix: continuous Floor Plan autosave, layout-name persistence, refresh protection, and floor-plan-only PDF/print output. See `RELEASE-NOTES-v1.3.2.md`.
