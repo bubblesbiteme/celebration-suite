@@ -72,6 +72,7 @@ source,reference,target,exists,context
 "app.html","/calendar.html","calendar.html",yes,not-event-scoped
 "app.html","/communications.html","communications.html",yes,not-event-scoped
 "app.html","/documents.html","documents.html",yes,event-scoped
+"app.html","/guest-photos.html","guest-photos.html",yes,not-event-scoped
 "app.html","/team.html","team.html",yes,not-event-scoped
 "app.html","/settings.html","settings.html",yes,not-event-scoped
 "app.html","/getting-started.html","getting-started.html",yes,not-event-scoped
@@ -595,6 +596,20 @@ source,reference,target,exists,context
 "guest-checkin.html","/assets/ui-v019.js","assets/ui-v019.js",yes,not-event-scoped
 "guest-checkin.html","/assets/premium-experience.js","assets/premium-experience.js",yes,not-event-scoped
 "guest-checkin.html","/assets/ultra-luxury.js","assets/ultra-luxury.js",yes,not-event-scoped
+"guest-photo-print.html","/assets/ultra-luxury.css","assets/ultra-luxury.css",yes,not-event-scoped
+"guest-photo-print.html","/assets/ultra-luxury.js","assets/ultra-luxury.js",yes,not-event-scoped
+"guest-photo-upload.html","/assets/app.css","assets/app.css",yes,not-event-scoped
+"guest-photo-upload.html","/assets/ultra-luxury.css","assets/ultra-luxury.css",yes,not-event-scoped
+"guest-photo-upload.html","/assets/tenant-branding.js","assets/tenant-branding.js",yes,not-event-scoped
+"guest-photo-upload.html","/assets/ultra-luxury.js","assets/ultra-luxury.js",yes,not-event-scoped
+"guest-photos.html","/assets/app.css","assets/app.css",yes,not-event-scoped
+"guest-photos.html","/assets/ultra-luxury.css","assets/ultra-luxury.css",yes,not-event-scoped
+"guest-photos.html","/app.html","app.html",yes,not-event-scoped
+"guest-photos.html","/guests.html","guests.html",yes,event-scoped
+"guest-photos.html","/assets/app.js","assets/app.js",yes,not-event-scoped
+"guest-photos.html","/assets/tenant-branding.js","assets/tenant-branding.js",yes,not-event-scoped
+"guest-photos.html","/guests.html?event_id=","guests.html",yes,event-scoped
+"guest-photos.html","/assets/ultra-luxury.js","assets/ultra-luxury.js",yes,not-event-scoped
 "guests-admin.html","/mobile-app.css","mobile-app.css",yes,not-event-scoped
 "guests-admin.html","assets/mobile-hardening.css","assets/mobile-hardening.css",yes,not-event-scoped
 "guests-admin.html","assets/ux-polish.css","assets/ux-polish.css",yes,not-event-scoped
@@ -619,6 +634,7 @@ source,reference,target,exists,context
 "guests.html","/assets/tenant-branding.js","assets/tenant-branding.js",yes,not-event-scoped
 "guests.html","/assets/runtime-compat.js","assets/runtime-compat.js",yes,not-event-scoped
 "guests.html","/guest-checkin.html?event_id=","guest-checkin.html",yes,event-scoped
+"guests.html","/guest-photos.html?event_id=","guest-photos.html",yes,not-event-scoped
 "guests.html","/registration.html?event_id=","registration.html",yes,not-event-scoped
 "guests.html","/assets/premium-experience.js","assets/premium-experience.js",yes,not-event-scoped
 "guests.html","/assets/ultra-luxury.js","assets/ultra-luxury.js",yes,not-event-scoped
@@ -979,6 +995,7 @@ source,reference,target,exists,context
 "portal.html","/terms.html","terms.html",yes,not-event-scoped
 "portal.html","my-events.html","my-events.html",yes,not-event-scoped
 "portal.html","portal-login.html","portal-login.html",yes,not-event-scoped
+"portal.html","/guest-photo-upload.html?token=","guest-photo-upload.html",yes,not-event-scoped
 "portal.html","portal-login.html","portal-login.html",yes,not-event-scoped
 "portal.html","portal-login.html","portal-login.html",yes,not-event-scoped
 "portal.html","/pwa.js","pwa.js",yes,not-event-scoped

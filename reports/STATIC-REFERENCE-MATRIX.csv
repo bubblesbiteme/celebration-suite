@@ -73,6 +73,7 @@ source,reference,type,status
 "app.html","/calendar.html",page,OK
 "app.html","/communications.html",page,OK
 "app.html","/documents.html",page,OK
+"app.html","/guest-photos.html",page,OK
 "app.html","/team.html",page,OK
 "app.html","/settings.html",page,OK
 "app.html","/getting-started.html",page,OK
@@ -598,6 +599,21 @@ source,reference,type,status
 "guest-checkin.html","/assets/ui-v019.js",asset,OK
 "guest-checkin.html","/assets/premium-experience.js",asset,OK
 "guest-checkin.html","/assets/ultra-luxury.js",asset,OK
+"guest-photo-print.html","/assets/ultra-luxury.css",asset,OK
+"guest-photo-print.html","/.netlify/functions/guest-photo-open?id=",function,OK
+"guest-photo-print.html","/assets/ultra-luxury.js",asset,OK
+"guest-photo-upload.html","/assets/app.css",asset,OK
+"guest-photo-upload.html","/assets/ultra-luxury.css",asset,OK
+"guest-photo-upload.html","/assets/tenant-branding.js",asset,OK
+"guest-photo-upload.html","/assets/ultra-luxury.js",asset,OK
+"guest-photos.html","/assets/app.css",asset,OK
+"guest-photos.html","/assets/ultra-luxury.css",asset,OK
+"guest-photos.html","/app.html",page,OK
+"guest-photos.html","/guests.html",page,OK
+"guest-photos.html","/assets/app.js",asset,OK
+"guest-photos.html","/assets/tenant-branding.js",asset,OK
+"guest-photos.html","/guests.html?event_id=",page,OK
+"guest-photos.html","/assets/ultra-luxury.js",asset,OK
 "guests-admin.html","/mobile-app.css",asset,OK
 "guests-admin.html","assets/mobile-hardening.css",asset,OK
 "guests-admin.html","assets/ux-polish.css",asset,OK
@@ -622,6 +638,7 @@ source,reference,type,status
 "guests.html","/assets/tenant-branding.js",asset,OK
 "guests.html","/assets/runtime-compat.js",asset,OK
 "guests.html","/guest-checkin.html?event_id=",page,OK
+"guests.html","/guest-photos.html?event_id=",page,OK
 "guests.html","/registration.html?event_id=",page,OK
 "guests.html","/assets/premium-experience.js",asset,OK
 "guests.html","/assets/ultra-luxury.js",asset,OK
@@ -986,6 +1003,7 @@ source,reference,type,status
 "portal.html","/terms.html",page,OK
 "portal.html","my-events.html",page,OK
 "portal.html","portal-login.html",page,OK
+"portal.html","/guest-photo-upload.html?token=",page,OK
 "portal.html","portal-login.html",page,OK
 "portal.html","portal-login.html",page,OK
 "portal.html","/pwa.js",asset,OK
