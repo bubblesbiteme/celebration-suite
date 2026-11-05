@@ -1496,6 +1496,7 @@ source,reference,type,status
 "getting-started.html","/event-day-command.html",page,OK
 "guests.html","/rsvp-public.html?event=",page,OK
 "guests.html","/login.html",page,OK
+"inspiration.html","/inspiration.html?event_id=",page,OK
 "inventory-design-picker.html","/event-workspace.html?id=",page,OK
 "inventory-reservation-calendar-admin.html","/inventory-reservation-calendar.html",page,OK
 "inventory-reservation-calendar.html","/login.html",page,OK

@@ -4,7 +4,7 @@ const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
 const read=(p)=>fs.readFileSync(path.join(root,p),'utf8');
 const html=read('demo.html'); const js=read('assets/demo-explorer.js'); const css=read('assets/demo-explorer.css'); const pkg=JSON.parse(read('package.json')); const sw=read('sw.js');
 let pass=0,fail=0; const check=(n,c)=>{if(c){console.log('PASS',n);pass++;}else{console.error('FAIL',n);fail++;}};
-check('package version is 1.3.6',pkg.version==='1.3.6');
+check('package version is 1.3.6+',/^1\.(?:3\.(?:[6-9]|[1-9][0-9])|[4-9]\.[0-9]+)$/.test(pkg.version));
 check('demo remains explicitly read only',html.includes('Read-only demo'));
 check('demo uses dedicated explorer assets',html.includes('/assets/demo-explorer.css')&&html.includes('/assets/demo-explorer.js'));
 check('demo does not load app API runtime',!html.includes('/assets/app.js')&&!html.includes('WLP.api(')&&!js.includes('WLP.api('));

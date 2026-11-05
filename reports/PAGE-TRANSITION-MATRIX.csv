@@ -1488,6 +1488,7 @@ source,reference,target,exists,context
 "getting-started.html","/event-day-command.html","event-day-command.html",yes,event-scoped
 "guests.html","/rsvp-public.html?event=","rsvp-public.html",yes,not-event-scoped
 "guests.html","/login.html","login.html",yes,not-event-scoped
+"inspiration.html","/inspiration.html?event_id=","inspiration.html",yes,event-scoped
 "inventory-design-picker.html","/event-workspace.html?id=","event-workspace.html",yes,event-scoped
 "inventory-reservation-calendar-admin.html","/inventory-reservation-calendar.html","inventory-reservation-calendar.html",yes,not-event-scoped
 "inventory-reservation-calendar.html","/login.html","login.html",yes,not-event-scoped

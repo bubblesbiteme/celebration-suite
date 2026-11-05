@@ -1,3 +1,7 @@
+# Celebration Suite v1.3.7 — Collaboration & Import Stability
+
+Current release: fixes Floor Plan seating visibility, Inspiration transform persistence, uploaded document viewing, questionnaire CSV import, inventory CSV preview, utility headers, and Inventory → Inspiration return routing. No new database migration is required.
+
 **Current release: v1.3.6 — Interactive Product Demo**
 
 The public demo is now a guided, read-only product explorer with 13 major workflow stops and safe temporary interactions. See `RELEASE-NOTES-v1.3.6.md`. No database migration is required.

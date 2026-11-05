@@ -129,8 +129,9 @@
     return bar;
   }
 
+  const modePages=new Set(['app.html','planner-dashboard.html','event-workspace.html']);
   function mountModeControl(){
-    if(!plannerPages.has(page) || doc.querySelector('.cs-luxury-mode-wrap')) return;
+    if(!modePages.has(page) || doc.querySelector('.cs-luxury-mode-wrap')) return;
     const bar=actionHost();
     if(!bar) return;
     let mode=localStorage.getItem('celebration_suite_experience_mode')||'professional';

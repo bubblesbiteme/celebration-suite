@@ -594,3 +594,9 @@ html.cs-ultra-luxury body.cs-page-event-workspace #workspaceBack{display:inline-
   html.cs-ultra-luxury body.cs-page-event-workspace #workspaceBack{width:42px!important;min-width:42px!important;padding:0!important;font-size:0!important}
   html.cs-ultra-luxury body.cs-page-event-workspace #workspaceBack::after{content:'←';font-size:16px!important}
 }
+
+/* v1.3.7 utility header cleanup */
+html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.top,html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.topbar{min-height:70px!important;height:auto!important;display:flex!important;align-items:center!important;gap:14px!important;padding:10px 22px!important}
+html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.top>.cs-luxury-header-actions,html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.topbar>.cs-luxury-header-actions{margin-left:auto!important}
+html.cs-ultra-luxury body.cs-page-inventory>.top>strong{font-size:14px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+@media(max-width:760px){html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.top,html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.topbar{padding:9px 12px!important}.cs-luxury-header-actions{max-width:70vw!important;overflow:auto!important}.cs-luxury-header-actions [data-context-help]{white-space:nowrap!important}}

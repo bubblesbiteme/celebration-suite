@@ -86,7 +86,7 @@ window.CSInstallApp=async()=>{if(!csInstallPrompt)return false;csInstallPrompt.p
     const href='/knowledge-base.html?article='+encodeURIComponent(id);
     if(document.querySelector('[data-context-help]')) return;
     const a=document.createElement('a');a.href=href;a.className='btn';a.dataset.contextHelp='1';a.textContent='? Help';a.title='Help for this page';
-    const actions=document.querySelector('.top-actions');
+    const actions=document.querySelector('.top-actions,.cs-luxury-header-actions');
     if(actions){actions.insertBefore(a,actions.firstChild);return;}
     const topbar=document.querySelector('.topbar,header');
     if(topbar){a.style.marginLeft='auto';topbar.appendChild(a);return;}
