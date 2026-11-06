@@ -9,7 +9,7 @@ ok('private photo storage bucket',migration.includes("celebration-suite-guest-ph
 ok('minimum two year retention',migration.includes("interval '2 years'")&&pub.includes('retain_until'));
 ok('public QR upload page',publicPage.includes('Select photos from your phone')&&publicPage.includes('prepare-upload')&&publicPage.includes('complete-upload'));
 ok('public upload uses signed direct storage',pub.includes('/object/upload/sign/')&&publicPage.includes("method:'PUT'"));
-ok('planner gallery settings and QR',planner.includes('Wedding-day QR')&&planner.includes('Download QR')&&planner.includes('Require planner approval'));
+ok('planner gallery settings and QR',(planner.includes('Wedding-day QR')||planner.includes('Client-specific event QR'))&&planner.includes('Download QR')&&planner.includes('Require planner approval'));
 ok('planner moderation',planner.includes("data-status=\"approved\"")&&planner.includes("data-status=\"hidden\""));
 ok('client portal guest photo section',portal.includes('data-section="guest-photos"')&&portal.includes('Download')&&portal.includes('Print'));
 ok('client portal data loads approved photos',client.includes('tenant_event_guest_photos')&&client.includes('status=eq.approved'));
