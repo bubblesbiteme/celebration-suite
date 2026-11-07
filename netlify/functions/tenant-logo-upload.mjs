@@ -12,7 +12,7 @@ export default async request=>{try{
   if(!base||!key)throw new Error('Storage is not configured.');
   const path=`${ctx.tenant.id}/branding/${Date.now()}-${crypto.randomUUID()}-${name}`;
   const encoded=path.split('/').map(encodeURIComponent).join('/');
-  const r=await fetch(`${base}/storage/v1/object/upload/sign/celebration-suite-media/${encoded}`,{method:'POST',headers:{apikey:key,authorization:`Bearer ${key}`,'content-type':'application/json'},body:'{}'});
+  const r=await fetch(`${base}/storage/v1/object/upload/sign/celebration-suite-media/${encoded}`,{method:'POST',headers:{apikey:key,...(String(key).startsWith('sb_')?{}:{authorization:`Bearer ${key}`}),'content-type':'application/json'},body:'{}'});
   const tx=await r.text();let j={};try{j=JSON.parse(tx)}catch{}
   if(!r.ok)throw new Error(j.message||tx||'Could not prepare logo upload.');
   const raw=j.url||j.signedURL||j.signedUrl;if(!raw)throw new Error('Upload URL not returned.');

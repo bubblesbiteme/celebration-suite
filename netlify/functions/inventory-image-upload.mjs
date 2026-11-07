@@ -15,7 +15,7 @@ export default async request=>{try{
   const ext=({'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[mime]||'jpg';
   const path=`${ctx.tenant.id}/${itemId}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
   const base=env('SUPABASE_URL'),key=env('SUPABASE_SERVICE_ROLE_KEY');if(!base||!key)throw new Error('Supabase is not configured.');
-  const r=await fetch(`${base}/storage/v1/object/celebration-suite-inventory/${path}`,{method:'POST',headers:{apikey:key,authorization:`Bearer ${key}`,'content-type':mime,'x-upsert':'false'},body});
+  const r=await fetch(`${base}/storage/v1/object/celebration-suite-inventory/${path}`,{method:'POST',headers:{apikey:key,...(String(key).startsWith('sb_')?{}:{authorization:`Bearer ${key}`}),'content-type':mime,'x-upsert':'false'},body});
   if(!r.ok)throw new Error(await r.text()||`Upload failed (${r.status}).`);
   const url=`${base}/storage/v1/object/public/celebration-suite-inventory/${path}`;
   const existing=await supabase(`tenant_inventory_images?tenant_id=eq.${encodeURIComponent(ctx.tenant.id)}&inventory_item_id=eq.${encodeURIComponent(itemId)}&select=id&limit=1`);
