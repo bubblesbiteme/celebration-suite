@@ -7,7 +7,7 @@ async function requirePlatform(event){
   return r.json().catch(()=>({ok:true}));
 }
 async function supa(path,opts={}){
-  const url=env('SUPABASE_URL'); const key=env('SUPABASE_SERVICE_ROLE_KEY');
+  const url=env('SUPABASE_URL'); const key=(env('SUPABASE_SECRET_KEY')||env('SUPABASE_SERVICE_ROLE_KEY')).trim().replace(/^['"]|['"]$/g,'');
   if(!url||!key) throw new Error('Supabase server configuration is missing.');
   const r=await fetch(url.replace(/\/$/,'')+path,{...opts,headers:{apikey:key,...(String(key).startsWith('sb_')?{}:{authorization:`Bearer ${key}`}),'content-type':'application/json',prefer:opts.prefer||'return=representation',...(opts.headers||{})}});
   const text=await r.text(); let data=null; try{data=text?JSON.parse(text):null}catch{data=text}
