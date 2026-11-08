@@ -1,0 +1,13 @@
+/* Sage & Celebration production/mobile hardening */
+html,body{max-width:100%;overflow-x:hidden}
+*,*::before,*::after{min-width:0}
+img,video,svg,canvas,iframe{max-width:100%}
+input,select,textarea,button{max-width:100%}
+pre,code{overflow-wrap:anywhere}
+.table-wrap,.table-responsive,.scroll-x,[data-scroll-x]{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:760px){
+  .actions,.quick,.toolbar,.button-row,.btn-row{flex-wrap:wrap}
+  .actions>*:not(input):not(select):not(textarea),.quick>*:not(input):not(select):not(textarea){max-width:100%}
+  table{font-size:.92rem}
+  dialog,.modal,.drawer,.panel,.card{max-width:calc(100vw - 20px)}
+}

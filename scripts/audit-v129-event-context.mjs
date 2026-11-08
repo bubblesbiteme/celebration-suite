@@ -1,0 +1,23 @@
+import fs from 'node:fs';
+const read=p=>fs.readFileSync(p,'utf8');
+const checks=[]; const check=(name,ok)=>checks.push([name,!!ok]);
+const pkg=JSON.parse(read('package.json'));
+const ew=read('event-workspace.html');
+const fn=read('netlify/functions/event-workspace.mjs');
+const portal=read('portal.html');
+const client=read('netlify/functions/client-data.mjs');
+const sw=read('sw.js');
+check('package version is v1.2.9+',/^1\.(?:[3-9]|\d{2,})\.\d+$/.test(pkg.version)||/^1\.2\.(?:9|[1-9][0-9]+)$/.test(pkg.version));
+check('workspace action URL always carries booking_id',ew.includes("new URLSearchParams({booking_id:id,event_id:id})"));
+check('workspace action body also carries event_id',ew.includes("booking_id:id,event_id:id"));
+check('workspace blocks missing local event context with actionable error',ew.includes('This event workspace is missing its event ID'));
+check('backend accepts query event context',fn.includes("u.searchParams.get('booking_id')||u.searchParams.get('event_id')"));
+check('backend accepts body event context fallback',fn.includes("clean(d.booking_id||d.event_id,120)"));
+check('backend reads POST body before event ID validation',fn.indexOf("const d=request.method==='GET'?{}:await request.json()") < fn.indexOf("if(!eventId)throw new Error('Event ID is required.')"));
+check('planner inspiration upload retains public image URL',ew.includes("image_url:sign.public_url||''"));
+check('client media signing returns public URL',client.includes("public_url:bucket==='celebration-suite-media'"));
+check('client inspiration upload retains public image URL',portal.includes("image_url:sign.public_url||''"));
+check('service worker cache is v129+',/celebration-suite-v(?:129|1[3-9][0-9]|[2-9][0-9]{2,})/.test(sw));
+let fail=0; for(const [n,ok] of checks){console.log(`${ok?'PASS':'FAIL'} ${n}`); if(!ok)fail++;}
+console.log(`${checks.length-fail}/${checks.length} v1.2.9 event-context checks passed`);
+if(fail)process.exit(1);

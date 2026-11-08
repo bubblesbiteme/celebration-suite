@@ -1,0 +1,848 @@
+
+> celebration-suite@1.2.0 release:audit
+> node scripts/preflight.mjs && node tools/audit-release-candidate.mjs && node tools/smoke-critical-pages.mjs && node tools/audit-native-branding.mjs && node tools/audit-commerce-parity.mjs && node tools/audit-infrastructure-parity.mjs && node tools/audit-production-acceptance.mjs && node tools/audit-commercial-launch.mjs && node tools/audit-launch-ux.mjs && node tools/audit-v1-launch.mjs && node tools/audit-beta-validation.mjs && node tools/audit-original-parity.mjs && node tools/audit-communications-schema.mjs
+
+PASS exists index.html
+PASS exists register.html
+PASS exists login.html
+PASS exists activate.html
+PASS exists app.html
+PASS exists event-workspace.html
+PASS exists portal.html
+PASS exists settings.html
+PASS exists platform-admin.html
+PASS exists license-expired.html
+PASS exists crm.html
+PASS exists proposals.html
+PASS exists proposal-public.html
+PASS exists contract-public.html
+PASS exists financials.html
+PASS exists vendors.html
+PASS exists inventory.html
+PASS exists guests.html
+PASS exists rsvp-public.html
+PASS exists appointments.html
+PASS exists approvals.html
+PASS exists approval-public.html
+PASS exists registration.html
+PASS exists registration-public.html
+PASS exists floorplan.html
+PASS exists event-day.html
+PASS exists supabase/migrations/0001_WHITE_LABEL_PLATFORM.sql
+PASS exists supabase/migrations/0002_CRM_PROPOSALS_FINANCIALS.sql
+PASS exists supabase/migrations/0003_ADVANCED_PLANNING_TOOLS.sql
+PASS exists netlify/functions/_tenant.mjs
+PASS exists netlify/functions/events.mjs
+PASS exists netlify/functions/vendors.mjs
+PASS exists netlify/functions/inventory.mjs
+PASS exists netlify/functions/guests.mjs
+PASS exists netlify/functions/rsvp-public.mjs
+PASS exists netlify/functions/appointments.mjs
+PASS exists netlify/functions/approvals.mjs
+PASS exists netlify/functions/approval-public.mjs
+PASS exists netlify/functions/registrations.mjs
+PASS exists netlify/functions/registration-public.mjs
+PASS exists netlify/functions/registration-verify.mjs
+PASS exists netlify/functions/floorplans.mjs
+PASS exists netlify/functions/event-day.mjs
+PASS tenant schema exists
+PASS license plans exist
+PASS license expiration RPC exists
+PASS v0.2 table tenant_clients
+PASS v0.2 table tenant_leads
+PASS v0.2 table tenant_activity
+PASS v0.2 table tenant_proposals
+PASS v0.2 table tenant_contracts
+PASS v0.2 table tenant_invoices
+PASS v0.2 table tenant_payments
+PASS v0.3 table tenant_vendors
+PASS v0.3 table tenant_inventory_items
+PASS v0.3 table tenant_inventory_reservations
+PASS v0.3 table tenant_guests
+PASS v0.3 table tenant_registration_types
+PASS v0.3 table tenant_registrations
+PASS v0.3 table tenant_appointments
+PASS v0.3 table tenant_approvals
+PASS v0.3 table tenant_floorplans
+PASS event API scopes by tenant
+PASS event API enforces active license
+PASS single event license event binding enforced
+PASS vendors.mjs requires active license
+PASS vendors.mjs tenant scoped
+PASS inventory.mjs requires active license
+PASS inventory.mjs tenant scoped
+PASS guests.mjs requires active license
+PASS guests.mjs tenant scoped
+PASS appointments.mjs requires active license
+PASS appointments.mjs tenant scoped
+PASS approvals.mjs requires active license
+PASS approvals.mjs tenant scoped
+PASS registrations.mjs requires active license
+PASS registrations.mjs tenant scoped
+PASS floorplans.mjs requires active license
+PASS floorplans.mjs tenant scoped
+PASS event-day.mjs requires active license
+PASS event-day.mjs tenant scoped
+PASS inventory enforces same-date availability
+PASS public RSVP tokenized
+PASS public approval tokenized
+PASS public registration tokenized
+PASS paid registration uses tenant Stripe
+PASS paid registration verifies tenant metadata
+PASS event day tenant scoped
+PASS integration credentials encrypted
+PASS separate secrets documented
+PASS Sage seller branding stays out of tenant-facing white-label pages
+PASS Celebration Suite seller identity present
+PASS dashboard stays focused on primary navigation
+PASS event workspace links event day
+PASS floor plan supports original palette drag and placed-object movement
+PASS guest page shares RSVP link
+PASS registration page shares public link
+PASS event day supports guest and ticket check-in
+PASS v0.4 exists team.html
+PASS v0.4 exists staff-invite.html
+PASS v0.4 exists time-tracking.html
+PASS v0.4 exists automations.html
+PASS v0.4 exists closeouts.html
+PASS v0.4 exists supabase/migrations/0004_TEAM_AUTOMATION_AGENCY.sql
+PASS v0.4 exists netlify/functions/team.mjs
+PASS v0.4 exists netlify/functions/staff-invite.mjs
+PASS v0.4 exists netlify/functions/time-entries.mjs
+PASS v0.4 exists netlify/functions/automations.mjs
+PASS v0.4 exists netlify/functions/automation-run.mjs
+PASS v0.4 exists netlify/functions/closeouts.mjs
+PASS v0.4 exists netlify/functions/_automation-engine.mjs
+PASS v0.4 table tenant_staff_invites
+PASS v0.4 table tenant_event_assignments
+PASS v0.4 table tenant_time_entries
+PASS v0.4 table tenant_automation_rules
+PASS v0.4 table tenant_automation_runs
+PASS v0.4 table tenant_event_closeouts
+PASS team user permissions column
+PASS team hourly rate column
+PASS tenant helper validates active user
+PASS permission helper exists
+PASS assignment access helper exists
+PASS team API requires manage_team
+PASS team invite expires seven days
+PASS team API assigns events
+PASS staff invite checks expiry
+PASS staff invite hashes password
+PASS staff invite creates session
+PASS time tracking permission enforced
+PASS time tracking prevents two open clocks
+PASS time tracking uses hourly rate
+PASS automation management restricted
+PASS automation rule stale_lead
+PASS automation rule overdue_invoice
+PASS automation rule event_countdown
+PASS automation rule client_task_reminder
+PASS automation rule post_event_closeout
+PASS automation dedupe key storage
+PASS automation uses tenant email
+PASS automation runner scheduled hourly
+PASS post event closes event
+PASS closeout can reopen event
+PASS event API filters assigned events
+PASS event API asserts assigned event access
+PASS dashboard bootstrap filters assigned events
+PASS bootstrap returns current user role
+PASS guests.mjs permission enforced
+PASS guests.mjs assignment enforced
+PASS approvals.mjs permission enforced
+PASS approvals.mjs assignment enforced
+PASS registrations.mjs permission enforced
+PASS registrations.mjs assignment enforced
+PASS floorplans.mjs permission enforced
+PASS floorplans.mjs assignment enforced
+PASS event-day.mjs permission enforced
+PASS event-day.mjs assignment enforced
+PASS dashboard links team
+PASS event workspace includes team/labor operations
+PASS settings links automations
+PASS event workspace links closeout
+PASS event workspace includes team/labor operations
+PASS event checklist stores due date through unified workspace
+PASS v0.5 exists pricing.html
+PASS v0.5 exists onboarding.html
+PASS v0.5 exists billing.html
+PASS v0.5 exists demo.html
+PASS v0.5 exists terms.html
+PASS v0.5 exists privacy.html
+PASS v0.5 exists eula.html
+PASS v0.5 exists supabase/migrations/0005_COMMERCIALIZATION_ONBOARDING.sql
+PASS v0.5 exists netlify/functions/pricing-config.mjs
+PASS v0.5 exists netlify/functions/onboarding.mjs
+PASS v0.5 exists netlify/functions/account-license.mjs
+PASS v0.5 exists netlify/functions/account-export.mjs
+PASS v0.5 exists netlify/functions/legal-accept.mjs
+PASS v0.5 exists netlify/functions/marketplace-order.mjs
+PASS v0.5 table tenant_onboarding
+PASS v0.5 table platform_orders
+PASS v0.5 table legal_acceptances
+PASS single event license binds specific event
+PASS pricing page has three commercial plans
+PASS registration requires legal acceptance
+PASS registration stores legal acceptances
+PASS onboarding checks brand email payment and event
+PASS billing supports renewal upgrade and export
+PASS annual checkout uses recurring subscription
+PASS marketplace fulfillment creates license code
+PASS marketplace fulfillment is admin protected
+PASS direct Stripe purchases recorded as platform orders
+PASS redeemed marketplace order links tenant
+PASS public demo is read only
+PASS seller console includes marketplace fulfillment
+PASS settings links setup and billing
+PASS v0.6 exists supabase/migrations/0006_MONTHLY_BILLING_AND_UNIFIED_AUTH.sql
+PASS v0.6 exists platform-login.html
+PASS v0.6 exists client-login.html
+PASS v0.6 exists netlify/functions/_oauth.mjs
+PASS v0.6 exists netlify/functions/google-auth-start.mjs
+PASS v0.6 exists netlify/functions/google-auth-callback.mjs
+PASS v0.6 exists netlify/functions/platform-auth-login.mjs
+PASS v0.6 exists netlify/functions/platform-auth-bootstrap.mjs
+PASS v0.6 exists netlify/functions/platform-auth-session.mjs
+PASS v0.6 exists netlify/functions/client-auth-login.mjs
+PASS v0.6 exists netlify/functions/client-auth-setup.mjs
+PASS v0.6 exists netlify/functions/client-auth-session.mjs
+PASS v0.6 exists netlify/functions/stripe-webhook.mjs
+PASS v0.6 exists netlify/functions/billing-portal.mjs
+PASS monthly unlimited plan added
+PASS monthly billing stores subscription id
+PASS billing recovery fields exist
+PASS billing suspension tenant state exists
+PASS client account tables exist
+PASS monthly checkout uses subscription mode
+PASS monthly Stripe price env used
+PASS Stripe payment failure enters past due
+PASS Stripe payment recovery reactivates
+PASS billing portal available
+PASS tenant context allows internal billing recovery only while usable
+PASS account license hides recovery timing fields
+PASS planner Google sign-in is existing-account gated
+PASS platform Google sign-in is approved-email gated
+PASS client Google sign-in requires invited email
+PASS staff Google sign-in requires invited email
+PASS client portal requires authenticated client session
+PASS platform admin UI uses account session
+PASS planner login offers Google
+PASS platform login offers email and Google
+PASS client login offers email and Google
+PASS staff invite offers Google
+PASS no customer-facing recovery duration disclosure
+PASS monthly public price is 59
+PASS v0.6.1 exists supabase/migrations/0007_RELIABILITY_DRAFTS_AND_SYNC.sql
+PASS v0.6.1 exists netlify/functions/client-draft.mjs
+PASS v0.6.1 exists docs/RELIABILITY-HOTFIX-REFERENCE.md
+PASS v0.6.1 exists docs/V0.6.1-RELIABILITY-AUTOSAVE-HOTFIXES.md
+PASS client cloud draft table exists
+PASS client cloud draft RLS enabled
+PASS client draft endpoint checks client session
+PASS client draft endpoint scopes event access
+PASS client portal refreshes every 45 seconds
+PASS client portal refreshes on focus and visibility
+PASS client portal pauses refresh during dirty questionnaire edit
+PASS client messages use shared event thread
+PASS client portal refreshes shared changes automatically
+PASS questionnaire draft flow persists through shared client backend
+PASS client message send returns refreshed shared portal state
+PASS event workspace recovery cache exists
+PASS event workspace saves mutations immediately through unified API
+PASS event workspace restores cached state before refresh
+PASS event workspace persists workspace mutations server side
+PASS event workspace exposes visible save/error feedback
+PASS event day refreshes every 45 seconds
+PASS event day foreground reconnect refresh exists
+PASS planner password login case insensitive
+PASS client password login case insensitive
+PASS platform password login case insensitive
+PASS Google tenant identity lookup case insensitive
+PASS reliability doc records 45 second and 2.5 second standards
+PASS v0.6.2 exists docs/V0.6.2-OAUTH-REDIRECT-HOTFIX.md
+PASS Google OAuth uses incoming request origin
+PASS Google OAuth no longer imports shared SITE_URL origin
+PASS Google callback post-login redirect uses incoming request origin
+PASS OAuth hotfix preserves host-only sessions
+PASS v0.7 exists supabase/migrations/0008_LAUNCH_EMAIL_PASSWORD_RESETS.sql
+PASS v0.7 exists forgot-password.html
+PASS v0.7 exists reset-password.html
+PASS v0.7 exists launch-health.html
+PASS v0.7 exists netlify/functions/_platform_mailer.mjs
+PASS v0.7 exists netlify/functions/password-reset-request.mjs
+PASS v0.7 exists netlify/functions/password-reset-complete.mjs
+PASS v0.7 exists netlify/functions/checkout-readiness.mjs
+PASS v0.7 exists netlify/functions/launch-health.mjs
+PASS v0.7 exists docs/V0.7-LAUNCH-READINESS.md
+PASS password reset token table exists
+PASS password reset token RLS enabled
+PASS password reset links expire in 24 hours
+PASS password reset token stored hashed
+PASS password reset is one-time
+PASS reset supports tenant platform client
+PASS planner login links password reset
+PASS platform login links password reset
+PASS client login links password reset
+PASS platform transactional email env documented
+PASS registration sends welcome email best effort
+PASS checkout readiness endpoint exists
+PASS checkout error names missing config
+PASS activation page checks checkout readiness
+PASS launch health is platform-session protected
+PASS launch health does not return secret values
+PASS platform admin links launch health
+PASS new elegant logo mark contains sparkle and botanical accent
+PASS full logo includes Sage and Celebration endorsement
+PASS v0.11 exists supabase/migrations/0012_BUSINESS_GRADE_OPERATIONS.sql
+PASS v0.11 exists purchasing.html
+PASS v0.11 exists vendor-reviews.html
+PASS v0.11 exists partner-access.html
+PASS v0.11 exists partner-portal.html
+PASS v0.11 exists reconciliation.html
+PASS v0.11 exists netlify/functions/purchasing.mjs
+PASS v0.11 exists netlify/functions/vendor-reviews.mjs
+PASS v0.11 exists netlify/functions/partner-links.mjs
+PASS v0.11 exists netlify/functions/partner-public.mjs
+PASS v0.11 exists netlify/functions/reconciliation.mjs
+PASS v0.11 exists docs/V0.11-BUSINESS-GRADE-OPERATIONS.md
+PASS v0.11 table tenant_vendor_reviews
+PASS v0.11 table tenant_purchasing_gaps
+PASS v0.11 table tenant_event_day_tasks
+PASS v0.11 table tenant_event_incidents
+PASS v0.11 table tenant_referral_partner_links
+PASS v0.11 table tenant_reconciliation_snapshots
+PASS purchasing API tenant scoped
+PASS vendor reviews tenant scoped
+PASS partner portal uses token access
+PASS partner links can be disabled
+PASS event day supports operational tasks
+PASS event day supports incident log
+PASS event day shows live labor
+PASS QuickBooks helper exported for reconciliation
+PASS reconciliation compares local and QuickBooks
+PASS new operations included in account export
+PASS purchasing remains available from event workspace
+PASS reconciliation remains available from accounting
+PASS referrals links partner access
+PASS v0.12 exists supabase/migrations/0013_PLATFORM_CONTROL_INTELLIGENCE.sql
+PASS v0.12 exists audit.html
+PASS v0.12 exists notifications.html
+PASS v0.12 exists integration-center.html
+PASS v0.12 exists netlify/functions/audit.mjs
+PASS v0.12 exists netlify/functions/notifications.mjs
+PASS v0.12 exists netlify/functions/integration-center.mjs
+PASS v0.12 exists netlify/functions/external-api.mjs
+PASS v0.12 exists netlify/functions/_webhooks.mjs
+PASS v0.12 exists docs/V0.12-PLATFORM-CONTROL-INTELLIGENCE.md
+PASS v0.12 table tenant_audit_log
+PASS v0.12 table tenant_notifications
+PASS v0.12 table tenant_api_keys
+PASS v0.12 table tenant_webhooks
+PASS v0.12 table tenant_webhook_deliveries
+PASS API keys stored hashed
+PASS external API supports event reads
+PASS external API supports lead intake
+PASS webhooks are HMAC signed
+PASS webhook deliveries logged
+PASS client activity creates audit history
+PASS client activity creates planner notification
+PASS client activity emits webhook
+PASS owner BI includes event profitability
+PASS owner BI includes inventory utilization
+PASS new platform control data included in export
+PASS notification center page remains available
+PASS integration center page remains available
+PASS event workspace includes activity history
+PASS v0.13 exists supabase/migrations/0014_DEEP_WORKSPACE_DESIGN_STUDIO.sql
+PASS v0.13 exists inspiration.html
+PASS v0.13 exists netlify/functions/inspiration.mjs
+PASS v0.13 exists netlify/functions/inspiration-upload.mjs
+PASS v0.13 exists docs/V0.13-DEEP-WORKSPACE-DESIGN-STUDIO.md
+PASS design board table exists
+PASS design item field rotation
+PASS design item field height
+PASS design item field requested_quantity
+PASS design item field client_note
+PASS design item field is_client_visible
+PASS design media bucket exists
+PASS design studio supports rotation
+PASS design studio supports two dimensional resizing
+PASS design studio supports layer controls
+PASS design studio uses inventory gallery
+PASS approved designs reconcile inventory
+PASS manual and design reservation quantities split
+PASS client portal receives inspiration board
+PASS client can leave design feedback
+PASS event workspace is command center
+PASS event workspace has richer budget
+PASS event book includes design board
+PASS account export includes design board config
+PASS v0.14 exists supabase/migrations/0015_DEEP_EVENT_OPERATIONS_PARITY.sql
+PASS v0.14 exists guest-checkin.html
+PASS v0.14 exists guests.html
+PASS v0.14 exists floorplan.html
+PASS v0.14 exists documents.html
+PASS v0.14 exists closeouts.html
+PASS v0.14 exists netlify/functions/file-upload.mjs
+PASS v0.14 exists netlify/functions/document-open.mjs
+PASS v0.14 exists netlify/functions/event-closeout-run.mjs
+PASS v0.14 exists docs/V0.14-DEEP-EVENT-OPERATIONS-PARITY.md
+PASS v0.14 migration capability invitation_settings
+PASS v0.14 migration capability invitation_code
+PASS v0.14 migration capability meal_choices
+PASS v0.14 migration capability background_url
+PASS v0.14 migration capability tenant_floorplan_versions
+PASS v0.14 migration capability version_number
+PASS v0.14 migration capability expiration_date
+PASS v0.14 migration capability pnl_snapshot
+PASS v0.14 migration capability inventory_verified
+PASS guest suite has CSV bulk import
+PASS guest suite sends personalized invites
+PASS public RSVP supports meal choices
+PASS mobile guest checkin exists
+PASS floor plan has original professional library
+PASS floor plan supports room dimensions rotation and item dimensions
+PASS floor plan versioning backend exists
+PASS document vault supports 30 MB upload
+PASS document vault supports locked versions and expiry
+PASS private documents open via fresh signed URLs
+PASS closeout has P&L and gates
+PASS daily closeout runner configured
+PASS dashboard separates archive
+PASS client portal includes guests and floorplan
+PASS client portal backend returns guests and floorplans
+PASS account export includes floor plan versions and closeouts
+PASS v0.15 exists supabase/migrations/0016_DEEP_CLIENT_JOURNEY_COMMUNICATIONS.sql
+PASS v0.15 exists scheduling.html
+PASS v0.15 exists vendor-quotes.html
+PASS v0.15 exists netlify/functions/scheduling.mjs
+PASS v0.15 exists netlify/functions/vendor-quotes.mjs
+PASS v0.15 exists netlify/functions/resend-inbound-webhook.mjs
+PASS v0.15 exists netlify/functions/telnyx-inbound-sms.mjs
+PASS v0.15 exists netlify/functions/_communication-match.mjs
+PASS v0.15 exists docs/V0.15-DEEP-CLIENT-JOURNEY-COMMUNICATIONS.md
+PASS v0.15 table tenant_appointment_types
+PASS v0.15 table tenant_scheduling_availability
+PASS v0.15 table tenant_scheduling_blocks
+PASS v0.15 table tenant_vendor_quotes
+PASS v0.15 field consultation_at
+PASS v0.15 field lost_reason
+PASS v0.15 field temperature
+PASS v0.15 field provider_event_id
+PASS v0.15 field match_status
+PASS client portal supports appointment booking
+PASS client appointment cancellation has 24 hour rule
+PASS scheduling supports weekly availability and blackout periods
+PASS vendor quotes compute full costs
+PASS vendor quote selection books vendor and commits budget
+PASS client portal exposes approval and change-order decisions
+PASS Resend inbound webhook validates signature
+PASS Telnyx inbound webhook verifies signature
+PASS communications supports unmatched resolution
+PASS communications contextual reply routing exists
+PASS CRM tracks lead temperature and lost reason
+PASS v0.15 automation agreement_signed
+PASS v0.15 automation invoice_due
+PASS v0.15 automation questionnaire_followup
+PASS v0.15 automation overdue_task
+PASS v0.15 automation vendor_document_due
+PASS new scheduling and quote data included in export
+PASS v0.16 exists docs/V0.16-CHILD-SIMPLE-UX-FLOORPLAN.md
+PASS dashboard removes duplicate task launcher
+PASS floor plan is event-workspace tool
+PASS event workspace promotes floor plan
+PASS floor plan uses original drag-or-tap guidance
+PASS global task launcher removed
+PASS easy mode toggle removed
+PASS floorplan uses original native library drag
+PASS floorplan library drag drops by coordinates
+PASS v0.17 exists supabase/migrations/0017_GUEST_COMMERCE_QR_TICKETING.sql
+PASS v0.17 exists ticket.html
+PASS v0.17 exists guest-checkin.html
+PASS v0.17 exists netlify/functions/ticketing.mjs
+PASS v0.17 exists netlify/functions/ticket-public.mjs
+PASS v0.17 exists netlify/functions/qr-checkin.mjs
+PASS v0.17 exists docs/V0.17-GUEST-COMMERCE-QR-TICKETING.md
+PASS v0.17 table tenant_registration_settings
+PASS v0.17 table tenant_registration_promos
+PASS v0.17 table tenant_ticket_orders
+PASS v0.17 table tenant_ticket_attendees
+PASS ticket sales support multiple attendee QR codes
+PASS RSVP guest QR exists
+PASS unified QR scanner exists
+PASS ticket sales supports promo codes
+PASS ticket refunds supported
+PASS Stripe webhook completes ticket orders
+PASS event workspace exposes tickets and QR checkin
+PASS event workspace exposes ticketing
+PASS guest suite includes ticket holders
+PASS account export includes ticket commerce
+PASS v0.18 exists supabase/migrations/0018_QR_INVENTORY_BULK_MEDIA_RESERVATIONS.sql
+PASS v0.18 exists netlify/functions/inventory-image-upload.mjs
+PASS v0.18 exists docs/V0.18-QR-INVENTORY-BULK-MEDIA-RESERVATIONS.md
+PASS v0.18 capability qr_code
+PASS v0.18 capability tenant_inventory_images
+PASS v0.18 capability tenant_inventory_import_batches
+PASS v0.18 capability design_item_ids
+PASS v0.18 capability celebration-suite-inventory
+PASS inventory bulk CSV import exists
+PASS bulk photo matching exists
+PASS inventory photo upload syncs primary image
+PASS inventory QR labels are 2x2
+PASS inventory QR phone lookup matches original flow
+PASS design reservation stores source design ids
+PASS event inventory separates manual and approved design
+PASS account export includes inventory media and import batches
+PASS v0.20 exists supabase/migrations/0019_ORIGINAL_PRODUCT_PARITY_BRIDGE.sql
+PASS v0.20 exists staff-operations.html
+PASS v0.20 exists inventory-reservation-calendar.html
+PASS v0.20 exists netlify/functions/staff-operations.mjs
+PASS v0.20 exists netlify/functions/inventory-operations.mjs
+PASS v0.20 exists netlify/functions/questionnaire-tools.mjs
+PASS v0.20 exists netlify/functions/quickbooks-webhook.mjs
+PASS v0.20 exists netlify/functions/quickbooks-changes.mjs
+PASS v0.20 exists netlify/functions/account-restore.mjs
+PASS v0.20 exists docs/V0.20-ORIGINAL-PRODUCT-PARITY-BRIDGE.md
+PASS v0.20 capability service_fee
+PASS v0.20 capability client_decor_budget
+PASS v0.20 capability tenant_staff_availability
+PASS v0.20 capability tenant_event_expenses
+PASS v0.20 capability tenant_inventory_movements
+PASS v0.20 capability tenant_quickbooks_changes
+PASS v0.20 capability tenant_restore_runs
+PASS v0.20 capability shared_editable
+PASS staff operations synchronizes labor expenses
+PASS staff operations checks conflicts
+PASS inventory operations preserve movement history
+PASS inventory reservation calendar exists
+PASS questionnaire analysis creates planning checklist
+PASS floor plans support multiple layout operations
+PASS client can update shared floorplan layouts
+PASS event finances separate service fee and decor allowance
+PASS event book has three packet modes
+PASS safe restore includes dry run and confirmation phrase
+PASS QuickBooks webhook is signed and review first
+PASS QuickBooks customer apply uses full_name
+PASS support UI can update status and resolution
+PASS support backend sends followup notifications
+PASS original event workspace route is direct SaaS fork
+PASS original financial admin route is compatible
+PASS export includes parity operational tables
+PASS v0.21 exists supabase/migrations/0020_DEEP_OPERATIONS_WORKSPACE_PARITY.sql
+PASS v0.21 exists vendor-operations.html
+PASS v0.21 exists netlify/functions/vendor-operations.mjs
+PASS v0.21 exists manifest.webmanifest
+PASS v0.21 exists sw.js
+PASS v0.21 exists offline.html
+PASS v0.21 exists docs/V0.21-DEEP-OPERATIONS-WORKSPACE-PARITY.md
+PASS vendor operations schema exists
+PASS event emergency contacts schema exists
+PASS vendor operations supports checkin and checkout
+PASS event day consumes vendor operations
+PASS event book has BEO packet
+PASS workspace timeline has calendar mode
+PASS PWA shell exists
+PASS export includes vendor operations
+PASS v0.23 migration exists
+PASS v0.23 inventory add form is inline
+PASS v0.23 inventory save creates QR-ready record
+PASS v0.23 floorplan syncs linked inventory
+PASS v0.23 floorplan matches original save/share model
+PASS v0.22 floorplan removes duplicate start-here sections
+PASS v0.22 floorplan has pro catalog
+PASS v0.23 removes non-original starter-template behavior
+PASS v0.23 restores original category accordion library
+PASS v0.23 floorplan has original snap-to-grid control
+PASS v0.33 exists integration-health.html
+PASS v0.33 exists netlify/functions/tenant-health.mjs
+PASS v0.33 exists netlify/functions/platform-health.mjs
+PASS v0.33 exists tools/audit-release-candidate.mjs
+PASS v0.33 exists tools/smoke-critical-pages.mjs
+PASS v0.33 platform admin exposes account health
+PASS v0.33 platform admin exports tenant support snapshot
+PASS v0.33 tenant account health shows integrations
+PASS v0.33 account health tracks webhook failures
+PASS v0.33 platform health includes data integrity checks
+PASS v0.33 settings links integration health
+PASS v0.33 workspace More Tools closes after navigation
+
+564 checks passed, 0 failed
+PASS critical page exists: app.html
+PASS critical page exists: event-workspace.html
+PASS critical page exists: portal.html
+PASS critical page exists: event-day.html
+PASS critical page exists: guests.html
+PASS critical page exists: floorplan.html
+PASS critical page exists: inspiration.html
+PASS critical page exists: inventory.html
+PASS critical page exists: financials.html
+PASS critical page exists: settings.html
+PASS critical page exists: platform-admin.html
+PASS critical page exists: integration-health.html
+PASS app.html has runtime compatibility
+PASS app.html has contextual help or direct-fork exception
+PASS event-workspace.html has runtime compatibility
+PASS event-workspace.html has contextual help or direct-fork exception
+PASS portal.html has runtime compatibility
+PASS portal.html has contextual help or direct-fork exception
+PASS event-day.html has runtime compatibility
+PASS event-day.html has contextual help or direct-fork exception
+PASS guests.html has runtime compatibility
+PASS guests.html has contextual help or direct-fork exception
+PASS floorplan.html has runtime compatibility
+PASS floorplan.html has contextual help or direct-fork exception
+PASS inspiration.html has runtime compatibility
+PASS inspiration.html has contextual help or direct-fork exception
+PASS inventory.html has runtime compatibility
+PASS inventory.html has contextual help or direct-fork exception
+PASS financials.html has runtime compatibility
+PASS financials.html has contextual help or direct-fork exception
+PASS settings.html has runtime compatibility
+PASS settings.html has contextual help or direct-fork exception
+PASS platform-admin.html has runtime compatibility
+PASS platform-admin.html has contextual help or direct-fork exception
+PASS integration-health.html has runtime compatibility
+PASS integration-health.html has contextual help or direct-fork exception
+PASS More Tools closes on navigation
+PASS More Tools closes on Escape
+PASS More Tools closes on outside click
+PASS client portal is direct-fork sized
+PASS portal includes messages
+PASS portal includes floor plan
+PASS portal includes inspiration
+PASS portal includes documents
+PASS client shared source: tenant_messages
+PASS client shared source: tenant_floorplans
+PASS client shared source: tenant_inspiration_items
+PASS client shared source: tenant_documents
+PASS client shared source: tenant_questionnaire
+PASS client shared source: tenant_approvals
+PASS client shared source: tenant_guests
+PASS client shared source: tenant_invoices
+PASS client shared source: tenant_payments
+PASS client appointments use shared scheduling endpoint
+PASS single branding runtime exists
+PASS branding default is Celebration Suite
+PASS settings links account health
+PASS tenant health endpoint exists
+PASS platform health endpoint exists
+PASS platform admin has health tab
+PASS platform admin can export support snapshot
+PASS event-day.html accepts event context
+PASS guests.html accepts event context
+PASS floorplan.html accepts event context
+PASS inspiration.html accepts event context
+PASS no Easy Mode remains in critical planner pages
+PASS portal.html loads tenant brand
+PASS client-login.html loads tenant brand
+PASS my-events.html loads tenant brand
+PASS rsvp-public.html loads tenant brand
+PASS registration-public.html loads tenant brand
+PASS ticket.html loads tenant brand
+PASS proposal-public.html loads tenant brand
+PASS questionnaire-public.html loads tenant brand
+PASS approval-public.html loads tenant brand
+PASS change-order-public.html loads tenant brand
+PASS pay-invoice.html loads tenant brand
+
+RC audit: 77 passed, 0 failed
+PASS event-workspace.html exists
+PASS event-workspace.html exposes Event Workspace
+PASS event-workspace.html exposes More tools
+PASS event-workspace.html exposes Preview client portal
+PASS event-workspace.html exposes Floor plan
+PASS event-workspace.html inline scripts parse
+PASS portal.html exists
+PASS portal.html exposes CLIENT PLANNING PORTAL
+PASS portal.html exposes Inspiration Board
+PASS portal.html exposes Floor Plan
+PASS portal.html exposes Documents
+PASS portal.html exposes Messages
+PASS portal.html inline scripts parse
+PASS event-day.html exists
+PASS event-day.html exposes Event Day
+PASS event-day.html exposes Guest
+PASS event-day.html exposes Incident
+PASS event-day.html exposes Vendor
+PASS event-day.html inline scripts parse
+PASS guests.html exists
+PASS guests.html exposes Guest Management
+PASS guests.html exposes Import CSV
+PASS guests.html exposes QR Check-In
+PASS guests.html inline scripts parse
+PASS floorplan.html exists
+PASS floorplan.html exposes Floor Plan
+PASS floorplan.html exposes Save + Share
+PASS floorplan.html exposes Snap to grid
+PASS floorplan.html inline scripts parse
+PASS inspiration.html exists
+PASS inspiration.html exposes Inspiration
+PASS inspiration.html exposes Master Inventory
+PASS inspiration.html exposes Board Settings
+PASS inspiration.html inline scripts parse
+PASS inventory.html exists
+PASS inventory.html exposes Inventory
+PASS inventory.html exposes Bulk inventory
+PASS inventory.html exposes QR
+PASS inventory.html inline scripts parse
+PASS financials.html exists
+PASS financials.html exposes Financial Center
+PASS financials.html exposes Invoice
+PASS financials.html exposes Payment
+PASS financials.html inline scripts parse
+PASS integration-health.html exists
+PASS integration-health.html exposes Account Health
+PASS integration-health.html exposes Connected services
+PASS integration-health.html exposes Warnings
+PASS integration-health.html inline scripts parse
+PASS platform-admin.html exists
+PASS platform-admin.html exposes Platform Admin
+PASS platform-admin.html exposes Account Health
+PASS platform-admin.html exposes Support
+PASS platform-admin.html exposes Errors
+PASS platform-admin.html inline scripts parse
+PASS workspace menu closes after selection
+PASS workspace menu closes on Escape
+PASS workspace menu closes outside click
+PASS portal planner preview supported
+PASS portal shared messages action
+PASS portal shared design review action
+PASS portal shared documents action
+PASS portal floorplan save path
+
+Critical interaction smoke contracts: 63 passed, 0 failed
+PASS vendors.html has no legacy Sage tenant identity
+PASS vendors.html loads tenant branding
+PASS vendors-admin.html has no legacy Sage tenant identity
+PASS vendors-admin.html loads tenant branding
+PASS financials.html has no legacy Sage tenant identity
+PASS financials.html loads tenant branding
+PASS financials-admin.html has no legacy Sage tenant identity
+PASS financials-admin.html loads tenant branding
+PASS guests-admin.html has no legacy Sage tenant identity
+PASS guests-admin.html loads tenant branding
+PASS communications.html has no legacy Sage tenant identity
+PASS communications.html loads tenant branding
+PASS communications-admin.html has no legacy Sage tenant identity
+PASS communications-admin.html loads tenant branding
+PASS scheduling-admin.html has no legacy Sage tenant identity
+PASS scheduling-admin.html loads tenant branding
+PASS event-day-command.html has no legacy Sage tenant identity
+PASS event-day-command.html loads tenant branding
+PASS branding uses explicit tenant name hooks
+PASS branding uses explicit tenant logo hooks
+PASS branding no longer depends on Sage alt/src replacement
+PASS runtime has one error reporter
+PASS runtime has one unhandled rejection reporter
+PASS release version is current hardening line
+PASS browser regression command exists
+PASS Playwright config exists
+PASS critical browser suite exists
+PASS public invoice return verifies Stripe session
+PASS public invoice no longer trusts paid=1
+
+Native branding/browser readiness audit: 29 passed, 0 failed
+PASS commerce artifact exists: commerce.html
+PASS commerce artifact exists: instant-book.html
+PASS commerce artifact exists: decor-rentals.html
+PASS commerce artifact exists: netlify/functions/commerce-admin.mjs
+PASS commerce artifact exists: netlify/functions/instant-book-public.mjs
+PASS commerce artifact exists: netlify/functions/decor-rentals-public.mjs
+PASS commerce artifact exists: netlify/functions/commerce-recovery.mjs
+PASS commerce artifact exists: supabase/migrations/0026_WHITE_LABEL_COMMERCE_STOREFRONTS.sql
+PASS commerce table tenant_commerce_settings
+PASS commerce table tenant_booking_packages
+PASS commerce table tenant_booking_addons
+PASS commerce table tenant_booking_orders
+PASS commerce table tenant_rental_orders
+PASS commerce table tenant_rental_order_items
+PASS commerce table tenant_rental_reservations
+PASS instant book uses tenant Stripe
+PASS instant book verifies Stripe session metadata
+PASS instant book creates event workspace
+PASS instant book creates invoice/payment records
+PASS instant book enforces date capacity
+PASS rentals source Master Inventory rentable flag
+PASS rentals enforce date range availability
+PASS rentals create reservation only after verified payment
+PASS rental checkout uses tenant Stripe
+PASS checkout holds are four-hour configurable
+PASS abandoned checkout recovery is scheduled
+PASS recovery sends at most two reminders
+PASS recovery expires after seven days
+PASS planner commerce UI exposes public URLs
+PASS dashboard links commerce
+
+Commerce parity audit: 30 passed, 0 failed
+PASS infrastructure lineage version
+PASS custom domain migration exists
+PASS custom domains function exists
+PASS domain resolver exists
+PASS custom domains planner page exists
+PASS settings links custom domains
+PASS instant booking supports custom-domain tenant resolution
+PASS decor rentals supports custom-domain tenant resolution
+PASS client login supports custom-domain tenant resolution
+PASS push subscription endpoint exists
+PASS push test endpoint exists
+PASS push delivery helper exists
+PASS client activity fans out to browser push
+PASS push browser helper exists
+PASS service worker handles pushes
+PASS service worker handles notification clicks
+PASS notifications has enable alerts
+PASS notifications has test push
+PASS web-push dependency declared
+PASS integration resilience endpoint exists
+PASS integration health has live test control
+PASS integration health has reconnect UI
+PASS tenant health reports reconnect state
+PASS Google reconnect route present
+PASS QuickBooks reconnect route present
+PASS Netlify domain env documented
+PASS VAPID env documented
+
+Infrastructure parity: 27/27 passed
+PASS v0.37+ package lineage
+PASS acceptance migration exists
+PASS floorplans have lock version
+PASS inspiration has lock version
+PASS planner floorplan rejects stale updates
+PASS planner inspiration rejects stale updates
+PASS client floorplan rejects stale updates
+PASS client inspiration rejects stale updates
+PASS floorplan UI sends lock version
+PASS inspiration UI sends lock version
+PASS Stripe payment ids stored
+PASS refund accounting columns exist
+PASS financial API has Stripe refund action
+PASS refund recalculates invoice state
+PASS financial UI exposes refund control
+PASS custom domain production diagnostics exist
+PASS domain UI exposes DNS SSL test
+PASS domain diagnostic fields migrate
+PASS release audit includes acceptance audit
+PASS browser suite includes conflict acceptance
+
+Production acceptance audit: 20/20 passed
+PASS migration 0029 exists
+PASS function entitlements.mjs
+PASS function release-notices.mjs
+PASS function platform-release-notices.mjs
+PASS function platform-launch-readiness.mjs
+PASS function platform-provision-tenant.mjs
+PASS function support-escalation-run.mjs
+PASS launch readiness UI
+PASS commercial launch UI
+PASS manual launch block enforced
+PASS onboarding completion persisted
+PASS support SLA set at creation
+PASS platform links launch readiness
+PASS release notice UI
+PASS release notices loaded globally
+PASS trial provisioning
+PASS support SLA escalation
+FAIL package version
+
+17/18 commercial launch checks passed.

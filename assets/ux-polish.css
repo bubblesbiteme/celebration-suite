@@ -1,0 +1,28 @@
+/* Sage & Celebration UI/UX consistency pass — 2026-10-25 */
+:root{--sc-touch:44px}
+button,.btn,a.btn,input,select,textarea{font-family:inherit}
+button,.btn,a.btn{min-height:var(--sc-touch);line-height:1.15;overflow-wrap:anywhere}
+button{touch-action:manipulation}
+input,select{min-height:var(--sc-touch)}
+.actions,.top-actions,.nav-actions,.button-row,.btn-row,.quick{align-items:center}
+.btn,.pill-btn,.nav-btn,.workspace-tab,.resolve-btn{max-width:100%}
+.card-head,.page-head,.drawer-head{min-width:0}
+.card-head>*:first-child,.page-head>*:first-child,.drawer-head>*:first-child{min-width:0}
+.muted,p,small,.stat-note{overflow-wrap:anywhere}
+@media(max-width:760px){
+  .actions,.top-actions,.button-row,.btn-row,.quick{gap:8px!important}
+  .actions>.btn,.actions>a.btn,.button-row>.btn,.btn-row>.btn{flex:1 1 auto}
+  .page-head{align-items:flex-start!important}
+  .page-head .actions{width:100%}
+  .page-head .actions>*{flex:1 1 140px}
+  .toolbar{gap:8px!important}
+  .notice{left:12px!important;right:12px!important;bottom:84px!important;max-width:none!important}
+}
+/* Dense local navigation should scroll instead of compressing controls. */
+.sectionnav,.tabs,.workspace-tabs,.bottom-nav{scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+@media(max-width:760px){
+  .sectionnav,.workspace-tabs{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;padding-bottom:8px!important}
+  .sectionnav>* ,.workspace-tabs>*{flex:0 0 auto!important}
+  .bottom-nav{overflow-x:auto!important;justify-content:flex-start!important}
+  .bottom-nav>a,.bottom-nav>button{flex:0 0 auto!important;min-width:72px}
+}

@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const checks=[];const ok=(name,cond)=>checks.push([name,!!cond]);
+const ew=read('event-workspace.html'),fp=read('floorplan.html'),portal=read('portal.html'),brand=read('assets/tenant-branding.js'),settings=read('settings.html'),app=read('app.html'),api=read('netlify/functions/floorplans.mjs');
+ok('obsolete CSTenantBrand removed',!ew.includes('CSTenantBrand'));
+ok('event workspace inches',ew.includes('Room width (in)')&&ew.includes(' in × '));
+ok('standalone floor plan inches',fp.includes('Room width (in)')&&fp.includes('room_width_in'));
+ok('client floor plan inches',portal.includes('value="480"> in')&&portal.includes(' in × '));
+ok('floor aspect ratio follows dimensions',fp.includes('c.style.aspectRatio')&&ew.includes('canvas.style.aspectRatio')&&portal.includes('canvas.style.aspectRatio'));
+ok('floor API persists inch columns',api.includes('room_width_in')&&api.includes('room_height_in'));
+ok('font color controls present',settings.includes('heading_text')&&settings.includes('body_text')&&settings.includes('button_text'));
+ok('branding runtime applies font colors',brand.includes('--brand-heading-text')&&brand.includes('--brand-button-text'));
+ok('license loader has timeout',app.includes('withTimeout')&&app.includes('Workspace loading timed out'));
+ok('migration 0033 exists',fs.existsSync(new URL('../supabase/migrations/0033_FLOORPLAN_INCHES_BRANDING_RESILIENCE.sql',import.meta.url)));
+for(const [n,v] of checks)console.log(`${v?'PASS':'FAIL'} ${n}`);const failed=checks.filter(x=>!x[1]);console.log(`${checks.length-failed.length}/${checks.length} v1.2.2 hotfix checks passed`);if(failed.length)process.exit(1);

@@ -1,0 +1,28 @@
+import fs from 'node:fs';
+import path from 'node:path';
+const root=path.resolve(process.argv[2]||'.');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const checks=[]; const ok=(name,cond)=>checks.push([name,!!cond]);
+const client=read('netlify/functions/client-data.mjs');
+const workspace=read('netlify/functions/event-workspace.mjs');
+const portal=read('portal.html');
+const event=read('event-workspace.html');
+ok('client messages use tenant_messages',client.includes("supabase('tenant_messages'"));
+ok('client portal excludes internal planner notes',client.includes('direction=neq.internal'));
+ok('planner client-visible messages are outbound',workspace.includes("clientVisible?'outbound':'internal'"));
+ok('planner internal notes remain internal',workspace.includes("'outbound':'internal'"));
+ok('shared inspiration records used by client',client.includes('tenant_inspiration_items'));
+ok('client inspiration layout writes item coordinates',client.includes("for(const [itemId,pos] of Object.entries(positions))"));
+ok('shared floorplan records used by client',client.includes('tenant_floorplans'));
+ok('client floorplan requires shared_editable',client.includes('shared_editable'));
+ok('shared document records used by client',client.includes('tenant_documents'));
+ok('client document ownership tagged',client.includes("uploaded_by_type:'client'"));
+ok('planner document ownership tagged',workspace.includes("uploaded_by_type:'planner'"));
+ok('client portal refreshes on focus',portal.includes("window.addEventListener('focus'"));
+ok('client portal periodic refresh enabled',portal.includes('setInterval')&&portal.includes('refreshPortalFromServer'));
+ok('planner workspace refreshes shared state on focus',event.includes('refreshSharedWorkspace'));
+ok('planner workspace periodic shared refresh enabled',event.includes('setInterval')&&event.includes('refreshSharedWorkspace'));
+const failed=checks.filter(x=>!x[1]);
+for(const [name,pass] of checks) console.log(`${pass?'PASS':'FAIL'} ${name}`);
+if(failed.length){console.error(`\n${failed.length} collaboration check(s) failed.`);process.exit(1)}
+console.log(`\n${checks.length} collaboration checks passed.`);

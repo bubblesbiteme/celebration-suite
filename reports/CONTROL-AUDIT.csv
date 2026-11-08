@@ -1,0 +1,83 @@
+page,control,finding
+activate.html,Activate License,button has no inline binding marker; requires runtime verification
+app.html,Create Event,button has no inline binding marker; requires runtime verification
+automations.html,Save Rule,button has no inline binding marker; requires runtime verification
+calendar.html,Add availability block,button has no inline binding marker; requires runtime verification
+change-orders.html,Create,button has no inline binding marker; requires runtime verification
+change-password.html,Save Password,button has no inline binding marker; requires runtime verification
+client-login.html,Sign In,button has no inline binding marker; requires runtime verification
+client-login.html,Forgot password?,hash-only link; verify it is a tab/anchor control
+client-login.html,Create Client Login,button has no inline binding marker; requires runtime verification
+client-security.html,Update password,button has no inline binding marker; requires runtime verification
+commerce.html,Save settings,button has no inline binding marker; requires runtime verification
+commerce.html,Save,button has no inline binding marker; requires runtime verification
+commerce.html,Save,button has no inline binding marker; requires runtime verification
+communications.html,Send message,button has no inline binding marker; requires runtime verification
+communications.html,Cancel,button has no inline binding marker; requires runtime verification
+contract-public.html,Sign Agreement,button has no inline binding marker; requires runtime verification
+crm.html,Save Lead,button has no inline binding marker; requires runtime verification
+custom-domains.html,Add Domain,button has no inline binding marker; requires runtime verification
+decor-rentals.html,Continue,button has no inline binding marker; requires runtime verification
+documents.html,Add to Vault,button has no inline binding marker; requires runtime verification
+event-day-command.html,Add setup item,button has no inline binding marker; requires runtime verification
+event-day-command.html,Add teardown item,button has no inline binding marker; requires runtime verification
+event-day-command.html,Add contact,button has no inline binding marker; requires runtime verification
+event-day-command.html,Log issue,button has no inline binding marker; requires runtime verification
+event-day.html,Scan QR,hash-only link; verify it is a tab/anchor control
+event-workspace.html,Send guest message,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save note,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save client permissions,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save current event as template,button has no inline binding marker; requires runtime verification
+event-workspace.html,Duplicate event,button has no inline binding marker; requires runtime verification
+event-workspace.html,Reschedule event,button has no inline binding marker; requires runtime verification
+event-workspace.html,Cancel event,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save referral,button has no inline binding marker; requires runtime verification
+event-workspace.html,Add referral & calculate commission,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save budget settings,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save,button has no inline binding marker; requires runtime verification
+event-workspace.html,Add budget item,button has no inline binding marker; requires runtime verification
+event-workspace.html,Add to vendor operations,button has no inline binding marker; requires runtime verification
+event-workspace.html,Add booked vendor,button has no inline binding marker; requires runtime verification
+event-workspace.html,Add payment,button has no inline binding marker; requires runtime verification
+event-workspace.html,Record payment,button has no inline binding marker; requires runtime verification
+event-workspace.html,Add requirement,button has no inline binding marker; requires runtime verification
+event-workspace.html,Add quote,button has no inline binding marker; requires runtime verification
+event-workspace.html,Awaiting client,button has no inline binding marker; requires runtime verification
+event-workspace.html,Create folder,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save changes,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save version ${Number(x.version_number||1)+1},button has no inline binding marker; requires runtime verification
+event-workspace.html,Add document,button has no inline binding marker; requires runtime verification
+event-workspace.html,Reserve for event,button has no inline binding marker; requires runtime verification
+event-workspace.html,Add question,button has no inline binding marker; requires runtime verification
+event-workspace.html,Use template,button has no inline binding marker; requires runtime verification
+event-workspace.html,Create questionnaire,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save AI controls,button has no inline binding marker; requires runtime verification
+event-workspace.html,Save labor,button has no inline binding marker; requires runtime verification
+event-workspace.html,Assign to event,button has no inline binding marker; requires runtime verification
+event-workspace.html,(unlabelled),button has no inline binding marker; requires runtime verification
+event-workspace.html,×,button has no inline binding marker; requires runtime verification
+forgot-password.html,Send Reset Link,button has no inline binding marker; requires runtime verification
+inspiration.html,Add to Board,button has no inline binding marker; requires runtime verification
+instant-book.html,Book now,button has no inline binding marker; requires runtime verification
+login.html,Sign In,button has no inline binding marker; requires runtime verification
+platform-login.html,Sign In,button has no inline binding marker; requires runtime verification
+platform-login.html,Create Owner Login,button has no inline binding marker; requires runtime verification
+portal.html,×,button has no inline binding marker; requires runtime verification
+portal.html,(unlabelled),button has no inline binding marker; requires runtime verification
+proposals.html,Create Proposal,button has no inline binding marker; requires runtime verification
+proposals.html,Create Contract,button has no inline binding marker; requires runtime verification
+questionnaire-public.html,Submit Questionnaire,button has no inline binding marker; requires runtime verification
+referrals.html,Add,button has no inline binding marker; requires runtime verification
+register.html,Create Account,button has no inline binding marker; requires runtime verification
+reset-password.html,Update Password,button has no inline binding marker; requires runtime verification
+rsvp-public.html,Submit RSVP,button has no inline binding marker; requires runtime verification
+scheduling-admin.html,Add appointment type,button has no inline binding marker; requires runtime verification
+scheduling-admin.html,Add availability,button has no inline binding marker; requires runtime verification
+security.html,Update password,button has no inline binding marker; requires runtime verification
+settings.html,Save Settings,button has no inline binding marker; requires runtime verification
+staff-invite.html,Join Team,button has no inline binding marker; requires runtime verification
+staff-operations.html,Save Shift,button has no inline binding marker; requires runtime verification
+support.html,Create Ticket,button has no inline binding marker; requires runtime verification
+team.html,Create Invitation,button has no inline binding marker; requires runtime verification
+team.html,Save Permissions,button has no inline binding marker; requires runtime verification
+time-tracking.html,Start Time,button has no inline binding marker; requires runtime verification

@@ -1,0 +1,13 @@
+{
+  "name":"Celebration Suite",
+  "short_name":"Celebration",
+  "start_url":"/app.html",
+  "scope":"/",
+  "display":"standalone",
+  "background_color":"#fbf8f3",
+  "theme_color":"#38223f",
+  "description":"Event planning, design, guest, inventory and event-day operations.",
+  "icons":[
+    {"src":"/assets/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

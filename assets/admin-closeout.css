@@ -1,0 +1,13 @@
+/* P-list closeout: shared private-app polish */
+:where(.topbar,.top,header) a.btn,:where(.topbar,.top,header) button.btn{min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+:where(.topbar,.top,header) .btn.white,:where(.topbar,.top,header) a.btn.white{background:#fff!important;color:#171717!important}
+:where(.topbar,.top,header) .btn.secondary,:where(.topbar,.top,header) a.btn.secondary{color:#171717}
+:where(button,a,input,select,textarea):focus-visible{outline:3px solid #9ec7ff;outline-offset:2px}
+@media(max-width:760px){
+  :where(.topbar,.top,header) .actions{gap:6px}
+  :where(.topbar,.top,header) a.btn,:where(.topbar,.top,header) button.btn{min-height:44px}
+  .toolbar{grid-template-columns:1fr!important}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .tablewrap,.board{overscroll-behavior-x:contain}
+}
+@media(max-width:480px){.stats{grid-template-columns:1fr!important}}
