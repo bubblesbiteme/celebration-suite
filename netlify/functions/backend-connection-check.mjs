@@ -1,0 +1,2 @@
+import {json,supabase,supabaseStatus} from './_shared.mjs';
+export default async request=>{try{if(request.method!=='GET')return json({error:'Method not allowed'},405);const status=supabaseStatus();await supabase('platform_admins?select=id&limit=1');return json({ok:true,project_ref:status.project_ref,key_type:status.key_type,key_source:status.key_source,database:'reachable'});}catch(e){return json({ok:false,error:e.message},503)}};

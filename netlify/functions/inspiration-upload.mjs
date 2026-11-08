@@ -1,7 +1,6 @@
-import {json,clean} from './_shared.mjs';
+import {json,clean,getSupabaseConfig} from './_shared.mjs';
 import {tenantContext,requireActive,requirePermission,assertEventAccess} from './_tenant.mjs';
 import crypto from 'node:crypto';
-const env=k=>process.env[k]||'';
 export default async request=>{try{
   const ctx=await tenantContext(request);requireActive(ctx);requirePermission(ctx,'manage_events');
   if(request.method!=='POST')return json({error:'Method not allowed'},405);
@@ -12,7 +11,7 @@ export default async request=>{try{
   const body=Buffer.from(await request.arrayBuffer());if(!body.length)throw new Error('Image is empty.');if(body.length>6*1024*1024)throw new Error('Image is too large. Maximum size is 6 MB.');
   const ext=({ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[mime]||'jpg';
   const path=`${ctx.tenant.id}/${eventId}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
-  const base=env('SUPABASE_URL'),key=(env('SUPABASE_SECRET_KEY')||env('SUPABASE_SERVICE_ROLE_KEY')).trim().replace(/^['"]|['"]$/g,'');if(!base||!key)throw new Error('Supabase is not configured.');
+  const {url:base,key}=getSupabaseConfig();
   const r=await fetch(`${base}/storage/v1/object/celebration-suite-media/${path}`,{method:'POST',headers:{apikey:key,...(String(key).startsWith('sb_')?{}:{authorization:`Bearer ${key}`}),'content-type':mime,'x-upsert':'false'},body});
   const tx=await r.text();if(!r.ok)throw new Error(tx||`Upload failed (${r.status}).`);
   return json({ok:true,file_name:name,path,url:`${base}/storage/v1/object/public/celebration-suite-media/${path}`});

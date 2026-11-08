@@ -17,7 +17,7 @@ const client=read('netlify/functions/client-data.mjs');
 const docOpen=read('netlify/functions/document-open.mjs');
 const clientDocOpen=read('netlify/functions/client-document-open.mjs');
 const docs=read('documents.html');
-check('package version 1.3.7+',pkg.version==='1.3.7'||/^1\.3\.(?:[89]|[1-9][0-9])$/.test(pkg.version));
+check('package version 1.3.7+',pkg.version==='1.3.7'||/^1\.3\.(?:[89]|[1-9][0-9])$/.test(pkg.version)||/^1\.(?:[4-9]|[1-9][0-9])\./.test(pkg.version));
 check('service worker cache v137+',/celebration-suite-v(?:13[7-9]|1[4-9][0-9]|[2-9][0-9]{2,})/.test(sw));
 check('event workspace seating is in side panel',/adminSeatingSidePanel/.test(ew)&&/floor-side-panel/.test(ew)&&/adminSeatingSideTab/.test(ew));
 check('standalone floor plan seating is in side workspace',/workspaceSide/.test(fp)&&/workspace-side/.test(fp)&&/seatingSideTab/.test(fp)&&/seatingModeBtn/.test(fp));

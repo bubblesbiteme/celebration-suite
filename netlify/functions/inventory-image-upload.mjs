@@ -1,7 +1,6 @@
-import {json,clean,supabase} from './_shared.mjs';
+import {json,clean,supabase,getSupabaseConfig} from './_shared.mjs';
 import {tenantContext,requireActive,requirePermission} from './_tenant.mjs';
 import crypto from 'node:crypto';
-const env=k=>process.env[k]||'';
 export default async request=>{try{
   const ctx=await tenantContext(request);requireActive(ctx);requirePermission(ctx,'manage_inventory');
   if(request.method!=='POST')return json({error:'Method not allowed'},405);
@@ -14,7 +13,7 @@ export default async request=>{try{
   const body=Buffer.from(await request.arrayBuffer());if(!body.length)throw new Error('Image is empty.');if(body.length>10*1024*1024)throw new Error('Image is too large. Maximum size is 10 MB.');
   const ext=({'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'})[mime]||'jpg';
   const path=`${ctx.tenant.id}/${itemId}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
-  const base=env('SUPABASE_URL'),key=(env('SUPABASE_SECRET_KEY')||env('SUPABASE_SERVICE_ROLE_KEY')).trim().replace(/^['"]|['"]$/g,'');if(!base||!key)throw new Error('Supabase is not configured.');
+  const {url:base,key}=getSupabaseConfig();
   const r=await fetch(`${base}/storage/v1/object/celebration-suite-inventory/${path}`,{method:'POST',headers:{apikey:key,...(String(key).startsWith('sb_')?{}:{authorization:`Bearer ${key}`}),'content-type':mime,'x-upsert':'false'},body});
   if(!r.ok)throw new Error(await r.text()||`Upload failed (${r.status}).`);
   const url=`${base}/storage/v1/object/public/celebration-suite-inventory/${path}`;

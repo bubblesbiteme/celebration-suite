@@ -1,3 +1,4 @@
+import {getSupabaseConfig} from './_shared.mjs';
 const json=(status,body)=>({statusCode:status,headers:{'content-type':'application/json','cache-control':'no-store'},body:JSON.stringify(body)});
 const env=(k)=>process.env[k]||'';
 function siteUrl(event){return env('SITE_URL')||`${event.headers?.['x-forwarded-proto']||'https'}://${event.headers?.host||''}`}
@@ -7,8 +8,7 @@ async function requirePlatform(event){
   return r.json().catch(()=>({ok:true}));
 }
 async function supa(path,opts={}){
-  const url=env('SUPABASE_URL'); const key=(env('SUPABASE_SECRET_KEY')||env('SUPABASE_SERVICE_ROLE_KEY')).trim().replace(/^['"]|['"]$/g,'');
-  if(!url||!key) throw new Error('Supabase server configuration is missing.');
+  const {url,key}=getSupabaseConfig();
   const r=await fetch(url.replace(/\/$/,'')+path,{...opts,headers:{apikey:key,...(String(key).startsWith('sb_')?{}:{authorization:`Bearer ${key}`}),'content-type':'application/json',prefer:opts.prefer||'return=representation',...(opts.headers||{})}});
   const text=await r.text(); let data=null; try{data=text?JSON.parse(text):null}catch{data=text}
   if(!r.ok){const e=new Error(data?.message||data?.error_description||data?.error||`Supabase request failed (${r.status})`);e.status=r.status;throw e}

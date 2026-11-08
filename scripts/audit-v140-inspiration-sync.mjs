@@ -4,7 +4,7 @@ const api=fs.readFileSync('netlify/functions/client-data.mjs','utf8');
 const sw=fs.readFileSync('sw.js','utf8');
 const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
 const checks=[
- ['package v1.4.0',pkg.version==='1.4.0'],
+ ['package v1.4.0+', /^1\.(?:[4-9]|[1-9][0-9])\./.test(pkg.version)],
  ['client canonical design-update action',api.includes("action==='design-update'")],
  ['client update uses optimistic lock',api.includes('lock_version=eq.${enc(expected)}')],
  ['client update returns canonical row',api.includes('item:saved[0]')],
@@ -12,6 +12,6 @@ const checks=[
  ['portal renders item x directly',portal.includes('Number.isFinite(+item.x)?+item.x')],
  ['portal renders item width directly',portal.includes('Number.isFinite(+item.width)?+item.width')],
  ['portal orders by canonical z index',portal.includes('(Number(a.z_index)||0)-(Number(b.z_index)||0)')],
- ['service worker cache bumped',sw.includes("celebration-suite-v140")],
+ ['service worker cache v140+', /celebration-suite-v(?:14[0-9]|1[5-9][0-9]|[2-9][0-9]{2,})/.test(sw)],
 ];
 let fail=0;for(const [name,ok] of checks){console.log(`${ok?'PASS':'FAIL'} ${name}`);if(!ok)fail++}console.log(`\n${checks.length-fail}/${checks.length} v1.4.0 inspiration sync checks passed.`);if(fail)process.exit(1);
