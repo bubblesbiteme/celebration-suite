@@ -1,13 +1,15 @@
 import {json,supabase,clean} from './_shared.mjs';
 import {tenantContext,requireActive,requirePermission,assertEventAccess} from './_tenant.mjs';
 import {starterTemplates} from './_questionnaire-defaults.mjs';
+import {extendedStarterTemplates} from './_questionnaire-extended-defaults.mjs';
+const allStarterTemplates=[...starterTemplates,...extendedStarterTemplates];
 const normQuestions=q=>Array.isArray(q)?q.slice(0,150).map((x,i)=>({id:clean(x?.id,80)||`q${i+1}`,label:clean(x?.label,500)||`Question ${i+1}`,type:['text','textarea','select','radio','checkbox','date','number'].includes(x?.type)?x.type:'text',required:!!x?.required,options:Array.isArray(x?.options)?x.options.map(v=>clean(v,200)).filter(Boolean).slice(0,50):[]})):[];
 
 async function ensureStarterTemplates(ctx){
   const current=await supabase(`tenant_questionnaire_templates?tenant_id=eq.${encodeURIComponent(ctx.tenant.id)}&select=id,name&limit=500`).catch(()=>[]);
   if((current||[]).length)return 0;
   let created=0;
-  for(const t of starterTemplates){
+  for(const t of allStarterTemplates){
     await supabase('tenant_questionnaire_templates',{method:'POST',body:{tenant_id:ctx.tenant.id,name:t.name,event_type:t.event_type||null,description:t.description||null,questions:normQuestions(t.questions),active:true},prefer:'return=minimal'});
     created++;
   }
