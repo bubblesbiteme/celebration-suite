@@ -34,3 +34,14 @@
     X-Frame-Options = "SAMEORIGIN"
     Permissions-Policy = "camera=(self), microphone=(self), geolocation=()"
     Cross-Origin-Opener-Policy = "same-origin-allow-popups"
+
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
