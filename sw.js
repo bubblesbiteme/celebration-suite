@@ -1,4 +1,4 @@
-const CACHE='celebration-suite-v153';
+const CACHE='celebration-suite-v154';
 const CORE=['/demo.html','/assets/demo-explorer.css','/assets/demo-explorer.js','/offline.html','/assets/app.css','/assets/app.js','/assets/ui-v019.js','/assets/favicon.svg','/app.html','/event-day.html','/guest-checkin.html','/guest-photos.html','/guest-photo-upload.html','/inventory-scan.html','/getting-started.html','/knowledge-base.html','/commerce.html','/assets/knowledge-base.js','/assets/premium-experience.css','/assets/premium-experience.js','/assets/ultra-luxury.css','/assets/ultra-luxury.js','/pwa.js','/admin-google-ui.js'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
