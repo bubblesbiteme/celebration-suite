@@ -562,6 +562,35 @@ html[data-tenant-branded="1"] h1,html[data-tenant-branded="1"] h2,html[data-tena
 html[data-tenant-branded="1"] .muted,html[data-tenant-branded="1"] p{color:var(--brand-body-text,var(--lux-muted))}
 html[data-tenant-branded="1"] .btn.primary,html[data-tenant-branded="1"] button.primary{color:var(--brand-button-text,#fff)!important}
 
+/* v1.6.1 featured pricing-card contrast */
+.lux-plan-card.recommended,
+.lux-plan-card.recommended h1,
+.lux-plan-card.recommended h2,
+.lux-plan-card.recommended h3,
+.lux-plan-card.recommended h4,
+.lux-plan-card.recommended .lux-price span{
+  color:#fff!important;
+}
+.lux-plan-card.recommended p,
+.lux-plan-card.recommended li,
+.lux-plan-card.recommended .lux-plan-term{
+  color:rgba(255,255,255,.78)!important;
+}
+.lux-plan-card.recommended .lux-price small{
+  color:rgba(255,255,255,.68)!important;
+}
+html[data-tenant-branded="1"] .lux-plan-card.recommended h1,
+html[data-tenant-branded="1"] .lux-plan-card.recommended h2,
+html[data-tenant-branded="1"] .lux-plan-card.recommended h3,
+html[data-tenant-branded="1"] .lux-plan-card.recommended h4,
+html[data-tenant-branded="1"] .lux-plan-card.recommended .lux-price span{
+  color:#fff!important;
+}
+html[data-tenant-branded="1"] .lux-plan-card.recommended p,
+html[data-tenant-branded="1"] .lux-plan-card.recommended li{
+  color:rgba(255,255,255,.78)!important;
+}
+
 /* v1.2.6 premium planner header */
 html.cs-ultra-luxury body.cs-page-event-workspace .shell>.top{
   display:flex!important;align-items:center!important;gap:18px!important;min-height:76px!important;padding:12px 24px!important;
