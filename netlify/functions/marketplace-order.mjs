@@ -1,4 +1,4 @@
-import {json,supabase,clean,origin} from './_shared.mjs';
+import {json,supabase,clean} from './_shared.mjs';
 import {readPlatformSession} from './_session.mjs';
 
 const allowed=req=>{
@@ -40,7 +40,7 @@ export default async request=>{
       const code=await supabase('license_codes',{method:'POST',body:codeRow});
       const c=code?.[0]||codeRow;
       await supabase(`platform_orders?id=eq.${encodeURIComponent(o.id)}`,{method:'PATCH',body:{status:'fulfilled',license_code_id:c.id,fulfilled_at:new Date().toISOString(),updated_at:new Date().toISOString()},prefer:'return=minimal'});
-      return json({ok:true,order:{...o,status:'fulfilled',license_code_id:c.id},license_code:c.code,fulfillment:{activation_url:`${origin(request)}/register.html?code=${encodeURIComponent(c.code)}`,buyer_email:order.buyer_email}});
+      return json({ok:true,order:{...o,status:'fulfilled',license_code_id:c.id},license_code:c.code,fulfillment:{activation_url:`https://planner.sageandcelebration.com/register.html?code=${encodeURIComponent(c.code)}`,buyer_email:order.buyer_email}});
     }
 
     if(request.method==='PATCH'){
