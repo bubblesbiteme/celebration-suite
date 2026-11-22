@@ -629,3 +629,112 @@ html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.to
 html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.top>.cs-luxury-header-actions,html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.topbar>.cs-luxury-header-actions{margin-left:auto!important}
 html.cs-ultra-luxury body.cs-page-inventory>.top>strong{font-size:14px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
 @media(max-width:760px){html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.top,html.cs-ultra-luxury body:not(.cs-page-event-workspace):not(.cs-page-portal)>.topbar{padding:9px 12px!important}.cs-luxury-header-actions{max-width:70vw!important;overflow:auto!important}.cs-luxury-header-actions [data-context-help]{white-space:nowrap!important}}
+
+
+/* v1.6.6 planner dashboard reset */
+html.cs-ultra-luxury body[data-page="app"]{
+  padding-left:0!important;
+  background:linear-gradient(180deg,#f8f5ef 0,#f3efe8 100%)!important;
+}
+html.cs-ultra-luxury body[data-page="app"] .cs-nav-dock{display:none!important}
+html.cs-ultra-luxury body[data-page="app"] .shell{min-height:100vh}
+html.cs-ultra-luxury body[data-page="app"] .license-banner{
+  min-height:34px!important;padding:7px 22px!important;border:0!important;border-bottom:1px solid var(--lux-line)!important;
+  background:#eefbd8!important;color:var(--lux-ink-2)!important;font-size:12px!important;font-weight:700!important
+}
+html.cs-ultra-luxury body[data-page="app"] .topbar{
+  min-height:72px!important;padding:12px 24px!important;box-shadow:none!important;border-bottom:1px solid rgba(255,255,255,.08)!important
+}
+html.cs-ultra-luxury body[data-page="app"] .top-actions{gap:8px!important}
+html.cs-ultra-luxury body[data-page="app"] .top-actions .btn{
+  min-height:38px!important;padding:8px 12px!important;font-size:12px!important
+}
+html.cs-ultra-luxury body[data-page="app"] .layout{
+  grid-template-columns:230px minmax(0,1fr)!important;
+  min-height:calc(100vh - 106px)!important
+}
+html.cs-ultra-luxury body[data-page="app"] .sidebar{
+  padding:24px 14px!important;background:rgba(248,245,239,.92)!important;border:0!important;border-right:1px solid var(--lux-line)!important
+}
+html.cs-ultra-luxury body[data-page="app"] .nav-group{margin-bottom:24px!important}
+html.cs-ultra-luxury body[data-page="app"] .nav-label{
+  margin:0 10px 8px!important;color:var(--lux-faint)!important;font-size:9px!important;letter-spacing:.15em!important
+}
+html.cs-ultra-luxury body[data-page="app"] .nav a,
+html.cs-ultra-luxury body[data-page="app"] .nav button{
+  min-height:40px!important;padding:9px 11px!important;border:1px solid transparent!important;border-radius:11px!important;
+  color:var(--lux-ink-2)!important;font-size:13px!important;font-weight:650!important
+}
+html.cs-ultra-luxury body[data-page="app"] .nav a:hover,
+html.cs-ultra-luxury body[data-page="app"] .nav button:hover{background:#eee9e1!important}
+html.cs-ultra-luxury body[data-page="app"] .nav button.active{
+  background:color-mix(in srgb,var(--lux-brand) 13%,#fff)!important;
+  border-color:color-mix(in srgb,var(--lux-brand) 24%,var(--lux-line))!important;
+  box-shadow:inset 3px 0 0 var(--lux-brand-dark)!important
+}
+html.cs-ultra-luxury body[data-page="app"] main{
+  width:100%!important;max-width:1380px!important;margin:0 auto!important;padding:44px 44px 80px!important
+}
+html.cs-ultra-luxury body[data-page="app"] #events.panel{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+html.cs-ultra-luxury body[data-page="app"] #events .page-head{
+  align-items:flex-end!important;margin:0 0 28px!important;padding:0!important
+}
+html.cs-ultra-luxury body[data-page="app"] #events .page-head h1{
+  font-size:clamp(3.1rem,5vw,5.2rem)!important;line-height:.9!important;margin:0 0 10px!important
+}
+html.cs-ultra-luxury body[data-page="app"] #events .page-head p{font-size:14px!important}
+html.cs-ultra-luxury body[data-page="app"] #events .toolbar{
+  display:grid!important;grid-template-columns:minmax(220px,300px) 180px!important;gap:10px!important
+}
+html.cs-ultra-luxury body[data-page="app"] #events .toolbar input,
+html.cs-ultra-luxury body[data-page="app"] #events .toolbar select{
+  min-height:44px!important;border-radius:12px!important;background:#fffdf9!important
+}
+html.cs-ultra-luxury body[data-page="app"] #eventGrid{
+  grid-template-columns:repeat(auto-fit,minmax(320px,410px))!important;
+  gap:20px!important;justify-content:start!important
+}
+html.cs-ultra-luxury body[data-page="app"] .event-card{
+  min-height:220px!important;padding:22px!important;border:1px solid var(--lux-line)!important;border-radius:20px!important;
+  background:#fffdf9!important;box-shadow:0 12px 34px rgba(30,22,32,.065)!important;
+  display:flex!important;flex-direction:column!important;gap:9px!important
+}
+html.cs-ultra-luxury body[data-page="app"] .event-card h3{
+  font-family:var(--lux-font-display)!important;font-size:1.65rem!important;font-weight:600!important;margin:4px 0 2px!important
+}
+html.cs-ultra-luxury body[data-page="app"] .event-card .event-meta{margin-bottom:3px}
+html.cs-ultra-luxury body[data-page="app"] .event-card .btn{margin-top:auto!important;width:100%!important}
+html.cs-ultra-luxury body[data-page="app"] .event-countdown{font-size:12px!important;color:var(--lux-muted)!important;margin:2px 0!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-guide{
+  margin:0 0 34px!important;padding:0!important;border:1px solid var(--lux-line)!important;border-radius:18px!important;
+  background:rgba(255,253,249,.92)!important;box-shadow:var(--lux-shadow-xs)!important;overflow:hidden!important
+}
+html.cs-ultra-luxury body[data-page="app"] .setup-compact{
+  display:grid!important;grid-template-columns:minmax(220px,1fr) minmax(180px,.7fr) auto!important;gap:20px!important;
+  align-items:center!important;padding:15px 18px!important
+}
+html.cs-ultra-luxury body[data-page="app"] .setup-copy{display:flex!important;align-items:baseline!important;gap:10px!important;flex-wrap:wrap!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-copy .cs-page-kicker{margin:0!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-copy strong{font-size:13px!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-copy span{font-size:11px!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-progress.compact{margin:0!important;height:6px!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-actions{display:flex!important;gap:7px!important;align-items:center!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-actions .btn{min-height:34px!important;padding:7px 10px!important;font-size:11px!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-details{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 18px 16px;border-top:1px solid var(--lux-line)
+}
+html.cs-ultra-luxury body[data-page="app"] .setup-details[hidden]{display:none!important}
+html.cs-ultra-luxury body[data-page="app"] .setup-step{margin-top:12px!important;box-shadow:none!important}
+@media(max-width:1000px){
+  html.cs-ultra-luxury body[data-page="app"] .layout{grid-template-columns:1fr!important}
+  html.cs-ultra-luxury body[data-page="app"] .sidebar{display:none!important}
+  html.cs-ultra-luxury body[data-page="app"] main{padding:28px 18px 60px!important}
+  html.cs-ultra-luxury body[data-page="app"] .setup-compact{grid-template-columns:1fr!important}
+  html.cs-ultra-luxury body[data-page="app"] .setup-details{grid-template-columns:1fr 1fr}
+  html.cs-ultra-luxury body[data-page="app"] #events .page-head{align-items:flex-start!important;flex-direction:column!important}
+}
+@media(max-width:620px){
+  html.cs-ultra-luxury body[data-page="app"] #events .toolbar{grid-template-columns:1fr!important;width:100%!important}
+  html.cs-ultra-luxury body[data-page="app"] #eventGrid{grid-template-columns:1fr!important}
+  html.cs-ultra-luxury body[data-page="app"] .setup-details{grid-template-columns:1fr}
+}
