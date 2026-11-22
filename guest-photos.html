@@ -1,10 +1,156 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Guest Photo QR Gallery</title><link rel="stylesheet" href="/assets/app.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><style>.page{max-width:1320px;margin:auto;padding:24px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.qr-card{text-align:center}.qr-host{width:240px;height:240px;margin:14px auto;background:#fff;padding:10px;border-radius:14px}.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}.photo-card{border:1px solid #ddd;border-radius:16px;overflow:hidden;background:#fff}.photo-card img{width:100%;aspect-ratio:1;object-fit:cover;background:#eee}.photo-body{padding:11px}.actions{display:flex;gap:7px;flex-wrap:wrap}.actions a,.actions button{font-size:.8rem}.settings label{display:block;margin:10px 0;font-weight:700}.settings input[type=text],.settings textarea{width:100%}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.album-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin:18px 0}.album-card{border:1px solid #ddd;border-radius:16px;background:#fff;padding:16px}.album-card h3{margin:0 0 6px}.album-meta{font-size:.88rem;color:#666;margin-bottom:10px}.album-counts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.album-counts div{background:#f7f4ef;border-radius:10px;padding:9px;text-align:center}.album-counts b{display:block;font-size:1.15rem}.album-actions{display:flex;gap:7px;flex-wrap:wrap}.album-actions button{font-size:.82rem}.stat{padding:15px;border:1px solid #ddd;border-radius:14px;background:#fff}.stat b{display:block;font-size:1.6rem}@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}</style><link rel="stylesheet" href="/assets/ultra-luxury.css"></head><body><header class="topbar"><div class="brand"><div class="brand-title" id="biz">Guest Photo Gallery</div><small>QR uploads, moderation and client keepsakes</small></div><div class="top-actions"><a class="btn" href="/app.html">← Dashboard</a><a class="btn" id="guestLink" href="/guests.html">Guest Management</a><button class="btn primary" id="refreshBtn">Refresh</button></div></header><main class="page"><div class="page-head"><div><div class="eyebrow">GUEST PHOTO QR</div><h1>Guest Photo Gallery</h1><p class="muted">Every event/client has its own private photo space and its own QR code. Switching events below switches the gallery, uploads, and QR destination. Approved photos stay available to that client for at least two years.</p></div><select id="eventSel"></select></div><section class="card" style="margin-top:18px"><div class="page-head"><div><h2>Client albums</h2><p class="muted">See which events have galleries, whether uploads are enabled, and whether photos are waiting for review.</p></div></div><div id="albumGrid" class="album-grid"></div></section><div class="stats" id="stats"></div><div class="hero-grid" style="margin-top:18px"><section class="card settings"><div class="page-head"><h2>Gallery settings</h2><button class="btn primary" id="saveSettings">Save</button></div><label><input id="enabled" type="checkbox"> Enable guest photo uploads</label><label>Gallery title<input id="galleryTitle" type="text"></label><label>Welcome message<textarea id="welcome"></textarea></label><label><input id="captions" type="checkbox"> Allow guest captions</label><label><input id="moderation" type="checkbox"> Require planner approval before client sees photos</label><label><input id="downloads" type="checkbox"> Allow client downloads</label><label><input id="printing" type="checkbox"> Allow client printing</label><p class="muted" id="retention"></p></section><section class="card qr-card"><h2>Selected client QR</h2><p class="muted">This is the same QR/link available in the client portal.</p><p class="muted" id="qrIdentity"></p><div id="qr" class="qr-host"></div><input id="publicUrl" readonly style="width:100%"><div class="actions" style="justify-content:center;margin-top:10px"><button class="btn" id="copyUrl">Copy link</button><button class="btn" id="downloadQr">Download QR</button><a class="btn" id="openPublic" target="_blank">Preview upload page</a></div></section><section class="card" style="margin-top:18px"><div class="page-head"><div><h2>Submitted photos</h2><p class="muted">Approve, hide, view or download guest submissions.</p></div><select id="statusFilter"><option value="">All photos</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="hidden">Hidden</option></select></div><div id="gallery" class="gallery"></div></section></main><script src="/assets/app.js"></script><script src="/assets/tenant-branding.js"></script><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Guest Photo QR Gallery</title><link rel="stylesheet" href="/assets/app.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><style>
+:root{--cream:#fff9ef;--ink:#151515;--pink:#ff4fa3;--lime:#d8f36a;--sage:#9db9a6;--muted:#6b6762;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif}
+.page{max-width:1380px;margin:auto;padding:34px 30px 70px}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:26px}
+.page-head h1{font-family:"Archivo Black";text-transform:uppercase;font-size:clamp(2.6rem,5vw,4.7rem);line-height:.92;margin:8px 0 10px}
+.page-head p{max-width:720px;line-height:1.6;margin:0}
+.eyebrow{font-size:.76rem;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;color:#e8318d}
+.muted{color:var(--muted)}
+.album-browser{border:3px solid var(--ink);border-radius:24px;background:#fff;overflow:hidden;margin-bottom:28px}
+.album-browser-head{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 24px;border-bottom:2px solid #ece8e2}
+.album-browser-head h2{margin:0;font-size:1.35rem}
+.album-browser-head p{margin:5px 0 0;color:var(--muted)}
+.album-grid{display:block}
+.album-card{display:grid;grid-template-columns:minmax(220px,1.35fr) minmax(170px,.9fr) minmax(240px,1fr) auto;gap:20px;align-items:center;padding:18px 24px;border-bottom:1px solid #ece8e2;background:#fff}
+.album-card:last-child{border-bottom:0}
+.album-card:hover,.album-card.active{background:#fffdf7}
+.album-card.active{box-shadow:inset 5px 0 0 var(--pink)}
+.album-title h3{margin:0 0 4px;font-size:1.05rem}
+.album-title small{color:var(--muted)}
+.album-status{display:flex;gap:7px;flex-wrap:wrap}
+.status-chip{display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:999px;padding:5px 9px;font-size:.72rem;font-weight:900;background:#fff}
+.status-chip.on{background:var(--lime)}
+.status-chip.pending{background:#fff3b0}
+.album-counts{display:flex;gap:22px}
+.album-count{min-width:54px}
+.album-count b{display:block;font:1.25rem "Archivo Black"}
+.album-count small{display:block;color:var(--muted);font-size:.7rem;text-transform:uppercase;font-weight:800}
+.album-actions{display:flex;gap:7px;justify-content:flex-end;flex-wrap:wrap}
+.album-actions button,.detail-tabs button,.actions a,.actions button,.btn{border:2px solid var(--ink);border-radius:999px;padding:9px 12px;background:#fff;color:var(--ink);font-weight:900;cursor:pointer;text-decoration:none;box-shadow:none}
+.album-actions button.primary,.btn.primary{background:var(--pink);color:#fff}
+.album-actions button:hover,.detail-tabs button:hover,.actions a:hover,.actions button:hover{background:var(--lime);color:var(--ink)}
+.detail-shell{border:3px solid var(--ink);border-radius:26px;background:#fff;overflow:hidden}
+.detail-header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 26px;border-bottom:2px solid #ece8e2}
+.detail-header h2{margin:0 0 5px;font-size:1.45rem}
+.detail-header p{margin:0;color:var(--muted)}
+.detail-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.detail-tabs button.active{background:var(--ink);color:#fff}
+.detail-panel{display:none;padding:26px}
+.detail-panel.active{display:block}
+.settings-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:26px}
+.settings-card,.qr-card,.photos-card{border:0;background:#fff;padding:0}
+.settings label{display:block;margin:0 0 18px;font-weight:800}
+.settings label.row-toggle{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #eee;margin:0}
+.settings input[type=text],.settings textarea{width:100%;border:2px solid #cfc9c1;border-radius:12px;padding:12px;font:inherit;margin-top:7px;background:#fff}
+.settings textarea{min-height:120px;resize:vertical}
+.settings-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+.settings-top h3,.qr-card h3,.photos-card h3{margin:0;font-size:1.15rem}
+.qr-card{background:#faf8f4;border:2px solid #e5dfd7;border-radius:18px;padding:22px;text-align:center}
+.qr-host{width:230px;height:230px;margin:16px auto;background:#fff;padding:10px;border-radius:14px}
+.qr-card input{width:100%;border:2px solid #d5d0c8;border-radius:10px;padding:10px;background:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.stat{border:2px solid #e2ddd5;border-radius:16px;padding:15px 16px;background:#faf8f4}
+.stat small{display:block;color:var(--muted);font-size:.72rem;text-transform:uppercase;font-weight:900}
+.stat b{display:block;font:1.55rem "Archivo Black";margin-top:4px}
+.photo-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.photo-toolbar select{border:2px solid var(--ink);border-radius:999px;padding:8px 12px;background:#fff;font-weight:800}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.photo-card{border:2px solid #e2ddd5;border-radius:16px;overflow:hidden;background:#fff}
+.photo-card img{width:100%;aspect-ratio:1;object-fit:cover;background:#eee}
+.photo-body{padding:12px}
+.photo-body p{margin:6px 0}
+.empty{padding:28px;color:var(--muted);text-align:center}
+#eventSel{display:none}
+@media(max-width:980px){.album-card{grid-template-columns:1fr auto}.album-status,.album-counts{grid-column:1/-1}.album-actions{grid-column:2}.settings-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.page{padding:20px 14px 50px}.page-head,.detail-header,.album-browser-head,.photo-toolbar{align-items:flex-start;flex-direction:column}.album-card{grid-template-columns:1fr;gap:12px;padding:17px}.album-actions{grid-column:auto;justify-content:flex-start}.stats{grid-template-columns:1fr 1fr}.detail-panel{padding:18px}.detail-tabs{width:100%}.detail-tabs button{flex:1}.album-counts{gap:14px}}
+</style><link rel="stylesheet" href="/assets/ultra-luxury.css"></head><body><header class="topbar"><div class="brand"><div class="brand-title" id="biz">Guest Photo Gallery</div><small>QR uploads, moderation and client keepsakes</small></div><div class="top-actions"><a class="btn" href="/app.html">← Dashboard</a><a class="btn" id="guestLink" href="/guests.html">Guest Management</a><button class="btn primary" id="refreshBtn">Refresh</button></div></header><main class="page">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Guest Photo Management</div>
+      <h1>Client Photo Albums</h1>
+      <p class="muted">A clean overview of every event gallery. Open a client to manage settings, pull the same QR code they see, or review submitted photos.</p>
+    </div>
+    <select id="eventSel"></select>
+  </div>
+
+  <section class="album-browser">
+    <div class="album-browser-head">
+      <div><h2>Event albums</h2><p>Photo activity across your current client events.</p></div>
+      <button class="btn" id="refreshBtn">Refresh</button>
+    </div>
+    <div id="albumGrid" class="album-grid"></div>
+  </section>
+
+  <section class="detail-shell" id="detailShell">
+    <div class="detail-header">
+      <div>
+        <h2 id="selectedAlbumTitle">Select a client album</h2>
+        <p id="selectedAlbumMeta">Choose an event above to manage its gallery.</p>
+      </div>
+      <div class="detail-tabs">
+        <button type="button" class="active" data-detail-tab="photos">Photos</button>
+        <button type="button" data-detail-tab="qr">QR Code</button>
+        <button type="button" data-detail-tab="settings">Settings</button>
+      </div>
+    </div>
+
+    <div class="detail-panel active" data-detail-panel="photos">
+      <div class="stats" id="stats"></div>
+      <div class="photos-card">
+        <div class="photo-toolbar">
+          <div><h3>Submitted photos</h3><p class="muted">Review guest submissions and manage what the client can see.</p></div>
+          <select id="statusFilter"><option value="">All photos</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="hidden">Hidden</option></select>
+        </div>
+        <div id="gallery" class="gallery"></div>
+      </div>
+    </div>
+
+    <div class="detail-panel" data-detail-panel="qr">
+      <div class="qr-card">
+        <h3>Client QR code</h3>
+        <p class="muted">This is the exact same QR code and upload link available inside the client portal.</p>
+        <p class="muted" id="qrIdentity"></p>
+        <div id="qr" class="qr-host"></div>
+        <input id="publicUrl" readonly>
+        <div class="actions">
+          <button class="btn" id="copyUrl">Copy link</button>
+          <button class="btn" id="downloadQr">Download QR</button>
+          <a class="btn" id="openPublic" target="_blank">Preview upload page</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-panel" data-detail-panel="settings">
+      <div class="settings-grid">
+        <section class="settings-card settings">
+          <div class="settings-top"><div><h3>Gallery settings</h3><p class="muted">Control guest uploads and what clients can do with approved photos.</p></div><button class="btn primary" id="saveSettings">Save changes</button></div>
+          <label class="row-toggle"><input id="enabled" type="checkbox"> Enable guest photo uploads</label>
+          <label>Gallery title<input id="galleryTitle" type="text"></label>
+          <label>Welcome message<textarea id="welcome"></textarea></label>
+          <label class="row-toggle"><input id="captions" type="checkbox"> Allow guest captions</label>
+          <label class="row-toggle"><input id="moderation" type="checkbox"> Require planner approval before client sees photos</label>
+          <label class="row-toggle"><input id="downloads" type="checkbox"> Allow client downloads</label>
+          <label class="row-toggle"><input id="printing" type="checkbox"> Allow client printing</label>
+          <p class="muted" id="retention"></p>
+        </section>
+        <aside class="qr-card">
+          <h3>Client access</h3>
+          <p class="muted">The client gets their QR directly inside their event portal. Use the QR Code tab here only when you need to print or resend it yourself.</p>
+          <a class="btn" id="guestLink" href="/guests.html">Guest Management</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main><script src="/assets/app.js"></script><script src="/assets/tenant-branding.js"></script><script>
 let events=[],data=null,overview={albums:[]};const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function load(){const b=await WLP.api('bootstrap');biz.textContent=(b.tenant.business_name||'Celebration Suite')+' · Guest Photo Gallery';events=(await WLP.api('events')).events||[];overview=await WLP.api('guest-photo-gallery');eventSel.innerHTML=events.map(e=>`<option value="${e.id}">${esc(e.client_name||'Client')} — ${esc(e.event_date||'TBD')} — ${esc(e.title)}</option>`).join('');const requested=new URLSearchParams(location.search).get('event_id');if(requested&&events.some(e=>e.id===requested))eventSel.value=requested;renderAlbums();await refresh()}
-function renderAlbums(){const rows=overview.albums||[];albumGrid.innerHTML=rows.length?rows.map(a=>{const e=a.event||{},g=a.gallery,c=a.counts||{};return `<article class="album-card"><h3>${esc(e.client_name||e.title||'Client Event')}</h3><div class="album-meta">${esc(e.title||'Event')} · ${esc(e.event_date||'Date TBD')}</div><div><span class="badge">${g?'Album created':'No album yet'}</span> <span class="badge">${g?.enabled?'Uploads on':'Uploads off'}</span></div><div class="album-counts"><div><b>${Number(c.total||0)}</b><small>Total</small></div><div><b>${Number(c.pending||0)}</b><small>Pending</small></div><div><b>${Number(c.approved||0)}</b><small>Approved</small></div></div><div class="album-actions"><button class="btn" data-open-album="${e.id}">Open album</button>${g&&a.public_url?`<button class="btn" data-copy-album="${e.id}">Copy QR link</button><button class="btn" data-download-album="${e.id}">Download QR</button>`:''}</div></article>`}).join(''):'<div class="empty">No events found.</div>';albumGrid.querySelectorAll('[data-open-album]').forEach(b=>b.onclick=()=>{eventSel.value=b.dataset.openAlbum;refresh();eventSel.scrollIntoView({behavior:'smooth',block:'center'})});albumGrid.querySelectorAll('[data-copy-album]').forEach(b=>b.onclick=async()=>{const a=(overview.albums||[]).find(x=>String(x.event?.id)===String(b.dataset.copyAlbum));if(!a?.public_url)return;await navigator.clipboard.writeText(a.public_url)});albumGrid.querySelectorAll('[data-download-album]').forEach(b=>b.onclick=()=>downloadAlbumQr(b.dataset.downloadAlbum));}
+function renderAlbums(){const rows=overview.albums||[];albumGrid.innerHTML=rows.length?rows.map(a=>{const e=a.event||{},g=a.gallery,c=a.counts||{},active=String(e.id)===String(eventSel.value);return `<article class="album-card ${active?'active':''}"><div class="album-title"><h3>${esc(e.client_name||e.title||'Client Event')}</h3><small>${esc(e.title||'Event')} · ${esc(e.event_date||'Date TBD')}</small></div><div class="album-status"><span class="status-chip ${g?'on':''}">${g?'Album ready':'No album yet'}</span><span class="status-chip ${g?.enabled?'on':''}">${g?.enabled?'Uploads on':'Uploads off'}</span>${Number(c.pending||0)>0?`<span class="status-chip pending">${Number(c.pending)} waiting</span>`:''}</div><div class="album-counts"><div class="album-count"><b>${Number(c.total||0)}</b><small>Total</small></div><div class="album-count"><b>${Number(c.pending||0)}</b><small>Pending</small></div><div class="album-count"><b>${Number(c.approved||0)}</b><small>Approved</small></div></div><div class="album-actions"><button class="primary" data-open-album="${e.id}">Manage</button>${g&&a.public_url?`<button data-copy-album="${e.id}">Copy QR</button>`:''}</div></article>`}).join(''):'<div class="empty">No events found.</div>';albumGrid.querySelectorAll('[data-open-album]').forEach(b=>b.onclick=()=>{eventSel.value=b.dataset.openAlbum;refresh();document.getElementById('detailShell')?.scrollIntoView({behavior:'smooth',block:'start'})});albumGrid.querySelectorAll('[data-copy-album]').forEach(b=>b.onclick=async()=>{const a=(overview.albums||[]).find(x=>String(x.event?.id)===String(b.dataset.copyAlbum));if(!a?.public_url)return;await navigator.clipboard.writeText(a.public_url)});}
 function downloadAlbumQr(eventId){const a=(overview.albums||[]).find(x=>String(x.event?.id)===String(eventId));if(!a?.public_url||!window.QRCode)return;const host=document.createElement('div');host.style.position='fixed';host.style.left='-9999px';document.body.appendChild(host);new QRCode(host,{text:a.public_url,width:1000,height:1000,correctLevel:QRCode.CorrectLevel.H});setTimeout(()=>{const c=host.querySelector('canvas'),i=host.querySelector('img'),src=c?c.toDataURL('image/png'):i?.src;if(src){const e=a.event||{},x=document.createElement('a');x.href=src;x.download=String((e.client_name||e.title||'client-event')+'-'+(e.event_date||'')).replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase()+'-guest-photo-qr.png';x.click()}host.remove()},80)}
 async function refresh(){if(!eventSel.value)return;data=await WLP.api('guest-photo-gallery?event_id='+encodeURIComponent(eventSel.value));overview=await WLP.api('guest-photo-gallery');guestLink.href='/guests.html?event_id='+encodeURIComponent(eventSel.value);renderAlbums();render()}
-function render(){const g=data.gallery,p=data.photos||[],ev=events.find(x=>x.id===eventSel.value)||{};enabled.checked=!!g.enabled;galleryTitle.value=g.title||'';welcome.value=g.welcome_message||'';captions.checked=g.allow_guest_captions!==false;moderation.checked=g.moderation_required!==false;downloads.checked=g.client_can_download!==false;printing.checked=g.client_can_print!==false;retention.textContent='Minimum retention through '+new Date(g.retention_until).toLocaleDateString();publicUrl.value=data.public_url;openPublic.href=data.public_url;qrIdentity.textContent=`${ev.client_name||'Client'} · ${ev.title||'Event'}${ev.event_date?' · '+ev.event_date:''}`;qr.innerHTML='';if(window.QRCode)new QRCode(qr,{text:data.public_url,width:220,height:220});stats.innerHTML=[['Total',p.length],['Pending',p.filter(x=>x.status==='pending').length],['Approved',p.filter(x=>x.status==='approved').length],['Hidden',p.filter(x=>x.status==='hidden').length]].map(x=>`<div class="stat"><small>${x[0]}</small><b>${x[1]}</b></div>`).join('');drawPhotos()}
+function render(){const g=data.gallery,p=data.photos||[],ev=events.find(x=>x.id===eventSel.value)||{};selectedAlbumTitle.textContent=ev.client_name||ev.title||'Client Event';selectedAlbumMeta.textContent=[ev.title||'Event',ev.event_date||'Date TBD'].filter(Boolean).join(' · ');enabled.checked=!!g.enabled;galleryTitle.value=g.title||'';welcome.value=g.welcome_message||'';captions.checked=g.allow_guest_captions!==false;moderation.checked=g.moderation_required!==false;downloads.checked=g.client_can_download!==false;printing.checked=g.client_can_print!==false;retention.textContent='Minimum retention through '+new Date(g.retention_until).toLocaleDateString();publicUrl.value=data.public_url;openPublic.href=data.public_url;qrIdentity.textContent=`${ev.client_name||'Client'} · ${ev.title||'Event'}${ev.event_date?' · '+ev.event_date:''}`;qr.innerHTML='';if(window.QRCode)new QRCode(qr,{text:data.public_url,width:220,height:220});stats.innerHTML=[['Total',p.length],['Pending',p.filter(x=>x.status==='pending').length],['Approved',p.filter(x=>x.status==='approved').length],['Hidden',p.filter(x=>x.status==='hidden').length]].map(x=>`<div class="stat"><small>${x[0]}</small><b>${x[1]}</b></div>`).join('');drawPhotos()}
 function drawPhotos(){const f=statusFilter.value,rows=(data.photos||[]).filter(x=>!f||x.status===f);gallery.innerHTML=rows.length?rows.map(p=>`<article class="photo-card"><a target="_blank" href="/.netlify/functions/guest-photo-open?id=${encodeURIComponent(p.id)}"><img src="/.netlify/functions/guest-photo-open?id=${encodeURIComponent(p.id)}" alt="Guest photo"></a><div class="photo-body"><b>${esc(p.uploader_name||'Guest')}</b><p>${esc(p.caption||'')}</p><small class="muted">${new Date(p.created_at).toLocaleString()} · ${esc(p.status)}</small><div class="actions" style="margin-top:8px"><a class="btn" target="_blank" href="/.netlify/functions/guest-photo-open?id=${encodeURIComponent(p.id)}">View</a><a class="btn" href="/.netlify/functions/guest-photo-open?id=${encodeURIComponent(p.id)}&download=1">Download</a>${p.status!=='approved'?`<button class="btn" data-status="approved" data-id="${p.id}">Approve</button>`:''}${p.status!=='hidden'?`<button class="btn" data-status="hidden" data-id="${p.id}">Hide</button>`:''}</div></div></article>`).join(''):'<div class="empty">No photos match this filter.</div>';gallery.querySelectorAll('[data-status]').forEach(b=>b.onclick=async()=>{await WLP.api('guest-photo-gallery?event_id='+encodeURIComponent(eventSel.value),{method:'PATCH',body:JSON.stringify({action:'photo-status',id:b.dataset.id,status:b.dataset.status})});await refresh()})}
-saveSettings.onclick=async()=>{saveSettings.disabled=true;try{await WLP.api('guest-photo-gallery?event_id='+encodeURIComponent(eventSel.value),{method:'PATCH',body:JSON.stringify({action:'settings',enabled:enabled.checked,title:galleryTitle.value,welcome_message:welcome.value,allow_guest_captions:captions.checked,moderation_required:moderation.checked,client_can_download:downloads.checked,client_can_print:printing.checked})});await refresh()}finally{saveSettings.disabled=false}};eventSel.onchange=refresh;refreshBtn.onclick=refresh;statusFilter.onchange=drawPhotos;copyUrl.onclick=()=>navigator.clipboard.writeText(publicUrl.value);downloadQr.onclick=()=>{const c=qr.querySelector('canvas'),i=qr.querySelector('img'),src=c?c.toDataURL('image/png'):i?.src;if(!src)return;const a=document.createElement('a');a.href=src;const ev=events.find(x=>x.id===eventSel.value)||{};const safe=String((ev.client_name||ev.title||'client-event')+'-'+(ev.event_date||'')).replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase();a.download=(safe||'client-event')+'-guest-photo-qr.png';a.click()};load().catch(e=>alert(e.message));
+saveSettings.onclick=async()=>{saveSettings.disabled=true;try{await WLP.api('guest-photo-gallery?event_id='+encodeURIComponent(eventSel.value),{method:'PATCH',body:JSON.stringify({action:'settings',enabled:enabled.checked,title:galleryTitle.value,welcome_message:welcome.value,allow_guest_captions:captions.checked,moderation_required:moderation.checked,client_can_download:downloads.checked,client_can_print:printing.checked})});await refresh()}finally{saveSettings.disabled=false}};eventSel.onchange=refresh;refreshBtn.onclick=refresh;statusFilter.onchange=drawPhotos;copyUrl.onclick=()=>navigator.clipboard.writeText(publicUrl.value);downloadQr.onclick=()=>{const c=qr.querySelector('canvas'),i=qr.querySelector('img'),src=c?c.toDataURL('image/png'):i?.src;if(!src)return;const a=document.createElement('a');a.href=src;const ev=events.find(x=>x.id===eventSel.value)||{};const safe=String((ev.client_name||ev.title||'client-event')+'-'+(ev.event_date||'')).replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase();a.download=(safe||'client-event')+'-guest-photo-qr.png';a.click()};document.querySelectorAll('[data-detail-tab]').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('[data-detail-tab]').forEach(x=>x.classList.toggle('active',x===btn));document.querySelectorAll('[data-detail-panel]').forEach(x=>x.classList.toggle('active',x.dataset.detailPanel===btn.dataset.detailTab));});load().catch(e=>alert(e.message));
 </script><script src="/assets/ultra-luxury.js"></script></body></html>
